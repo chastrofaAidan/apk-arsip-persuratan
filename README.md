@@ -5,7 +5,8 @@ Be sure to follow the following steps in order for your aplication to work
 1.  Make sure to activate your XAMPP's MySQL and Apache Server
 2.  In MySQL, use this syntax:
   CREATE DATABASE arsip_persuratan;
-3.  In Command Prompt directing to your project, run this:
+3. Extract Laravel Project and change the file named .env.example on the main project folder to 
+4.  In Command Prompt directing to your project, run this:
   php artisan migrate
   php artisan db:seed --class=ArsipSeeder
 etc.
