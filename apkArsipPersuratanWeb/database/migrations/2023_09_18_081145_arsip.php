@@ -17,10 +17,10 @@ return new class extends Migration
             $table ->string('judul_surat');
             $table ->string('perusahaan');
             $table ->string('jenis_surat');
-            $table ->string('tanggal_surat');
+            $table ->date('tanggal_surat');
             $table ->string('perihal_surat');
             $table ->string('file_surat');
-            $table ->string('keterangan');
+            $table ->text('keterangan');
             $table  ->timestamps();            
             // $table->softDeletes();
         });

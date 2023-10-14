@@ -1,6 +1,6 @@
 <h3>Surat Arsip</h3>
 <br>
-<a href="/walas/trash" class="btn btn-primary">Tempat Sampah</a>
+<a href="/arsip/tambah" class="btn btn-primary">Tambah Arsip</a>
 <br/>
 <br/>
 
@@ -13,6 +13,7 @@
         <th>Perusahaan</th>
         <th>Tanggal Surat</th>
         <th>Perihal Surat</th>
+        <th>File</th>
         <th>Keterangan</th>
         <th>Action</th>
     </tr>
