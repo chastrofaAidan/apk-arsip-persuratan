@@ -22,11 +22,11 @@ Route::get('/arsip','ArsipController@index');
 Route::get('/arsip/tambah','ArsipController@tambah');
 Route::post('/arsip/store','ArsipController@store');
 Route::get('/arsip/hapus/{id}','ArsipController@hapus');
+Route::get('/arsip/edit/{id}','ArsipController@edit');
+Route::post('/arsip/update','ArsipController@update');
 
 
 Route::get('/preview/{pdf}', 'ArsipController@preview')->name('preview');
-// Route::get('/walas/edit/{id}','WalasController@edit');
-// Route::post('/walas/update','WalasController@update');
 // // Soft Deletes Wali Kelas
 // Route::get('/walas/trash', 'WalasController@trash');
 // Route::get('/walas/kembalikan/{id}', 'WalasController@kembalikan');

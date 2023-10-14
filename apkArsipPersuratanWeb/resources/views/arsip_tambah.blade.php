@@ -31,19 +31,3 @@
 
     <input class="btn btn-primary" type="submit" value="Simpan Data">
 </form>
-
-
-
-
-            <!-- File Gambar <input class="list-group-item"type="file" name="fotowalas" required="required"> 
-            <br />
-            Nama Wali Kelas     <input class="list-group-item"type="text" name="namawalas" required="required"> 
-            <br />
-            NIP    <input class="list-group-item"type="number" name="nip" required="required"> 
-            <br /> 
-            Kelas   <input class="list-group-item"type="text" name="kelaswalas" required="required"> 
-            <br /> 
-            Mata Pelajaran  <input class="list-group-item"type="text" name="mapel" required="required"> 
-            <br />
-            <input  class="btn btn-primary" type="submit" value="Simpan Data">  -->
-        </form>
