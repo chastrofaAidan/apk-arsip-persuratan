@@ -21,9 +21,12 @@ return new class extends Migration
             $table ->string('perihal_surat');
             $table ->string('file_surat');
             $table ->string('keterangan');
-            $table  ->timestamps();
+            $table  ->timestamps();            
+            // $table->softDeletes();
         });
     }
+
+    
 
     /**
      * Reverse the migrations.
