@@ -80,7 +80,7 @@ body {
 
 .text-indigo:hover,
 .text-indigo {
-    color: var(--bs-indigo);
+    color: #9A4444;
 }
 .bg-indigo {
     background-color: var(--bs-indigo);
@@ -179,7 +179,7 @@ body {
     background-color: var(--bs-gray-200);
 }
 .sidebar-menu-item.active a {
-    background-color: var(--bs-indigo);
+    background-color: #9A4444;
     color: var(--bs-light);
     box-shadow: 0 .25rem .25rem rgba(0, 0, 0, 0.175);
 }
