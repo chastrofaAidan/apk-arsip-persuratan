@@ -14,12 +14,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login/login');
 });
 
-Route::get('/walas','WalasController@index');
-Route::get('/walas/tambah','WalasController@tambah');
-Route::post('/walas/store','WalasController@store');
-Route::get('/walas/edit/{id}','WalasController@edit');
-Route::post('/walas/update','WalasController@update');
-Route::get('/walas/hapus/{id}','WalasController@hapus');
+Route::get('/side', function () {
+    return view('partials/sidebar');
+});
+
+
+Route::get('/arsip','ArsipController@index');
+Route::get('/arsip/tambah','ArsipController@tambah');
+Route::post('/arsip/store','ArsipController@store');
+Route::get('/arsip/hapus/{id}','ArsipController@hapus');
+Route::get('/arsip/edit/{id}','ArsipController@edit');
+Route::post('/arsip/update','ArsipController@update');
+
+
+Route::get('/preview/{pdf}', 'ArsipController@preview')->name('preview');
+// // Soft Deletes Wali Kelas
+// Route::get('/walas/trash', 'WalasController@trash');
+// Route::get('/walas/kembalikan/{id}', 'WalasController@kembalikan');
+// Route::get('/walas/kembalikan_semua', 'WalasController@kembalikan_semua');
+// Route::get('/walas/hapus_permanen/{id}', 'WalasController@hapus_permanen');
+// Route::get('/walas/hapus_permanen_semua', 'WalasController@hapus_permanen_semua');
