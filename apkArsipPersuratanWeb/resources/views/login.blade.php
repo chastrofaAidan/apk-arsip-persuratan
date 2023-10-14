@@ -1,1 +1,0 @@
-awkowkoakwdokawodkaowkdaowkdoawkdoaw konto
