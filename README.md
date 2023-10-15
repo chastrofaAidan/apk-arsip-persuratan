@@ -10,5 +10,3 @@ Be sure to follow the following steps in order for your aplication to work
   php artisan migrate
   php artisan db:seed --class=ArsipSeeder
 etc.
-
-THANKYOUUU
