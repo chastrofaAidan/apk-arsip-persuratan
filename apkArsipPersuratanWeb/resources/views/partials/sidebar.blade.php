@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- CSS -->
     <link href="{{ asset('css/sidebar_style.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -18,7 +18,9 @@
     <!-- Sidebar -->
     <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
         <div class="d-flex align-items-center p-3">
-            <a href="#" class="sidebar-logo text-uppercase fw-bold text-decoration-none text-indigo fs-4">Archie</a>
+            <a href="#" class="sidebar-logo">
+                <img src="{{ asset('images/logo_archie.png') }}" alt="Error" width="120">
+            </a>
             <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
         </div>
         <ul class="sidebar-menu p-3 m-0 mb-0">
@@ -32,7 +34,7 @@
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Arsip</li>
             <li class="sidebar-menu-item has-dropdown">
                 <a href="#">
-                    <i class="ri-mail-line sidebar-menu-item-icon"></i>
+                    <i class="ri-mail-unread-line sidebar-menu-item-icon"></i>
                     Surat Masuk
                     <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
                 </a>
@@ -51,7 +53,7 @@
             </li>
             <li class="sidebar-menu-item has-dropdown">
               <a href="#">
-                  <i class="ri-mail-line sidebar-menu-item-icon"></i>
+                  <i class="ri-mail-send-line sidebar-menu-item-icon"></i>
                   Surat Keluar
                   <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
               </a>
@@ -70,7 +72,7 @@
           </li>
           <li class="sidebar-menu-item has-dropdown">
             <a href="#">
-                <i class="ri-mail-line sidebar-menu-item-icon"></i>
+                <i class="ri-archive-2-line sidebar-menu-item-icon"></i>
                 Surat Arsip
                 <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
             </a>
@@ -90,32 +92,32 @@
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Tools</li>
             <li class="sidebar-menu-item">
                 <a href="#">
-                    <i class="ri-mail-line sidebar-menu-item-icon"></i>
+                    <i class="ri-mail-add-line sidebar-menu-item-icon"></i>
                     Pembuatan Surat
                 </a>
             </li>
             <li class="sidebar-menu-item">
                 <a href="#">
-                    <i class="ri-calendar-line sidebar-menu-item-icon"></i>
+                    <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i>
                     Pengarsipan Surat
                 </a>
             </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
             <li class="sidebar-menu-item">
                 <a href="#">
-                    <i class="ri-mail-line sidebar-menu-item-icon"></i>
+                    <i class="ri-account-circle-line sidebar-menu-item-icon"></i>
                     Profile
                 </a>
             </li>
             <li class="sidebar-menu-item">
                 <a href="#">
-                    <i class="ri-calendar-line sidebar-menu-item-icon"></i>
+                    <i class="ri-settings-line sidebar-menu-item-icon"></i>
                     Settings
                 </a>
             </li>
             <li class="sidebar-menu-item">
               <a href="#">
-                  <i class="ri-calendar-line sidebar-menu-item-icon"></i>
+                  <i class="ri-logout-box-line sidebar-menu-item-icon"></i>
                   Logout
               </a>
           </li>
