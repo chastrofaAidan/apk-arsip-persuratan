@@ -17,7 +17,7 @@
         <div class="login-container">
             <p class="title">TATA USAHA</p>
             <div class="separator"></div>
-            <p class="welcome-message">Please, provide login credential to proceed and have access to all our services</p>
+            <p class="welcome-message">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero, doloremque.</p>
 
             <form class="login-form">
                 <div class="form-control">
