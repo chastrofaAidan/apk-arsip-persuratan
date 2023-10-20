@@ -16,6 +16,7 @@
 <body>
 
     <!-- Sidebar -->
+    @if (Auth::user()->role == 'superadmin')
     <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
         <div class="d-flex align-items-center p-3">
             <a href="#" class="sidebar-logo">
@@ -91,7 +92,7 @@
         </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Tools</li>
             <li class="sidebar-menu-item">
-                <a href="#">
+                <a href="https://www.youtube.com/watch?v=Vnx-oCyocxA">
                     <i class="ri-mail-add-line sidebar-menu-item-icon"></i>
                     Pembuatan Surat
                 </a>
@@ -116,13 +117,112 @@
                 </a>
             </li>
             <li class="sidebar-menu-item">
-              <a href="#">
+              <a href="/logout">
                   <i class="ri-logout-box-line sidebar-menu-item-icon"></i>
                   Logout
               </a>
           </li>
         </ul>
     </div>
+    @endif
+
+    @if (Auth::user()->role == 'admin')
+    <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
+        <div class="d-flex align-items-center p-3">
+            <a href="#" class="sidebar-logo">
+                <img src="{{ asset('images/logo_archie.png') }}" alt="Error" width="120">
+            </a>
+            <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
+        </div>
+        <ul class="sidebar-menu p-3 m-0 mb-0">
+            <li class="sidebar-menu-item active">
+                <a href="#">
+                    <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Arsip</li>
+            <li class="sidebar-menu-item has-dropdown">
+                <a href="#">
+                    <i class="ri-mail-unread-line sidebar-menu-item-icon"></i>
+                    Surat Masuk
+                    <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+                </a>
+                <ul class="sidebar-dropdown-menu">
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#">
+                            Terbaru
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown-menu-item">
+                        <a href="#">
+                            Terlama
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidebar-menu-item has-dropdown">
+              <a href="#">
+                  <i class="ri-mail-send-line sidebar-menu-item-icon"></i>
+                  Surat Keluar
+                  <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+              </a>
+              <ul class="sidebar-dropdown-menu">
+                  <li class="sidebar-dropdown-menu-item">
+                      <a href="#">
+                          Terbaru
+                      </a>
+                  </li>
+                  <li class="sidebar-dropdown-menu-item">
+                      <a href="#">
+                          Terlama
+                      </a>
+                  </li>
+              </ul>
+          </li>
+          <li class="sidebar-menu-item has-dropdown">
+            <a href="#">
+                <i class="ri-archive-2-line sidebar-menu-item-icon"></i>
+                Surat Arsip
+                <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
+            </a>
+            <ul class="sidebar-dropdown-menu">
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="#">
+                        Terbaru
+                    </a>
+                </li>
+                <li class="sidebar-dropdown-menu-item">
+                    <a href="#">
+                        Terlama
+                    </a>
+                </li>
+            </ul>
+        </li>
+            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
+            <li class="sidebar-menu-item">
+                <a href="#">
+                    <i class="ri-account-circle-line sidebar-menu-item-icon"></i>
+                    Profile
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+                <a href="#">
+                    <i class="ri-settings-line sidebar-menu-item-icon"></i>
+                    Settings
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+              <a href="/logout">
+                  <i class="ri-logout-box-line sidebar-menu-item-icon"></i>
+                  Logout
+              </a>
+          </li>
+        </ul>
+    </div>
+    @endif
+
     <div class="sidebar-overlay"></div>
     <!-- Main -->
     <main class="bg-light">

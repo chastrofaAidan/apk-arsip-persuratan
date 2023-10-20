@@ -17,7 +17,7 @@ class ArsipController extends Controller
 
 
     public function preview($filename)
-    { 
+    {
         $path = public_path('data_file/' . $filename); // Specify the path to the "data_file" folder
 
         if (file_exists($path)) {
@@ -75,11 +75,11 @@ class ArsipController extends Controller
 
 
     public function edit($id_surat)
-    { 
-        $arsip = DB::table('arsip')->where('id_surat',$id_surat)->get(); 
-        
-        
-        return view('arsip_edit',['dataarsip' => $arsip]);
+    {
+        $arsip = DB::table('arsip')->where('id_surat', $id_surat)->get();
+
+
+        return view('arsip_edit', ['dataarsip' => $arsip]);
     }
 
 
@@ -137,10 +137,22 @@ class ArsipController extends Controller
 
     public function hapus($id_surat)
     {
-        DB::table('arsip')->where('id_surat',$id_surat)->delete();
-        
+        DB::table('arsip')->where('id_surat', $id_surat)->delete();
+
         // alihkan halaman ke halaman arsip
         return redirect('/arsip');
     }
 
+    function index2()
+    {
+        return view('partials/sidebar');
+    }
+    function superadmin()
+    {
+        return view('partials/sidebar');
+    }
+    function admin()
+    {
+        return view('partials/sidebar');
+    }
 }

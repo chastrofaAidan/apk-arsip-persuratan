@@ -18,14 +18,25 @@
             <p class="title">TATA USAHA</p>
             <div class="separator"></div>
             <p class="welcome-message">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero, doloremque.</p>
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $item)
+                        <li>{{ $item }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
 
-            <form class="login-form">
+
+            <form action="" method="POST" class="login-form">
+                @csrf
                 <div class="form-control">
-                    <input type="text" placeholder="Username">
+                    <input type="email" placeholder="Username" name="email" value="{{ old('email') }}">
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="form-control">
-                    <input type="password" placeholder="Password">
+                    <input type="password" placeholder="Password" name="password">
                     <i class="fas fa-lock"></i>
                 </div>
 
