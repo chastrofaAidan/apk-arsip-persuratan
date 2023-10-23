@@ -29,8 +29,17 @@ Route::get('/arsip/hapus/{id}','ArsipController@hapus');
 Route::get('/arsip/edit/{id}','ArsipController@edit');
 Route::post('/arsip/update','ArsipController@update');
 
-
 Route::get('/preview/{pdf}', 'ArsipController@preview')->name('preview');
+
+Route::get('/surat_masuk', 'ArsipController@masuk');
+Route::get('/surat_keluar','ArsipController@keluar');
+// Route::get('/surat_masuk', function () {
+//     return view('surat_masuk');
+// });
+// Route::get('/surat_keluar', function () {
+//     return view('surat_keluar');
+// });
+
 // // Soft Deletes Wali Kelas
 // Route::get('/walas/trash', 'WalasController@trash');
 // Route::get('/walas/kembalikan/{id}', 'WalasController@kembalikan');
