@@ -39,7 +39,7 @@ class ArsipController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'kode_surat' => 'required',
+            'kode_surat' => 'required', 
             'judul_surat' => 'required',
             'perusahaan' => 'required',
             'jenis_surat' => 'required|in:Surat Masuk,Surat Keluar',
@@ -106,7 +106,7 @@ class ArsipController extends Controller
         // Check if the "file" input is empty
         if (!$request->hasFile('file')) {
             // Assign the previous value to the "file" field
-            $file = $record->file;
+            $pdf = $record->file_surat;
         } else {
             // Handle the case when a new file is uploaded
             $file = $request->file('file');
@@ -143,4 +143,16 @@ class ArsipController extends Controller
         return redirect('/arsip');
     }
 
+
+    public function masuk()
+    {
+        $arsip = ArsipModel::where('jenis_surat', 'Surat Masuk')->get();
+        return view('surat_masuk', ['dataarsip' => $arsip]);
+    }
+
+    
+    public function keluar(){
+        $arsip = ArsipModel::All();
+        return view('surat_keluar', ['dataarsip' => $arsip]);
+    }
 }
