@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArsipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,12 +34,12 @@ Route::get('/preview/{pdf}', 'ArsipController@preview')->name('preview');
 
 Route::get('/surat_masuk', 'ArsipController@masuk');
 Route::get('/surat_keluar','ArsipController@keluar');
-// Route::get('/surat_masuk', function () {
-//     return view('surat_masuk');
-// });
-// Route::get('/surat_keluar', function () {
-//     return view('surat_keluar');
-// });
+
+Route::get('/arsip/search','ArsipController@searchArsip');
+Route::get('/surat_masuk/search','ArsipController@searchSuratMasuk');
+Route::get('/surat_keluar/search','ArsipController@searchSuratKeluar');
+// Route::get('/surat_masuk/search',[ArsipController::class,'search']);
+
 
 // // Soft Deletes Wali Kelas
 // Route::get('/walas/trash', 'WalasController@trash');
