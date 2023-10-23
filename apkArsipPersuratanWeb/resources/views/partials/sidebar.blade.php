@@ -182,11 +182,7 @@
               </ul>
           </li>
           <li class="sidebar-menu-item has-dropdown">
-            <a href="#">
-                <i class="ri-archive-2-line sidebar-menu-item-icon"></i>
-                Surat Arsip
-                <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
-            </a>
+           
             <ul class="sidebar-dropdown-menu">
                 <li class="sidebar-dropdown-menu-item">
                     <a href="#">
