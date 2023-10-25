@@ -1,15 +1,14 @@
-<h3>Surat Arsip</h3>
-<br>
-<a href="/arsip/tambah" class="btn btn-primary">Tambah Arsip</a>
-<form action="/arsip/search" method="GET">
+<h3>Surat Masuk</h3>
+<!-- Your search form here -->
+
+<form action="/surat_masuk/search" method="GET">
     <label for="search">Date Format: YYYY-MM-DD</label><br>
     <input type="search" name="search" placeholder="Search">
-    <button type="submit">
-        find
-    </button>
+    <button type="submit">Find</button>
 </form>
-<br/><br/>
-<form action="/arsip" method="GET"> <!-- Add this form for per_page -->
+<br><br>
+
+<form action="/surat_masuk" method="GET"> <!-- Add this form for per_page -->
     <label for="per_page">Records Per Page: </label>
     <select name="per_page" id="per_page" onchange="this.form.submit()">
         <option value="3" @if($perPage == 3) selected @endif>3</option>
@@ -21,26 +20,21 @@
     </select>
 </form>
 
-<table class="table table-bordered" border="1">
+<table class="table table-bordered" border="1"> 
     <tr> 
-        <th>ID</th>
         <th>Kode Surat</th>
         <th>Judul Surat</th>
-        <th>Jenis Surat</th>
         <th>Perusahaan</th>
-        <th>Tanggal Surat</th>
+        <th>Tanggal Masuk</th>
         <th>Perihal Surat</th>
         <th>File</th>
         <th>Keterangan</th>
-        <th>Action</th>
     </tr>
 
     @foreach($dataarsip as $a)
     <tr>
-        <td>{{ $a->id_surat }}</td>
         <td>{{ $a->kode_surat }}</td>
         <td>{{ $a->judul_surat }}</td>
-        <td>{{ $a->jenis_surat }}</td>
         <td>{{ $a->perusahaan }}</td>
         <td>
             @if ($a->tanggal_surat)
@@ -58,17 +52,13 @@
         </td>
 
         <td>{{ $a->keterangan }}</td>
-        <td>
-            <a href="/arsip/edit/{{ $a->id_surat }}">Edit</a>
-            |
-            <a href="/arsip/hapus/{{ $a->id_surat }}">Hapus</a>
-        </td>
     </tr>
     @endforeach
 </table>
 
 <!-- Pagination links -->
 {{ $dataarsip->appends(['per_page' => $perPage])->links() }}
+
 
 <br>
 <br>

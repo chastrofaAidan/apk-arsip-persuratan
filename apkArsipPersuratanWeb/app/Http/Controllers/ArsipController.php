@@ -9,11 +9,38 @@ use Barryvdh\DomPDF\PDF as PDF;
 
 class ArsipController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $arsip = ArsipModel::All();
+        $perPage = $request->input('per_page', 10); // Default to 10 records per page
+
+        // Use paginate() to paginate the results based on the selected number of records per page
+        $arsip = ArsipModel::paginate($perPage);
+
+        return view('arsip_index', ['dataarsip' => $arsip, 'perPage' => $perPage]);
+    }
+
+
+    public function searchArsip(Request $request)
+    {
+        if ($request->has('search')) {
+            $search = $request->input('search'); // Get the search input from the request
+
+            $arsip = ArsipModel::where(function ($query) use ($search) {
+                $query->where('kode_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('judul_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('perusahaan', 'LIKE', '%' . $search . '%')
+                    ->orWhere('tanggal_surat', '=', $search)
+                    ->orWhere('perihal_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('keterangan', 'LIKE', '%' . $search . '%');
+            })
+                ->get();
+        } else {
+            $arsip = ArsipModel::all();
+        }
         return view('arsip_index', ['dataarsip' => $arsip]);
     }
+
+
 
 
     public function preview($filename)
@@ -39,7 +66,7 @@ class ArsipController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'kode_surat' => 'required',
+            'kode_surat' => 'required', 
             'judul_surat' => 'required',
             'perusahaan' => 'required',
             'jenis_surat' => 'required|in:Surat Masuk,Surat Keluar',
@@ -106,7 +133,7 @@ class ArsipController extends Controller
         // Check if the "file" input is empty
         if (!$request->hasFile('file')) {
             // Assign the previous value to the "file" field
-            $file = $record->file;
+            $pdf = $record->file_surat;
         } else {
             // Handle the case when a new file is uploaded
             $file = $request->file('file');
@@ -142,7 +169,7 @@ class ArsipController extends Controller
         // alihkan halaman ke halaman arsip
         return redirect('/arsip');
     }
-
+  
     function index2()
     {
         return view('partials/sidebar');
@@ -155,4 +182,72 @@ class ArsipController extends Controller
     {
         return view('partials/sidebar');
     }
+
+    public function masuk(Request $request)
+    {
+        $perPage = $request->input('per_page', 10); // Default to 10 records per page
+
+        // Use paginate() to paginate the results based on the selected number of records per page
+        $surat_masuk = ArsipModel::where('jenis_surat', 'Surat Masuk')
+            ->paginate($perPage);
+
+        return view('surat_masuk', ['dataarsip' => $surat_masuk, 'perPage' => $perPage]);
+    }
+
+    
+    public function searchSuratMasuk(Request $request)
+    {
+        if ($request->has('search')) {
+            $search = $request->input('search'); // Get the search input from the request
+
+            $surat_masuk = ArsipModel::where(function ($query) use ($search) {
+                $query->where('kode_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('judul_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('perusahaan', 'LIKE', '%' . $search . '%')
+                    ->orWhere('tanggal_surat', '=', $search)
+                    ->orWhere('perihal_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('keterangan', 'LIKE', '%' . $search . '%');
+            })
+                ->where('jenis_surat', 'Surat Masuk')
+                ->get();
+        } else {
+            $surat_masuk = ArsipModel::all();
+        }
+        return view('surat_masuk', ['dataarsip' => $surat_masuk]);
+    }
+
+
+    
+    public function keluar(Request $request){
+
+        $perPage = $request->input('per_page', 10); // Default to 10 records per page
+
+        // Use paginate() to paginate the results based on the selected number of records per page
+        $surat_keluar = ArsipModel::where('jenis_surat', 'Surat Keluar')
+            ->paginate($perPage);
+
+        return view('surat_keluar', ['dataarsip' => $surat_keluar, 'perPage' => $perPage]);
+    }
+
+    public function searchSuratKeluar(Request $request)
+    {
+        if ($request->has('search')) {
+            $search = $request->input('search'); // Get the search input from the request
+
+            $surat_keluar = ArsipModel::where(function ($query) use ($search) {
+                $query->where('kode_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('judul_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('perusahaan', 'LIKE', '%' . $search . '%')
+                    ->orWhere('tanggal_surat', '=', $search)
+                    ->orWhere('perihal_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('keterangan', 'LIKE', '%' . $search . '%');
+            })
+                ->where('jenis_surat', 'Surat Keluar')
+                ->get();
+        } else {
+            $surat_keluar = ArsipModel::all();
+        }
+        return view('surat_keluar', ['dataarsip' => $surat_keluar]);
+    }
+
 }
