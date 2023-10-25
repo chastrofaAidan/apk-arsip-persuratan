@@ -1,4 +1,5 @@
 <h3>Tambah Arsip</h3>
+<a href="/arsip"> Kembali</a>
 <form action="/arsip/store" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <label for="kode_surat">Kode Surat</label>

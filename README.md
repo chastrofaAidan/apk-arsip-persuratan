@@ -9,4 +9,5 @@ Be sure to follow the following steps in order for your aplication to work
 4.  In Command Prompt directing to your project, run this:
   php artisan migrate
   php artisan db:seed --class=ArsipSeeder
+  php artisan db:seed --class=AkunSeeder
 etc.
