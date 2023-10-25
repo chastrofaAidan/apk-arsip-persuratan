@@ -208,7 +208,7 @@ body {
 }
 .sidebar-dropdown-menu-item.focused > a,
 .sidebar-dropdown-menu-item a:hover {
-    color: var(--bs-indigo);
+    color: #DE8F5F;
 }
 .sidebar-dropdown-menu {
     padding-left: 2rem;
@@ -389,3 +389,7 @@ nav {
     
 }
 /* end: Breakpoints */
+
+
+
+

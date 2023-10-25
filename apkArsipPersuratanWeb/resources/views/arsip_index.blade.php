@@ -1,8 +1,25 @@
 <h3>Surat Arsip</h3>
 <br>
 <a href="/arsip/tambah" class="btn btn-primary">Tambah Arsip</a>
-<br/>
-<br/>
+<form action="/arsip/search" method="GET">
+    <label for="search">Date Format: YYYY-MM-DD</label><br>
+    <input type="search" name="search" placeholder="Search">
+    <button type="submit">
+        find
+    </button>
+</form>
+<br/><br/>
+<form action="/arsip" method="GET"> <!-- Add this form for per_page -->
+    <label for="per_page">Records Per Page: </label>
+    <select name="per_page" id="per_page" onchange="this.form.submit()">
+        <option value="3" @if($perPage == 3) selected @endif>3</option>
+        <option value="5" @if($perPage == 5) selected @endif>5</option>
+        <option value="10" @if($perPage == 10) selected @endif>10</option>
+        <option value="25" @if($perPage == 25) selected @endif>25</option>
+        <option value="50" @if($perPage == 50) selected @endif>50</option>
+        <option value="100" @if($perPage == 100) selected @endif>100</option>
+    </select>
+</form>
 
 <table class="table table-bordered" border="1">
     <tr> 
@@ -50,7 +67,9 @@
     @endforeach
 </table>
 
-<br>
+<!-- Pagination links -->
+{{ $dataarsip->appends(['per_page' => $perPage])->links() }}
+
 <br>
 <br>
 <a href="/surat_masuk" class="btn btn-primary">Surat Masuk</a><br>
