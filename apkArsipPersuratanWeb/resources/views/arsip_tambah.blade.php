@@ -1,4 +1,12 @@
-<h3>Tambah Arsip</h3>
+@extends('partials/sidebar')
+
+@section('Judul')
+<i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i>
+    Pengarsipan Surat
+@endsection
+
+@section('isi')
+<div class="px-3 py-2 bg-white rounded shadow">
 <a href="/arsip"> Kembali</a>
 <form action="/arsip/store" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
@@ -32,3 +40,5 @@
 
     <input class="btn btn-primary" type="submit" value="Simpan Data">
 </form>
+</div>
+@endsection

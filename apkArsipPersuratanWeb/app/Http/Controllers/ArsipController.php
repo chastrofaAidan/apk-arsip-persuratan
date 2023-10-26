@@ -9,7 +9,24 @@ use Barryvdh\DomPDF\PDF as PDF;
 
 class ArsipController extends Controller
 {
-    public function index(Request $request)
+    function index()
+    {
+        return view('dashboard');
+    }
+    // public function superadmin()
+    // {
+    //     // Return view or perform actions for superadmin
+    //     return view('superadmin_dashboard');
+    // }
+
+    // public function admin()
+    // {
+    //     // Return view or perform actions for admin
+    //     return view('admin_dashboard');
+    // }
+
+    
+    public function arsip(Request $request)
     {
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
 
@@ -170,18 +187,6 @@ class ArsipController extends Controller
         return redirect('/arsip');
     }
   
-    function index2()
-    {
-        return view('partials/sidebar');
-    }
-    function superadmin()
-    {
-        return view('partials/sidebar');
-    }
-    function admin()
-    {
-        return view('partials/sidebar');
-    }
 
     public function masuk(Request $request)
     {
@@ -202,6 +207,7 @@ class ArsipController extends Controller
 
             $surat_masuk = ArsipModel::where(function ($query) use ($search) {
                 $query->where('kode_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('id_surat', 'LIKE', '%' . $search . '%')
                     ->orWhere('judul_surat', 'LIKE', '%' . $search . '%')
                     ->orWhere('perusahaan', 'LIKE', '%' . $search . '%')
                     ->orWhere('tanggal_surat', '=', $search)

@@ -11,6 +11,46 @@
     <link href="{{ asset('css/sidebar_style.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Archie</title>
+    <style>
+        
+        
+        .kepala {
+            background-color: #9A4444;
+        }
+
+        .navigasi {
+            color: white;
+            padding: 3vh;
+            height: 15vh;
+            display: flex;
+            justify-content: space-between; /* Align items at the top */
+            align-items: flex-start; /* Align items at the top */
+        }
+
+
+        .left-container {
+            display: block;
+        }
+
+        .left-container h6, .left-container h5 {
+            float: left;
+            clear: left;
+            width: 100%;
+        }
+
+        .konten{
+            /* width: 75%; */
+            margin: 0vh 5vh;
+            position: absolute;
+            z-index: 1; /* Higher z-index to make it overlay */
+            top: 11vh; /* Adjust this value to control the overlay height */
+        }
+        
+        .px-3.py-2.bg-white.rounded.shadow {
+            padding: 10rem;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -34,26 +74,26 @@
 
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Arsip</li>
             <li class="sidebar-menu-item has-dropdown">
-                <a href="#">
+                <a href="{{ route('masuk') }}">
                     <i class="ri-mail-unread-line sidebar-menu-item-icon"></i>
                     Surat Masuk
                     <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
                 </a>
                 <ul class="sidebar-dropdown-menu">
                     <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
+                        <a href="{{ route('masuk') }}">
                             Terbaru
                         </a>
                     </li>
                     <li class="sidebar-dropdown-menu-item">
-                        <a href="#">
+                        <a href="{{ route('masuk') }}">
                             Terlama
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="sidebar-menu-item has-dropdown">
-              <a href="#">
+              <a href="{{ route('keluar') }}">
                   <i class="ri-mail-send-line sidebar-menu-item-icon"></i>
                   Surat Keluar
                   <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
@@ -72,19 +112,19 @@
               </ul>
           </li>
           <li class="sidebar-menu-item has-dropdown">
-            <a href="#">
+            <a href="/arsip">
                 <i class="ri-archive-2-line sidebar-menu-item-icon"></i>
                 Surat Arsip
                 <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
             </a>
             <ul class="sidebar-dropdown-menu">
                 <li class="sidebar-dropdown-menu-item">
-                    <a href="#">
+                    <a href="/arsip">
                         Terbaru
                     </a>
                 </li>
                 <li class="sidebar-dropdown-menu-item">
-                    <a href="#">
+                    <a href="/arsip">
                         Terlama
                     </a>
                 </li>
@@ -98,7 +138,7 @@
                 </a>
             </li>
             <li class="sidebar-menu-item">
-                <a href="#">
+                <a href="/arsip/tambah">
                     <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i>
                     Pengarsipan Surat
                 </a>
@@ -124,9 +164,8 @@
           </li>
         </ul>
     </div>
-    @endif
 
-    @if (Auth::user()->role == 'admin')
+    @elseif (Auth::user()->role == 'admin')
     <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
         <div class="d-flex align-items-center p-3">
             <a href="#" class="sidebar-logo">
@@ -144,7 +183,7 @@
 
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Arsip</li>
             <li class="sidebar-menu-item has-dropdown">
-                <a href="#">
+                <a href="{{ route('masuk') }}">
                     <i class="ri-mail-unread-line sidebar-menu-item-icon"></i>
                     Surat Masuk
                     <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
@@ -163,7 +202,7 @@
                 </ul>
             </li>
             <li class="sidebar-menu-item has-dropdown">
-              <a href="#">
+              <a href="{{ route('keluar') }}">
                   <i class="ri-mail-send-line sidebar-menu-item-icon"></i>
                   Surat Keluar
                   <i class="ri-arrow-down-s-line sidebar-menu-item-accordion ms-auto"></i>
@@ -219,15 +258,30 @@
     </div>
     @endif
 
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="sidebar-overlay"></div>
     <!-- Main -->
-    <main class="bg-light">
-        <div class="p-2">
+    <main>
+        <div class="kepala p-2">
             <!-- Navbar -->
-            <nav class="px-3 py-2 bg-white rounded shadow">
-                <i class="ri-menu-line sidebar-toggle me-3 d-block d-md-none"></i>
-                <h5 class="fw-bold mb-0 me-auto">Blank</h5>
-                <div class="dropdown me-3 d-none d-sm-block">
+            <nav class="navigasi">
+                <div class="left-container">
+                    <h6 class="mb-0 me-auto">SMK Negeri 1 Cimahi</h6>
+                    <h4 class="fw-bold mb-0 me-auto">Surat & Arsip Tata Usaha</h4>
+                </div>
+
+                <div class="dropdown me-3 ms-auto">
                     <div class="cursor-pointer dropdown-toggle navbar-link" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="ri-notification-line"></i>
                     </div>
@@ -285,6 +339,22 @@
                 </div>
             </nav>
         </div>
+        <div class="konten p-2">
+            <div class="px-3 py-2 bg-white rounded shadow">
+                <h1 class="fw-bold">
+                    @yield('Judul')
+                    <br>
+                </h1>
+            </div>
+            <br>
+            @yield('isi')
+        </div>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     </main>
 
     <!-- JS -->
