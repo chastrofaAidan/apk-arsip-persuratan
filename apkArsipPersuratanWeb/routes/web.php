@@ -58,9 +58,11 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
 });
 
 Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->middleware('userAkses:superadmin,admin');
+
 Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin');
 
 
+Route::get('/ewow', 'ArsipController@masuk')->name('masuk');
 
 Route::get('/preview/{pdf}', 'ArsipController@preview')->name('preview');
 
