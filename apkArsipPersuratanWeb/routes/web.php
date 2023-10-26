@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
@@ -41,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
 // });
 
 Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
-    Route::get('/arsip/search','ArsipController@searchArsip');
+    Route::get('/arsip/search', 'ArsipController@searchArsip');
     Route::get('/arsip/tambah', 'ArsipController@tambah');
     Route::post('/arsip/store', 'ArsipController@store');
     Route::get('/arsip/hapus/{id}', 'ArsipController@hapus');
@@ -52,13 +53,13 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
 Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     // Route::get('/surat_masuk', 'ArsipController@masuk')->name('masuk');
     // Route::get('/surat_keluar', 'ArsipController@keluar')->name('keluar');
-    
+
     Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');
     Route::get('/surat_keluar/search', 'ArsipController@searchSuratKeluar');
 });
 
-Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->middleware('userAkses:superadmin,admin');
-Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin');
+Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->middleware('userAkses:superadmin,admin')->name('masuk');
+Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin')->name('keluar');
 
 
 
