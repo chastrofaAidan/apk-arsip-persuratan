@@ -1,4 +1,25 @@
-<h3>Surat Keluar</h3>
+@extends('partials/sidebar')
+@section('Judul')
+<i class="ri-mail-send-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
+    Surat Keluar
+@endsection
+
+
+@section('isi')
+
+<div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-equalizer-line" style="font-size: 20px;"></i>
+    Filter
+</h4>
+
+</div>
+<br><br>
+<div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-mail-send-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
+    Surat Keluar
+</h4>
 <br>
 <form action="/surat_keluar/search" method="GET">
     <label for="search">Date Format: YYYY-MM-DD</label><br>
@@ -46,9 +67,8 @@
 
         <td>{{ $a->perihal_surat }}</td>
         <td>
-            <a href="{{ asset('preview/' . $a->file_surat) }}" target="_blank">Preview</a>
-            |
-            <a href="{{ asset('preview/' . $a->file_surat) }}" download>Download</a>
+        <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn btn-success col-12 text-center" target="_blank">Preview</a><br>
+            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn btn-info col-12 text-center" download>Download</a><br>
         </td>
 
         <td>{{ $a->keterangan }}</td>
@@ -58,9 +78,5 @@
 
 <!-- Pagination links -->
 {{ $dataarsip->appends(['per_page' => $perPage])->links() }}
-
-<br>
-<br>
-<a href="/surat_masuk" class="btn btn-primary">Surat Masuk</a><br>
-<a href="/surat_keluar" class="btn btn-primary">Surat Keluar</a><br>
-
+</div>
+@endsection

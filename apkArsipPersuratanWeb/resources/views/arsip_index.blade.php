@@ -1,6 +1,33 @@
-<h3>Surat Arsip</h3>
+@extends('partials/sidebar')
+
+<style>
+    th, td {
+        vertical-align: middle; /* Center the content vertically */
+    }
+</style>
+
+@section('Judul')
+<i class="ri-archive-2-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
+    Surat Arsip
+@endsection
+
+@section('isi')
+
+<div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-equalizer-line" style="font-size: 20px;"></i>
+    Filter
+</h4>
+
+</div>
+<br><br>
+<div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-archive-2-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
+    Surat Arsip
+</h4>
 <br>
-<a href="/arsip/tambah" class="btn btn-primary">Tambah Arsip</a>
+<a href="/arsip/tambah" class="btn btn-primary">Tambah Arsip</a><br><br>
 <form action="/arsip/search" method="GET">
     <label for="search">Date Format: YYYY-MM-DD</label><br>
     <input type="search" name="search" placeholder="Search">
@@ -22,17 +49,17 @@
 </form>
 
 <table class="table table-bordered" border="1">
-    <tr> 
-        <th>ID</th>
-        <th>Kode Surat</th>
-        <th>Judul Surat</th>
-        <th>Jenis Surat</th>
-        <th>Perusahaan</th>
-        <th>Tanggal Surat</th>
-        <th>Perihal Surat</th>
-        <th>File</th>
-        <th>Keterangan</th>
-        <th>Action</th>
+<tr>
+        <th class="text-center">ID</th>
+        <th class="text-center">Kode Surat</th>
+        <th class="text-center">Judul Surat</th>
+        <th class="text-center">Jenis Surat</th>
+        <th class="text-center">Perusahaan</th>
+        <th class="text-center">Tanggal Surat</th>
+        <th class="text-center">Perihal Surat</th>
+        <th class="text-center">File</th>
+        <th class="text-center">Keterangan</th>
+        <th class="text-center">Action</th>
     </tr>
 
     @foreach($dataarsip as $a)
@@ -52,16 +79,14 @@
 
         <td>{{ $a->perihal_surat }}</td>
         <td>
-            <a href="{{ asset('preview/' . $a->file_surat) }}" target="_blank">Preview</a>
-            |
-            <a href="{{ asset('preview/' . $a->file_surat) }}" download>Download</a>
+            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn btn-success col-12 text-center" target="_blank">Preview</a><br>
+            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn btn-info col-12 text-center" download>Download</a><br>
         </td>
 
         <td>{{ $a->keterangan }}</td>
         <td>
-            <a href="/arsip/edit/{{ $a->id_surat }}">Edit</a>
-            |
-            <a href="/arsip/hapus/{{ $a->id_surat }}">Hapus</a>
+            <a href="/arsip/edit/{{ $a->id_surat }}" class="btn btn-warning col-12 text-center">Edit</a><br>
+            <a href="/arsip/hapus/{{ $a->id_surat }} " class="btn btn-danger col-12 text-center">Hapus</a><br>
         </td>
     </tr>
     @endforeach
@@ -69,8 +94,6 @@
 
 <!-- Pagination links -->
 {{ $dataarsip->appends(['per_page' => $perPage])->links() }}
-
-<br>
-<br>
-<a href="/surat_masuk" class="btn btn-primary">Surat Masuk</a><br>
-<a href="/surat_keluar" class="btn btn-primary">Surat Keluar</a><br>
+</div>
+</div>
+@endsection
