@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
 // });
 
 Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
-    Route::get('/arsip/search', 'ArsipController@searchArsip');
+    Route::get('/surat_arsip/search', 'ArsipController@searchArsip');
     Route::post('/arsip/store', 'ArsipController@store');
     Route::get('/arsip/hapus/{id}', 'ArsipController@hapus');
     Route::get('/arsip/edit/{id}', 'ArsipController@edit');
