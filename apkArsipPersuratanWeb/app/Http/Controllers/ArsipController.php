@@ -11,7 +11,16 @@ class ArsipController extends Controller
 {
     function index()
     {
-        return view('dashboard');
+        $surat_arsip = ArsipModel::all();
+        $arsip = $surat_arsip->count();
+        
+        $surat_masuk = ArsipModel::where('jenis_surat', 'Surat Masuk');
+        $masuk = $surat_masuk->count();
+        
+        $surat_keluar = ArsipModel::where('jenis_surat', 'Surat Keluar');
+        $keluar = $surat_keluar->count();
+
+        return view('dashboard', ['arsip' => $arsip, 'masuk' => $masuk, 'keluar' => $keluar]);
     }
     // public function superadmin()
     // {

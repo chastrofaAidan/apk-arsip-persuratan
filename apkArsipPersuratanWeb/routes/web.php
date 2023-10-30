@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [ArsipController::class, 'index']);
     // Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->middleware('userAkses:superadmin');
     // Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin');
-    Route::get('/arsip', [ArsipController::class, 'arsip'])->middleware('userAkses:superadmin');
+    Route::get('/surat_arsip', [ArsipController::class, 'arsip'])->middleware('userAkses:superadmin');
     // Route::get('/admin/admin', [ArsipController::class, 'admin'])->middleware('userAkses:admin');
     Route::get('/logout', [SessionController::class, 'logout']);
 });
@@ -43,25 +43,25 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     Route::get('/arsip/search', 'ArsipController@searchArsip');
-    Route::get('/arsip/tambah', 'ArsipController@tambah');
     Route::post('/arsip/store', 'ArsipController@store');
     Route::get('/arsip/hapus/{id}', 'ArsipController@hapus');
     Route::get('/arsip/edit/{id}', 'ArsipController@edit');
     Route::post('/arsip/update', 'ArsipController@update');
+    Route::get('/pengarsipan_surat', 'ArsipController@tambah');
+    Route::get('/pembuatan_surat', 'TemplateSuratController@index');
+    Route::get('/setting', 'TemplateSuratController@index');
+    Route::get('/surat_dispen', 'TemplateSuratController@suratDispen');
 });
 
-Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
-    // Route::get('/surat_masuk', 'ArsipController@masuk')->name('masuk');
-    // Route::get('/surat_keluar', 'ArsipController@keluar')->name('keluar');
 
-    Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');
-    Route::get('/surat_keluar/search', 'ArsipController@searchSuratKeluar');
-});
 
 
 Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->middleware('userAkses:superadmin,admin')->name('masuk');
 Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin')->name('keluar');
-//hello world
+Route::get('/profil', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin');
+// Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');
+// Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');
+// Route::get('/surat_keluar/search', 'ArsipController@searchSuratKeluar');
 
 Route::get('/preview/{pdf}', 'ArsipController@preview')->name('preview');
 

@@ -7,12 +7,26 @@
 </style>
 
 @section('Judul')
-<i class="ri-archive-2-line sidebar-menu-item-icon"></i>
+<i class="ri-archive-2-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
     Surat Arsip
 @endsection
 
 @section('isi')
+
 <div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-equalizer-line" style="font-size: 20px;"></i>
+    Filter
+</h4>
+
+</div>
+<br><br>
+<div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-archive-2-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
+    Surat Arsip
+</h4>
+<br>
 <a href="/arsip/tambah" class="btn btn-primary">Tambah Arsip</a><br><br>
 <form action="/arsip/search" method="GET">
     <label for="search">Date Format: YYYY-MM-DD</label><br>
@@ -80,11 +94,6 @@
 
 <!-- Pagination links -->
 {{ $dataarsip->appends(['per_page' => $perPage])->links() }}
-
-<br>
-<br>
-<a href="/surat_masuk" class="btn btn-primary">Surat Masuk</a>
-<a href="/surat_keluar" class="btn btn-primary">Surat Keluar</a>
 </div>
 </div>
 @endsection
