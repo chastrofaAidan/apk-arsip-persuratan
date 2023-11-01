@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ArsipModel;
 use App\Models\User;
-use Barryvdh\DomPDF\PDF as PDF;
+use PDF;
 // use Barryvdh\DomPDF\PDF;
 
 class TemplateSuratController extends Controller 
@@ -29,8 +29,27 @@ class TemplateSuratController extends Controller
 
     public function suratDispen()
     {
-        $pdf = app('dompdf.wrapper')->loadView('surat.dispen');
-        return $pdf->download('NamaSurat.pdf');
+        $pdf = PDF::loadView('surat/dispen')->setOptions(['defaultFont' => 'sans-serif']);
+        return $pdf->download('NamaFile.pdf');
     }
 
 }
+
+// public function cetakpdf()
+// {
+//     //mengambil data dari table guru
+//     $dataguru = GuruModel::all();
+
+//     $pdf = PDF::loadview('v_gurupdf',['guru'=>$dataguru]);
+//     return $pdf->download('laporan-guru.pdf');
+// }
+
+
+// public function previewpdf()
+// {
+//     //mengambil data dari table guru
+//     $dataguru = GuruModel::all();
+
+//     $pdf = PDF::loadview('v_gurupdf',['guru'=>$dataguru]);
+//     return $pdf->stream();
+// }

@@ -10,16 +10,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Archie</title>
     <style>
-        body{
+        .A4{
             height: 1754px;
             width: 1240px;
+            background-color: var(--bs-color3);
         }
 
     </style>
 </head>
-
-
 <body>
-Hello Ewow    
+<div class="A4">
+    Hello Ewow    
+</div>
 </body>
 </html>

@@ -11,7 +11,12 @@
     <link href="{{ asset('css/sidebar_style.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Archie</title>
+    @yield('css')
     <style>
+        /* body{
+            background-color: var(--bs-color4);
+        } */
+        
         .kepala {
             background-color: #9A4444;
         }
@@ -45,9 +50,9 @@
             top: 8vh; /* Adjust this value to control the overlay height */
         }
 
-
-
-
+        th{
+            background-color: var(--bs-color1);
+        }
 
         /* .sidebar-minimized {
             width: 60px; Adjust to your desired width
@@ -209,12 +214,14 @@
                     <h6 class="mb-0 me-auto">SMK Negeri 1 Cimahi</h6>
                     <h4 class="fw-bold mb-0 me-auto">Surat & Arsip Tata Usaha</h4>
                 </div>
-                <a href="/" class="sidebar-logo">
-                    <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="me-2 d-none d-sm-block">{{$user->name}}</span>
+                <a href="/profile" style="text-decoration: none; cursor: default;">
+                    <div class="d-flex align-items-center cursor-pointer">
+                        <span class="me-2 d-none d-sm-block no-link" >{{$user->name}}</span>
+
                         <img class="navbar-profile-image" src="data_file/{{$user->profile}}" alt="Image">
                     </div>
                 </a>
+
             </nav>
         </div>
         <div class="konten p-2">
@@ -303,7 +310,7 @@
             // Add the "active" class to the list item
             $("#pengarsipan_surat").addClass("active");
         }
-        else if (currentPath === profil) 
+        else if (currentPath === profile) 
         {
             // Add the "active" class to the list item
             $("#profile").addClass("active");
