@@ -18,21 +18,21 @@
 <br>
 <div class="row">
     <a href="/surat_dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Dispensasi</div>
+        <div class="btn format-surat btn-warning col-md-12">Surat Perintah</div>
     </a><br>
     <a href="/surat-dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Tugas</div>
+        <div class="btn format-surat btn-warning col-md-12">Surat Izin</div>
     </a><br>
 </div>
 <br>
-<!-- <div class="row">
+<div class="row">
     <a href="/surat-dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Dispensasi</div>
+        <div class="btn format-surat btn-warning col-md-12">Surat Pengantar</div>
     </a><br>
     <a href="/surat-dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Tugas</div>
+        <div class="btn format-surat btn-warning col-md-12">Surat Keterangan</div>
     </a><br>
-</div> -->
+</div>
 </div>
 <br><br>
 
@@ -58,7 +58,7 @@
     <a href="/surat-dispen" class="col-md-6 text-center">
         <div class="btn format-surat btn-warning col-md-12">Surat Tugas</div>
     </a><br>
-    <a href="/surat_dispen" class="btn btn-primary" target="_blank">CETAK PDF</a>
+    <a href="/surat_ijin" class="btn btn-primary" target="_blank">CETAK PDF</a>
 </div>
 </div>
 <br><br>

@@ -141,7 +141,7 @@
 @endsection
 
 
-@section('js')
+<!-- @section('js')
 <script>
     let perusahaan = $("#filter-perusahaan").val()
     let jenis = $("#filter-jenis").val()
@@ -155,4 +155,4 @@
         // console.log("FILTER")
     })
 </script>
-@endsection
+@endsection -->

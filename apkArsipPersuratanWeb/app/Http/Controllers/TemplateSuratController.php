@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\App;
 use App\Models\ArsipModel;
 use App\Models\User;
 use PDF;
@@ -27,13 +28,120 @@ class TemplateSuratController extends Controller
         return view('settings', ['user' => $user]);
     }
 
-    public function suratDispen()
+
+    public function suratIjin()
     {
-        $pdf = PDF::loadView('surat/dispen')->setOptions(['defaultFont' => 'sans-serif']);
-        return $pdf->download('NamaFile.pdf');
+        // Use the correct directory separator for your OS
+        $path = public_path() . '/data_file/kop_surat.png';
+    
+        // Check if the image file exists
+        if (file_exists($path)) {
+            $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+    
+            $namaFile = 'NamaSurat.pdf';
+    
+            // Load the view and set the default font to Arial
+            $pdf = PDF::loadView('surat.ijin', ['image' => $image])->setOptions([
+                'defaultFont' => 'Arial', // Set the default font to Arial
+            ]);
+            $pdf->setPaper('a4', 'portrait');
+    
+            // Save the PDF to a file or return it as a download
+            return $pdf->stream($namaFile);
+            // return $pdf->download($namaFile);
+            // return view('surat.ijin', ['image' => $image]);
+        } else {
+            // Handle the case when the image file does not exist
+            return "Image file not found.";
+        }
+    }
+    
+
+    public function suratPengantar()
+    {
+        // Use the correct directory separator for your OS
+        $path = public_path() . '/data_file/kop_surat.png';
+    
+        // Check if the image file exists
+        if (file_exists($path)) {
+            $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+    
+            $namaFile = 'NamaSurat.pdf';
+    
+            // Load the view and set the default font to Arial
+            $pdf = PDF::loadView('surat.pengantar', ['image' => $image])->setOptions([
+                'defaultFont' => 'Arial', // Set the default font to Arial
+            ]);
+            $pdf->setPaper('a4', 'portrait');
+    
+            // Save the PDF to a file or return it as a download
+            return $pdf->stream($namaFile);
+            // return $pdf->download($namaFile);
+            // return view('surat.pengantar', ['image' => $image]);
+        } else {
+            // Handle the case when the image file does not exist
+            return "Image file not found.";
+        }
     }
 
+    public function suratPerintah()
+    {
+        // Use the correct directory separator for your OS
+        $path = public_path() . '/data_file/kop_surat.png';
+    
+        // Check if the image file exists
+        if (file_exists($path)) {
+            $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+    
+            $namaFile = 'NamaSurat.pdf';
+    
+            // Load the view and set the default font to Arial
+            $pdf = PDF::loadView('surat.perintah', ['image' => $image])->setOptions([
+                'defaultFont' => 'Arial', // Set the default font to Arial
+            ]);
+            $pdf->setPaper('a4', 'portrait');
+    
+            // Save the PDF to a file or return it as a download
+            return $pdf->stream($namaFile);
+            // return $pdf->download($namaFile);
+            // return view('surat.perintah', ['image' => $image]);
+        } else {
+            // Handle the case when the image file does not exist
+            return "Image file not found.";
+        }
+    }
+
+    public function suratPernyataan()
+    {
+        // Use the correct directory separator for your OS
+        $path = public_path() . '/data_file/kop_surat.png';
+    
+        // Check if the image file exists
+        if (file_exists($path)) {
+            $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+    
+            $namaFile = 'NamaSurat.pdf';
+    
+            // Load the view and set the default font to Arial
+            $pdf = PDF::loadView('surat.pernyataan', ['image' => $image])->setOptions([
+                'defaultFont' => 'Arial', // Set the default font to Arial
+            ]);
+            $pdf->setPaper('a4', 'portrait');
+    
+            // Save the PDF to a file or return it as a download
+            return $pdf->stream($namaFile);
+            // return $pdf->download($namaFile);
+            // return view('surat.pernyataan', ['image' => $image]);
+        } else {
+            // Handle the case when the image file does not exist
+            return "Image file not found.";
+        }
+    }
 }
+// $path = public_path() . 'data_file/kop_surat.png';
+// $type = pathinfo($path, PATHINFO_EXTENSION);
+// $data = file_get_contents($path);
+// $image = 'data:image/' . $type . ';base64' . base64_encode($data);
 
 // public function cetakpdf()
 // {
