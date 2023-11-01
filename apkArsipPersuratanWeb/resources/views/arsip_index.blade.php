@@ -20,17 +20,47 @@
     <i class="ri-equalizer-line" style="font-size: 20px;"></i>
     Filter
 </h4>
-
+<div class="row">
+    <div class="col-md-4">
+        <label>Perusahaan</label>
+        <select id="filter-perusahaan" class="form-control filter">
+            <option value="" disabled selected>Pilih Perusahaan</option>
+            @foreach($dataarsip as $a)
+                <option value="{{ $a->id_surat }}">{{ $a->perusahaan }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label>Jenis Surat</label>
+        <select id="filter-jenis" class="form-control filter">
+            <option value="" disabled selected>Pilih Jenis Surat</option>
+            @foreach($dataarsip as $a)
+                <option value="{{ $a->id_surat }}">{{ $a->jenis_surat }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label>Perihal</label>
+        <select id="filter-perihal" class="form-control filter">
+            <option value="" disabled selected>Pilih Perihal</option>
+            @foreach($dataarsip as $a)
+                <option value="{{ $a->id_surat }}">{{ $a->perihal_surat }}</option>
+            @endforeach
+        </select>
+    </div>
+    
+</div>
 </div>
 <br><br>
+
+
 <div class="px-3 py-2 bg-white rounded shadow">
 <h4 class="fw-bold">
     <i class="ri-archive-2-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
     Surat Arsip
 </h4>
 <br>
-<a href="/arsip/tambah" class="btn btn-primary">Tambah Arsip</a><br><br>
-<form action="/arsip/search" method="GET">
+<form action="/surat_arsip/search" method="GET">
     <label for="search">Date Format: YYYY-MM-DD</label><br>
     <input type="search" name="search" placeholder="Search">
     <button type="submit">
@@ -106,4 +136,23 @@
 {{ $dataarsip->appends(['per_page' => $perPage])->links() }}
 </div>
 </div>
+
+
+@endsection
+
+
+@section('js')
+<script>
+    let perusahaan = $("#filter-perusahaan").val()
+    let jenis = $("#filter-jenis").val()
+    let perihal = $("#filter-perihal").val()
+    
+    $(".filter").on('change',function(){
+        perusahaan = $("#filter-perusahaan").val()
+        jenis = $("#filter-jenis").val()
+        perihal = $("#filter-perihal").val()
+        // console.log([perusahaan,jenis,perihal])
+        // console.log("FILTER")
+    })
+</script>
 @endsection
