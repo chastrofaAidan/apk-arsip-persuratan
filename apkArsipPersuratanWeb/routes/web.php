@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\TemplateSuratController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -38,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 // Route::get('/dashboard', function () {
-//     return view('partials/sidebar');
+//     return view('partials/sidebar'); 
 // });
 
 Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
@@ -48,17 +49,23 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     Route::get('/arsip/edit/{id}', 'ArsipController@edit');
     Route::post('/arsip/update', 'ArsipController@update');
     Route::get('/pengarsipan_surat', 'ArsipController@tambah');
+    // Route::get('/surat_masuk', 'ArsipController@masuk')->name('masuk');
+    // Route::get('/surat_keluar', 'ArsipController@keluar')->name('keluar');
     Route::get('/pembuatan_surat', 'TemplateSuratController@index');
-    Route::get('/setting', 'TemplateSuratController@index');
-    Route::get('/surat_dispen', 'TemplateSuratController@suratDispen');
+    Route::get('/settings', 'TemplateSuratController@settings');
+    Route::get('/profile', 'TemplateSuratController@profile');
+    Route::get('/surat_dispen', 'TemplateSuratController@suratDispen'); 
 });
 
-
-
+Route::middleware(['auth', 'userAkses:admin'])->group(function () {
+    // Route::get('/surat_masuk', 'ArsipController@masuk')->name('masuk');
+    // Route::get('/surat_keluar','ArsipController@keluar')->name('keluar');
+});
 
 Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->middleware('userAkses:superadmin,admin')->name('masuk');
 Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin')->name('keluar');
-Route::get('/profil', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin');
+Route::get('/profile', [TemplateSuratController::class, 'profile'])->middleware('userAkses:superadmin,admin');
+Route::get('/settings', [TemplateSuratController::class, 'settings'])->middleware('userAkses:superadmin');
 // Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');
 // Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');
 // Route::get('/surat_keluar/search', 'ArsipController@searchSuratKeluar');

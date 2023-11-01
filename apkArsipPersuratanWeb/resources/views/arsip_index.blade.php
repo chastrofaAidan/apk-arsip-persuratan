@@ -1,10 +1,12 @@
 @extends('partials/sidebar')
 
+@section('css')
 <style>
     th, td {
         vertical-align: middle; /* Center the content vertically */
     }
 </style>
+@endsection
 
 @section('Judul')
 <i class="ri-archive-2-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
@@ -78,28 +80,28 @@
     </select>
 </form>
 
-<table class="table table-bordered" border="1">
+<table class="table table-bordered table-striped" border="1">
 <tr>
-        <th class="text-center">ID</th>
-        <th class="text-center">Kode Surat</th>
-        <th class="text-center">Judul Surat</th>
-        <th class="text-center">Jenis Surat</th>
-        <th class="text-center">Perusahaan</th>
-        <th class="text-center">Tanggal Surat</th>
-        <th class="text-center">Perihal Surat</th>
-        <th class="text-center">File</th>
-        <th class="text-center">Keterangan</th>
-        <th class="text-center">Action</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">ID</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Kode Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Judul Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Jenis Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perusahaan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Tanggal Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perihal Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">File</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
     </tr>
 
     @foreach($dataarsip as $a)
     <tr>
-        <td>{{ $a->id_surat }}</td>
-        <td>{{ $a->kode_surat }}</td>
-        <td>{{ $a->judul_surat }}</td>
-        <td>{{ $a->jenis_surat }}</td>
-        <td>{{ $a->perusahaan }}</td>
-        <td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->id_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->kode_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->judul_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->jenis_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->perusahaan }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">
             @if ($a->tanggal_surat)
                 {{ $a->tanggal_surat->format('Y-m-d') }}
             @else
@@ -107,16 +109,24 @@
             @endif
         </td>
 
-        <td>{{ $a->perihal_surat }}</td>
-        <td>
-            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn btn-success col-12 text-center" target="_blank">Preview</a><br>
-            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn btn-info col-12 text-center" download>Download</a><br>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->perihal_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">
+            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" target="_blank" style="background-color: var(--bs-color3); color: white;">
+                <i class="ri-eye-line"></i>
+            </a><br><br>
+            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" style="background-color: var(--bs-color4); color: white;" download>
+                <i class="ri-file-download-line"></i>
+            </a><br>
         </td>
 
-        <td>{{ $a->keterangan }}</td>
-        <td>
-            <a href="/arsip/edit/{{ $a->id_surat }}" class="btn btn-warning col-12 text-center">Edit</a><br>
-            <a href="/arsip/hapus/{{ $a->id_surat }} " class="btn btn-danger col-12 text-center">Hapus</a><br>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->keterangan }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">
+            <a href="/arsip/edit/{{ $a->id_surat }}" class="btn col-12 text-center" style="background-color: var(--bs-color2); color: white;">
+            <i class="ri-edit-box-line"></i>
+            </a><br><br>
+            <a href="/arsip/hapus/{{ $a->id_surat }} " class="btn col-12 text-center" style="background-color: var(--bs-color1); color: white;">
+                <i class="ri-delete-bin-line"></i>            
+            </a><br>
         </td>
     </tr>
     @endforeach
