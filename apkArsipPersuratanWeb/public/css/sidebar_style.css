@@ -35,6 +35,13 @@
     --bs-danger: #dc3545;
     --bs-light: #f8f9fa;
     --bs-dark: #212529;
+
+/*  WARNA PROJEK */
+    --bs-color1: #9A4444;
+    --bs-color2: #DE8F5F;
+    --bs-color3: #F4DFB6;
+    --bs-color4: #D6D46D;
+
     --bs-primary-rgb: 13, 110, 253;
     --bs-secondary-rgb: 108, 117, 125;
     --bs-success-rgb: 25, 135, 84;

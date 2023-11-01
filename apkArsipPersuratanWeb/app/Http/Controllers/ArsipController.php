@@ -4,24 +4,59 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ArsipModel;
+use App\Models\User;
 use Barryvdh\DomPDF\PDF as PDF;
 
 class ArsipController extends Controller
 {
-    public function index(Request $request)
+    function index()
     {
+        $user = Auth::user(); // Get the currently logged-in user
+
+        $surat_arsip = ArsipModel::all();
+        $arsip = $surat_arsip->count();
+        
+        $surat_masuk = ArsipModel::where('jenis_surat', 'Surat Masuk');
+        $masuk = $surat_masuk->count();
+        
+        $surat_keluar = ArsipModel::where('jenis_surat', 'Surat Keluar');
+        $keluar = $surat_keluar->count();
+
+        return view('dashboard', ['user' => $user, 'arsip' => $arsip, 'masuk' => $masuk, 'keluar' => $keluar]);
+    }
+    // public function superadmin()
+    // {
+    //     // Return view or perform actions for superadmin
+    //     return view('superadmin_dashboard');
+    // }
+
+    // public function admin()
+    // {
+    //     // Return view or perform actions for admin
+    //     return view('admin_dashboard');
+    // }
+
+    
+    public function arsip(Request $request)
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
 
         // Use paginate() to paginate the results based on the selected number of records per page
         $arsip = ArsipModel::paginate($perPage);
 
-        return view('arsip_index', ['dataarsip' => $arsip, 'perPage' => $perPage]);
+        return view('arsip_index', ['user' => $user, 'dataarsip' => $arsip, 'perPage' => $perPage]);
     }
 
 
     public function searchArsip(Request $request)
     {
+
+        $user = Auth::user(); // Get the currently logged-in user
+
         if ($request->has('search')) {
             $search = $request->input('search'); // Get the search input from the request
 
@@ -37,7 +72,7 @@ class ArsipController extends Controller
         } else {
             $arsip = ArsipModel::all();
         }
-        return view('arsip_index', ['dataarsip' => $arsip]);
+        return view('arsip_index', ['user' => $user, 'dataarsip' => $arsip]);
     }
 
 
@@ -58,7 +93,9 @@ class ArsipController extends Controller
 
     public function tambah()
     {
-        return view('arsip_tambah');
+        $user = Auth::user(); // Get the currently logged-in user
+
+        return view('arsip_tambah', ['user' => $user]);
     }
 
 
@@ -103,10 +140,12 @@ class ArsipController extends Controller
 
     public function edit($id_surat)
     {
+        $user = Auth::user(); // Get the currently logged-in user
+
         $arsip = DB::table('arsip')->where('id_surat', $id_surat)->get();
 
 
-        return view('arsip_edit', ['dataarsip' => $arsip]);
+        return view('arsip_edit', ['user' => $user, 'dataarsip' => $arsip]);
     }
 
 
@@ -170,38 +209,31 @@ class ArsipController extends Controller
         return redirect('/arsip');
     }
   
-    function index2()
-    {
-        return view('partials/sidebar');
-    }
-    function superadmin()
-    {
-        return view('partials/sidebar');
-    }
-    function admin()
-    {
-        return view('partials/sidebar');
-    }
 
     public function masuk(Request $request)
     {
+        $user = Auth::user(); // Get the currently logged-in user
+
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
 
         // Use paginate() to paginate the results based on the selected number of records per page
         $surat_masuk = ArsipModel::where('jenis_surat', 'Surat Masuk')
             ->paginate($perPage);
 
-        return view('surat_masuk', ['dataarsip' => $surat_masuk, 'perPage' => $perPage]);
+        return view('surat_masuk', ['user' => $user, 'dataarsip' => $surat_masuk, 'perPage' => $perPage]);
     }
 
     
     public function searchSuratMasuk(Request $request)
     {
+        $user = Auth::user(); // Get the currently logged-in user
+
         if ($request->has('search')) {
             $search = $request->input('search'); // Get the search input from the request
 
             $surat_masuk = ArsipModel::where(function ($query) use ($search) {
                 $query->where('kode_surat', 'LIKE', '%' . $search . '%')
+                    ->orWhere('id_surat', 'LIKE', '%' . $search . '%')
                     ->orWhere('judul_surat', 'LIKE', '%' . $search . '%')
                     ->orWhere('perusahaan', 'LIKE', '%' . $search . '%')
                     ->orWhere('tanggal_surat', '=', $search)
@@ -213,12 +245,13 @@ class ArsipController extends Controller
         } else {
             $surat_masuk = ArsipModel::all();
         }
-        return view('surat_masuk', ['dataarsip' => $surat_masuk]);
+        return view('surat_masuk', ['user' => $user, 'dataarsip' => $surat_masuk]);
     }
 
 
     
     public function keluar(Request $request){
+        $user = Auth::user(); // Get the currently logged-in user
 
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
 
@@ -226,11 +259,13 @@ class ArsipController extends Controller
         $surat_keluar = ArsipModel::where('jenis_surat', 'Surat Keluar')
             ->paginate($perPage);
 
-        return view('surat_keluar', ['dataarsip' => $surat_keluar, 'perPage' => $perPage]);
+        return view('surat_keluar', ['user' => $user, 'dataarsip' => $surat_keluar, 'perPage' => $perPage]);
     }
 
     public function searchSuratKeluar(Request $request)
     {
+        $user = Auth::user(); // Get the currently logged-in user
+
         if ($request->has('search')) {
             $search = $request->input('search'); // Get the search input from the request
 
@@ -243,11 +278,11 @@ class ArsipController extends Controller
                     ->orWhere('keterangan', 'LIKE', '%' . $search . '%');
             })
                 ->where('jenis_surat', 'Surat Keluar')
-                ->get();
+                ->get(); 
         } else {
             $surat_keluar = ArsipModel::all();
         }
-        return view('surat_keluar', ['dataarsip' => $surat_keluar]);
+        return view('surat_keluar', ['user' => $user, 'dataarsip' => $surat_keluar]);
     }
 
 }

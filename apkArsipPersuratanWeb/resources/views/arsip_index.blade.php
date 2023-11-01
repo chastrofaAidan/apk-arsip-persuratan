@@ -1,7 +1,66 @@
-<h3>Surat Arsip</h3>
+@extends('partials/sidebar')
+
+@section('css')
+<style>
+    th, td {
+        vertical-align: middle; /* Center the content vertically */
+    }
+</style>
+@endsection
+
+@section('Judul')
+<i class="ri-archive-2-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
+    Surat Arsip
+@endsection
+
+@section('isi')
+
+<div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-equalizer-line" style="font-size: 20px;"></i>
+    Filter
+</h4>
+<div class="row">
+    <div class="col-md-4">
+        <label>Perusahaan</label>
+        <select id="filter-perusahaan" class="form-control filter">
+            <option value="" disabled selected>Pilih Perusahaan</option>
+            @foreach($dataarsip as $a)
+                <option value="{{ $a->id_surat }}">{{ $a->perusahaan }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label>Jenis Surat</label>
+        <select id="filter-jenis" class="form-control filter">
+            <option value="" disabled selected>Pilih Jenis Surat</option>
+            @foreach($dataarsip as $a)
+                <option value="{{ $a->id_surat }}">{{ $a->jenis_surat }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label>Perihal</label>
+        <select id="filter-perihal" class="form-control filter">
+            <option value="" disabled selected>Pilih Perihal</option>
+            @foreach($dataarsip as $a)
+                <option value="{{ $a->id_surat }}">{{ $a->perihal_surat }}</option>
+            @endforeach
+        </select>
+    </div>
+    
+</div>
+</div>
+<br><br>
+
+
+<div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-archive-2-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
+    Surat Arsip
+</h4>
 <br>
-<a href="/arsip/tambah" class="btn btn-primary">Tambah Arsip</a>
-<form action="/arsip/search" method="GET">
+<form action="/surat_arsip/search" method="GET">
     <label for="search">Date Format: YYYY-MM-DD</label><br>
     <input type="search" name="search" placeholder="Search">
     <button type="submit">
@@ -21,28 +80,28 @@
     </select>
 </form>
 
-<table class="table table-bordered" border="1">
-    <tr> 
-        <th>ID</th>
-        <th>Kode Surat</th>
-        <th>Judul Surat</th>
-        <th>Jenis Surat</th>
-        <th>Perusahaan</th>
-        <th>Tanggal Surat</th>
-        <th>Perihal Surat</th>
-        <th>File</th>
-        <th>Keterangan</th>
-        <th>Action</th>
+<table class="table table-bordered table-striped" border="1">
+<tr>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">ID</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Kode Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Judul Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Jenis Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perusahaan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Tanggal Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perihal Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">File</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
     </tr>
 
     @foreach($dataarsip as $a)
     <tr>
-        <td>{{ $a->id_surat }}</td>
-        <td>{{ $a->kode_surat }}</td>
-        <td>{{ $a->judul_surat }}</td>
-        <td>{{ $a->jenis_surat }}</td>
-        <td>{{ $a->perusahaan }}</td>
-        <td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->id_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->kode_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->judul_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->jenis_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->perusahaan }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">
             @if ($a->tanggal_surat)
                 {{ $a->tanggal_surat->format('Y-m-d') }}
             @else
@@ -50,18 +109,24 @@
             @endif
         </td>
 
-        <td>{{ $a->perihal_surat }}</td>
-        <td>
-            <a href="{{ asset('preview/' . $a->file_surat) }}" target="_blank">Preview</a>
-            |
-            <a href="{{ asset('preview/' . $a->file_surat) }}" download>Download</a>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->perihal_surat }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">
+            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" target="_blank" style="background-color: var(--bs-color3); color: white;">
+                <i class="ri-eye-line"></i>
+            </a><br><br>
+            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" style="background-color: var(--bs-color4); color: white;" download>
+                <i class="ri-file-download-line"></i>
+            </a><br>
         </td>
 
-        <td>{{ $a->keterangan }}</td>
-        <td>
-            <a href="/arsip/edit/{{ $a->id_surat }}">Edit</a>
-            |
-            <a href="/arsip/hapus/{{ $a->id_surat }}">Hapus</a>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">{{ $a->keterangan }}</td>
+        <td class="{{ $a->id_surat % 2 == 0 ? 'even-row' : 'odd-row' }}">
+            <a href="/arsip/edit/{{ $a->id_surat }}" class="btn col-12 text-center" style="background-color: var(--bs-color2); color: white;">
+            <i class="ri-edit-box-line"></i>
+            </a><br><br>
+            <a href="/arsip/hapus/{{ $a->id_surat }} " class="btn col-12 text-center" style="background-color: var(--bs-color1); color: white;">
+                <i class="ri-delete-bin-line"></i>            
+            </a><br>
         </td>
     </tr>
     @endforeach
@@ -69,8 +134,25 @@
 
 <!-- Pagination links -->
 {{ $dataarsip->appends(['per_page' => $perPage])->links() }}
+</div>
+</div>
 
-<br>
-<br>
-<a href="/surat_masuk" class="btn btn-primary">Surat Masuk</a><br>
-<a href="/surat_keluar" class="btn btn-primary">Surat Keluar</a><br>
+
+@endsection
+
+
+@section('js')
+<script>
+    let perusahaan = $("#filter-perusahaan").val()
+    let jenis = $("#filter-jenis").val()
+    let perihal = $("#filter-perihal").val()
+    
+    $(".filter").on('change',function(){
+        perusahaan = $("#filter-perusahaan").val()
+        jenis = $("#filter-jenis").val()
+        perihal = $("#filter-perihal").val()
+        // console.log([perusahaan,jenis,perihal])
+        // console.log("FILTER")
+    })
+</script>
+@endsection
