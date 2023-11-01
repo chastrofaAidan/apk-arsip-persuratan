@@ -48,7 +48,7 @@
 @section('isi')
 <div class="px-3 py-2 bg-white rounded shadow">
     <div class="dashboard">
-        <h3>Selamat Datang, Luna Maya</h3>
+        <h3>Selamat Datang, {{$user->name}}</h3>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut, quis inventore totam iste tempora doloribus? Necessitatibus incidunt, quia veritatis culpa facilis nihil, iste ea eveniet soluta reprehenderit, laboriosam tempore aliquam.
         <br>
         <br>

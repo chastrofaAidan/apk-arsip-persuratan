@@ -100,7 +100,7 @@
         </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Tools</li>
             <li class="sidebar-menu-item" id="pembuatan_surat">
-                <a href="/">
+                <a href="/pembuatan_surat">
                     <i class="ri-mail-add-line sidebar-menu-item-icon"></i>
                     Pembuatan Surat
                 </a>
@@ -112,14 +112,14 @@
                 </a>
             </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
-            <li class="sidebar-menu-item" id="profil">
-                <a href="/">
+            <li class="sidebar-menu-item" id="profile">
+                <a href="/profile">
                     <i class="ri-account-circle-line sidebar-menu-item-icon"></i>
                     Profile
                 </a>
             </li>
-            <li class="sidebar-menu-item" id="setting">
-                <a href="/">
+            <li class="sidebar-menu-item" id="settings">
+                <a href="/settings">
                     <i class="ri-settings-line sidebar-menu-item-icon"></i>
                     Settings
                 </a>
@@ -164,18 +164,18 @@
               </a>
           </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
-            <li class="sidebar-menu-item" id="profil">
-                <a href="/">
+            <li class="sidebar-menu-item" id="profile">
+                <a href="/profile">
                     <i class="ri-account-circle-line sidebar-menu-item-icon"></i>
                     Profile
                 </a>
             </li>
-            <li class="sidebar-menu-item" id="setting">
-                <a href="/">
+            <!-- <li class="sidebar-menu-item" id="setting">
+                <a href="/settings">
                     <i class="ri-settings-line sidebar-menu-item-icon"></i>
                     Settings
                 </a>
-            </li>
+            </li> -->
             <li class="sidebar-menu-item">
               <a href="/logout">
                   <i class="ri-logout-box-line sidebar-menu-item-icon"></i>
@@ -209,63 +209,12 @@
                     <h6 class="mb-0 me-auto">SMK Negeri 1 Cimahi</h6>
                     <h4 class="fw-bold mb-0 me-auto">Surat & Arsip Tata Usaha</h4>
                 </div>
-
-                <div class="dropdown me-3 ms-auto">
-                    <div class="cursor-pointer dropdown-toggle navbar-link" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="ri-notification-line"></i>
-                    </div>
-                    <div class="dropdown-menu fx-dropdown-menu">
-                        <h5 class="p-3 bg-indigo text-light">Notification</h5>
-                        <div class="list-group list-group-flush">
-                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
-                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
-                                <div class="me-auto">
-                                    <div class="fw-semibold">Subheading</div>
-                                    <span class="fs-7">Content for list item</span>
-                                </div>
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="dropdown">
+                <a href="/" class="sidebar-logo">
                     <div class="d-flex align-items-center cursor-pointer dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="me-2 d-none d-sm-block">Luna Maya</span>
-                        <img class="navbar-profile-image" src="6rs6duyf" alt="Image">
+                        <span class="me-2 d-none d-sm-block">{{$user->name}}</span>
+                        <img class="navbar-profile-image" src="data_file/{{$user->profile}}" alt="Image">
                     </div>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </div>
+                </a>
             </nav>
         </div>
         <div class="konten p-2">
@@ -319,8 +268,8 @@
         var surat_arsip = '/surat_arsip';
         var pembuatan_surat = '/pembuatan_surat';
         var pengarsipan_surat = '/pengarsipan_surat';
-        var profil = '/profil';
-        var setting = '/setting';
+        var profile = '/profile';
+        var settings = '/settings';
         
     
         // Check if the current URL matches the link's URL
@@ -357,12 +306,12 @@
         else if (currentPath === profil) 
         {
             // Add the "active" class to the list item
-            $("#profil").addClass("active");
+            $("#profile").addClass("active");
         }
-        else if (currentPath === setting) 
+        else if (currentPath === settings) 
         {
             // Add the "active" class to the list item
-            $("#setting").addClass("active");
+            $("#settings").addClass("active");
         }
     });
 
