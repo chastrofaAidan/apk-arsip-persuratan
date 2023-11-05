@@ -54,6 +54,7 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     Route::get('/pembuatan_surat', 'TemplateSuratController@index');
     Route::get('/settings', 'TemplateSuratController@settings');
     Route::get('/profile', 'TemplateSuratController@profile');
+    Route::get('/profile/update', 'TemplateSuratController@profileUpdate');
     Route::get('/surat_ijin', 'TemplateSuratController@suratIjin');
     Route::get('/surat_pengantar', 'TemplateSuratController@suratPengantar');
     Route::get('/surat_perintah', 'TemplateSuratController@suratPerintah');

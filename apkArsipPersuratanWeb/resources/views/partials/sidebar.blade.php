@@ -265,8 +265,8 @@
 
 </html>
 
+@yield('js')
 <script>
-    @yield('js')
     $(document).ready(function () {
         // Get the current URL path
         var currentPath = window.location.pathname;

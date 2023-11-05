@@ -22,6 +22,42 @@ class TemplateSuratController extends Controller
         $user = Auth::user(); // Get the currently logged-in user
         return view('profile', ['user' => $user]);
     }
+
+    public function profileUpdate(){
+        // Validate the request data
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'profile' => 'required',
+        ]);
+
+        $user = Auth::user();
+
+        // Check if the "fotowalas" input is empty
+        if (!$request->hasFile('fotowalas')) {
+            // Assign the previous value to the "fotowalas" field
+            $fotowalas = $record->fotowalas;
+        } else {
+            // Handle the case when a new file is uploaded
+            $file = $request->file('fotowalas');
+            $photo = time() . "_" . $file->getClientOriginalName();
+            $tujuanupload = 'data_file';
+            $file->move($tujuanupload, $photo);
+            $fotowalas = $photo;
+        }
+        
+        DB::table('tbl_walas')->where('idwalas',$request->idwalas)->update([
+
+            'fotowalas' => $fotowalas,
+            'namawalas' => $request->namawalas,
+            'nip' => $request->nip,
+            'kelaswalas' => $request->kelaswalas,
+            'mapel' => $request->mapel
+        ]);
+
+        return redirect('/');
+    }
     
     public function settings(){
         $user = Auth::user(); // Get the currently logged-in user
