@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "65881160358",
+    "firebase_url": "https://memome-ba1b5-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "memome-ba1b5",
+    "storage_bucket": "memome-ba1b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65881160358:android:da5e47522220e474c75267",
+        "android_client_info": {
+          "package_name": "com.darva.memome"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZcJgJbBFCI4lSKqiL1GBHKXOVBLcsGmI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
