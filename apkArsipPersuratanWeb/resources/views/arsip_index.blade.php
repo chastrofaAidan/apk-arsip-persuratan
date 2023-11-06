@@ -60,14 +60,14 @@
     Surat Arsip
 </h4>
 <br>
-<form action="/surat_arsip/search" method="GET">
+<!-- <form action="/surat_arsip/search" method="GET">
     <label for="search">Date Format: YYYY-MM-DD</label><br>
     <input type="search" name="search" placeholder="Search">
     <button type="submit">
         find
     </button>
 </form>
-<br/><br/>
+<br/><br/> -->
 <form action="/arsip" method="GET"> <!-- Add this form for per_page -->
     <label for="per_page">Records Per Page: </label>
     <select name="per_page" id="per_page" onchange="this.form.submit()">

@@ -1,8 +1,12 @@
 @extends('partials/sidebar')
 
+@section('css')
 <style>
-    
+    /* .custom-color{
+        background-color: var(--bs-color1);
+    } */
 </style>
+@endsection
 
 @section('Judul')
 <i class="ri-mail-add-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
@@ -17,20 +21,20 @@
 </h4>
 <br>
 <div class="row">
-    <a href="/surat_dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Perintah</div>
+    <a href="/surat_perintah" class="btn col-md-6 text-center" target="_blank">
+        <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;">Surat Perintah</div>
     </a><br>
-    <a href="/surat-dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Izin</div>
+    <a href="/surat_ijin" class="btn col-md-6 text-center" target="_blank">
+        <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;">Surat Izin</div>
     </a><br>
 </div>
 <br>
 <div class="row">
-    <a href="/surat-dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Pengantar</div>
+    <a href="/surat_pengantar" class="btn col-md-6 text-center" target="_blank">
+        <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;">Surat Pengantar</div>
     </a><br>
-    <a href="/surat-dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Keterangan</div>
+    <a href="/surat_pernyataan" class="btn col-md-6 text-center" target="_blank">
+        <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;">Surat Pernyataan</div>
     </a><br>
 </div>
 </div>
@@ -52,13 +56,13 @@
     Surat Keluar
 </h4>
 <div class="row">
-    <a href="/surat_dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Dispensasi</div>
+    <a href="/surat_ijin" class="btn col-md-6 text-center" target="_blank">
+        <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;"> Catat Surat Keluar & Unduh Sebagai PDF</div>
     </a><br>
-    <a href="/surat-dispen" class="col-md-6 text-center">
-        <div class="btn format-surat btn-warning col-md-12">Surat Tugas</div>
+    <a href="/surat_ijin" class="btn col-md-6 text-center" target="_blank">
+        <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;">Preview Surat</div>
     </a><br>
-    <a href="/surat_ijin" class="btn btn-primary" target="_blank">CETAK PDF</a>
+    <!-- <a href="/surat_ijin" class="btn btn-primary" >Unduh Sebagai PDF</a> -->
 </div>
 </div>
 <br><br>

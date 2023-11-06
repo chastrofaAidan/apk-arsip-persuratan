@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kepala_sekolah', function (Blueprint $table){
             $table ->id('id_kepala_sekolah');
-            $table ->date('nama_kepala_sekolah');
+            $table ->string('nama_kepala_sekolah');
             $table ->string('golongan_kepala_sekolah');
             $table ->string('nip_kepala_sekolah');
             $table ->string('tanda_tangan');

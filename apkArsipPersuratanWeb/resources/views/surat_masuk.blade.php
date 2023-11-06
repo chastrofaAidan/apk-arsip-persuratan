@@ -20,12 +20,12 @@
     Surat Masuk
 </h4>
 <br>
-<form action="/surat_masuk/search" method="GET">
+<!-- <form action="/surat_masuk/search" method="GET">
     <label for="search">Date Format: YYYY-MM-DD</label><br>
     <input type="search" name="search" placeholder="Search">
     <button type="submit">Find</button>
 </form>
-<br><br>
+<br><br> -->
 
 <form action="/surat_masuk" method="GET"> <!-- Add this form for per_page -->
     <label for="per_page">Records Per Page: </label>
