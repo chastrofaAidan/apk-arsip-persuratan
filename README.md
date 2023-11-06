@@ -10,4 +10,6 @@ Be sure to follow the following steps in order for your aplication to work
   php artisan migrate
   php artisan db:seed --class=ArsipSeeder
   php artisan db:seed --class=AkunSeeder
+  php artisan db:seed --class=KopSuratSeeder
+  php artisan db:seed --class=kepalaSekolahSeeder
 etc.
