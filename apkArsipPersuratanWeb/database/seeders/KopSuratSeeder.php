@@ -16,7 +16,7 @@ class KopSuratSeeder extends Seeder
         DB::table('kop_surat')->insert([
             [
                 'id_kop_surat' => '01',
-                'kode_surat' => '',
+                'kode_surat' => 'SMKN.1-Cadisdik Wil.VII',
                 'nama_instansi' => 'SEKOLAH MENENGAH KEJURUAN NEGERI 1 CIMAHI',
                 'logo_instansi' => 'kop_surat.png',
                 'alamat_instansi' => 'Jalan Mahar Martanegara no, 48 Leuwigajah',

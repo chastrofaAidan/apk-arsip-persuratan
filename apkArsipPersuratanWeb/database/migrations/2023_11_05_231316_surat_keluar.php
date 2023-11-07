@@ -16,10 +16,9 @@ return new class extends Migration
             $table ->date('tanggal_keluar');
             $table ->string('kode_keluar');
             $table ->string('ditujukan');
-            $table ->string('identitas_keluar');
             $table ->string('perihal_keluar');
             $table ->string('surat_keluar');
-            $table ->text('keterangan_keluar');
+            $table ->text('keterangan_keluar')->nullable()->default(null);
             $table  ->timestamps();            
             // $table->softDeletes();
         });

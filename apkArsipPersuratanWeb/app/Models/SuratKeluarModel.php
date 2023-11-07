@@ -13,7 +13,7 @@ class SuratKeluarModel extends Model
     protected $primaryKey = 'no_keluar';
     protected $keyType = 'string';
     public $incrementing = false;
-    protected $fillable = ['no_keluar', 'tanggal_keluar', 'kode_keluar', 'ditujukan', 'identitas_keluar', 'perihal_keluar', 'surat_keluar', 'keterangan_keluar'];
+    protected $fillable = ['no_keluar', 'tanggal_keluar', 'kode_keluar', 'ditujukan', 'perihal_keluar', 'surat_keluar', 'keterangan_keluar'];
     protected $casts = [
         'tanggal_keluar' => 'date',
     ];

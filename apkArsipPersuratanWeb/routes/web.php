@@ -68,8 +68,15 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
 
 Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->middleware('userAkses:superadmin,admin')->name('masuk');
 Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin')->name('keluar');
+Route::get('/surat_keluar/edit/{id}', [ArsipController::class, 'keluarEdit'])->middleware('userAkses:superadmin');
+Route::post('/surat_keluar/update', [ArsipController::class, 'keluarUpdate'])->middleware('userAkses:superadmin');
+
+
+
 Route::get('/profile', [TemplateSuratController::class, 'profile'])->middleware('userAkses:superadmin,admin');
 Route::get('/settings', [TemplateSuratController::class, 'settings'])->middleware('userAkses:superadmin');
+
+
 // Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');
 // Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');
 // Route::get('/surat_keluar/search', 'ArsipController@searchSuratKeluar');
