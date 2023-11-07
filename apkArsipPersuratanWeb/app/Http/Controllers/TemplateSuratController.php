@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
+use Intervention\Image\Facades\Image;
 use App\Models\ArsipModel;
+use App\Models\KopSuratModel;
+use App\Models\KepalaSekolahModel;
 use App\Models\User;
 use PDF;
 // use Barryvdh\DomPDF\PDF;
@@ -67,31 +70,42 @@ class TemplateSuratController extends Controller
 
     public function suratIjin()
     {
-        // Use the correct directory separator for your OS
-        $path = public_path() . '/data_file/kop_surat.png';
-    
-        // Check if the image file exists
-        if (file_exists($path)) {
-            $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
-    
-            $namaFile = 'NamaSurat.pdf';
-    
+        $kop_surat = KopSuratModel::latest()->first();
+        $kepala_sekolah = KepalaSekolahModel::latest()->first();
+
+        // Paths to the image files
+        $logoImagePath = public_path('data_file/' . $kop_surat->logo_instansi);
+        $tandaTanganPath = public_path('data_file/' . $kepala_sekolah->tanda_tangan);
+
+        // Check if the image files exist
+        if (file_exists($logoImagePath) && file_exists($tandaTanganPath)) {
+            // Resize the logo to 100px width
+            $logo = Image::make($logoImagePath)->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+            // Convert the resized logo to base64
+            $resizedLogo = 'data:image/png;base64,' . base64_encode($logo->stream()->__toString());
+
             // Load the view and set the default font to Arial
-            $pdf = PDF::loadView('surat.ijin', ['image' => $image])->setOptions([
-                'defaultFont' => 'Arial', // Set the default font to Arial
+            $pdf = PDF::loadView('surat.ijin', [
+                'image' => $resizedLogo,
+                'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
+                'kop_surat' => $kop_surat,
+                'kepala_sekolah' => $kepala_sekolah,
+            ])->setOptions([
+                'defaultFont' => 'Arial',
             ]);
+
             $pdf->setPaper('a4', 'portrait');
-    
+
             // Save the PDF to a file or return it as a download
-            return $pdf->stream($namaFile);
-            // return $pdf->download($namaFile);
-            // return view('surat.ijin', ['image' => $image]);
+            return $pdf->stream('NamaSurat.pdf');
         } else {
-            // Handle the case when the image file does not exist
             return "Image file not found.";
         }
     }
-    
+
 
     public function suratPengantar()
     {

@@ -5,7 +5,7 @@
     th, td {
         vertical-align: middle; /* Center the content vertically */
     }
-</style>
+</style> 
 @endsection
 
 @section('Judul')

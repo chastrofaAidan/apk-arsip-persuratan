@@ -1,4 +1,13 @@
 @extends('partials/sidebar')
+
+@section('css')
+<style>
+    th, td {
+        vertical-align: middle; /* Center the content vertically */
+    }
+</style>
+@endsection
+
 @section('Judul')
 <i class="ri-mail-send-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
     Surat Keluar
@@ -43,13 +52,13 @@
 
 <table class="table table-bordered table-striped" border="1">
     <tr> 
-        <th style="background-color: var(--bs-color1); color: white;">Kode Surat</th>
-        <th style="background-color: var(--bs-color1); color: white;">Judul Surat</th>
-        <th style="background-color: var(--bs-color1); color: white;">Perusahaan</th>
-        <th style="background-color: var(--bs-color1); color: white;">Tanggal Keluar</th>
-        <th style="background-color: var(--bs-color1); color: white;">Perihal Surat</th>
-        <th style="background-color: var(--bs-color1); color: white;">File</th>
-        <th style="background-color: var(--bs-color1); color: white;">Keterangan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Kode Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Judul Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perusahaan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Tanggal Keluar</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perihal Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">File</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
     </tr>
 
     @foreach($dataarsip as $a)

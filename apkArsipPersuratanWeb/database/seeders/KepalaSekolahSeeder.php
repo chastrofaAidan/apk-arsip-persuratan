@@ -16,9 +16,9 @@ class KepalaSekolahSeeder extends Seeder
         DB::table('kepala_sekolah')->insert([
             [
                 'id_kepala_sekolah' => '01',
-                'nama_kepala_sekolah' => '',
-                'golongan_kepala_sekolah' => 'SEKOLAH MENENGAH KEJURUAN NEGERI 1 CIMAHI',
-                'nip_kepala_sekolah' => 'logo.png',
+                'nama_kepala_sekolah' => 'Agus Priyatmono Nugroho,S.Pd.M.Si',
+                'golongan_kepala_sekolah' => 'Pembina Tk.1',
+                'nip_kepala_sekolah' => '196708311990031003',
                 'tanda_tangan' => 'ttd.png',
             ],
         ]);
