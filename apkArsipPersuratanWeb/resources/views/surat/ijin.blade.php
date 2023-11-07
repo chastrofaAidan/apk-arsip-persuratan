@@ -4,11 +4,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Icons -->
+    <link rel="icon" href="data_file/Logo-SMKN1-Cimahi.png">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <!-- CSS -->
     <link href="{{ asset('css/sidebar_style.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <title>Archie</title>
+    <title>Archie - Surat Ijin</title>
     <style>
     @page {
         size: a4 portrait;
@@ -89,6 +90,25 @@
         text-align: center;
     }
 
+    .txt-light.text-left {
+        position: relative; /* Make the parent container a positioning context */
+    }
+
+    .ttd {
+        position: absolute; /* Position absolutely within the parent container */
+        top: 0;
+        left: 0;
+        z-index: 1; /* Set a higher z-index to make it appear above other elements */
+    }
+
+    .signature {
+        position: absolute; /* Position absolutely within the parent container */
+        top: 0;
+        left: 0;
+        z-index: 2; /* Set a higher z-index to make it appear above the "ttd" div */
+    }
+
+
 </style>
 
 </head>
@@ -103,9 +123,9 @@
         <div class="txt-light title">PEMERINTAH DAERAH PROVINSI JAWA BARAT</div>
         <div class="txt-light title">DINAS PENDIDIKAN</div>
         <div class="txt-light title">CABANG DINAS PENDIDIKAN WILAYAH VII</div>
-        <div class="txt-bold big">SEKOLAH MENENGAH KEJURUAN NEGERI 1 CIMAHI</div>
-        <div class="txt-light">Jalan Mahar Martanegara No.48 Leuwigajah, Telp./Fax. (022) 6629683</div>
-        <div class="txt-light">Website : http://www.smkn1-cmi.sch.id - email : <a href="info@smkn1-cmi.sch.id">info@smkn1-cmi.sch.id</a></div>
+        <div class="txt-bold big">{{ $kop_surat->nama_instansi }}</div>
+        <div class="txt-light">{{ $kop_surat->alamat_instansi }}, Telp./Fax. {{ $kop_surat->kontak_instansi }}</div>
+        <div class="txt-light">Website : {{ $kop_surat->website_instansi }} - email : <a href="{{ $kop_surat->email_instansi }}">{{ $kop_surat->email_instansi }}</a></div>
         <div class="txt-light">Kota Cimahi - 40533</div>
     </td>
 </tr>
@@ -117,22 +137,28 @@
 <div class="text-center">Nomor : 800/515/SMKN.1.Cadisdik WIL.VII</div>
 <div class="text-center">Tanggal : 01 November 2023</div>
 
-<!-- <div class="page-break"></div>
 <div class="page-break"></div>
-<div class="page-break"></div> -->
+<div class="page-break"></div>
+<div class="page-break"></div>
 
 
 <table class="footer" style="width: 100%;">
 <tr>
     <td style="width: 55%;"></td>
     <td style="width: 45%;">
-        <div class="txt-light text-left">
-            <div class="txt-light title">K E P A L A</div>
-            <br><br><br>
-            <b>Agus Priyatmono Nugroho,S.Pd.M.Si</b><br>
-            Pembina Tk.1 <br>
-            NIP. 196708311990031003 <br>
+    <div class="txt-light text-left">
+        <div class="ttd">
+            <br>
+            <img src="{{ $tanda_tangan }}" alt="ttd">
         </div>
+        <div class="signature">
+            <div class="txt-light title">K E P A L A</div>
+            <br><br><br><br><br>
+            <b>{{ $kepala_sekolah->nama_kepala_sekolah }}</b><br>
+            {{$kepala_sekolah->golongan_kepala_sekolah}} <br>
+            NIP. {{$kepala_sekolah->nip_kepala_sekolah}} <br>
+        </div>
+    </div>
     </td>
 </tr>
 </table>

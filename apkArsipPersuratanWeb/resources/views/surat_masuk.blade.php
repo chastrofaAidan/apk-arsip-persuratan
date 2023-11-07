@@ -1,4 +1,13 @@
 @extends('partials/sidebar')
+
+@section('css')
+<style>
+    th, td {
+        vertical-align: middle; /* Center the content vertically */
+    }
+</style>
+@endsection
+
 @section('Judul')
 <i class="ri-mail-unread-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
     Surat Masuk
@@ -20,12 +29,12 @@
     Surat Masuk
 </h4>
 <br>
-<form action="/surat_masuk/search" method="GET">
+<!-- <form action="/surat_masuk/search" method="GET">
     <label for="search">Date Format: YYYY-MM-DD</label><br>
     <input type="search" name="search" placeholder="Search">
     <button type="submit">Find</button>
 </form>
-<br><br>
+<br><br> -->
 
 <form action="/surat_masuk" method="GET"> <!-- Add this form for per_page -->
     <label for="per_page">Records Per Page: </label>
@@ -39,15 +48,15 @@
     </select>
 </form>
 
-<table class="table table-bordered" border="1"> 
+<table class="table table-bordered table-striped" border="1"> 
     <tr> 
-        <th>Kode Surat</th>
-        <th>Judul Surat</th>
-        <th>Perusahaan</th>
-        <th>Tanggal Masuk</th>
-        <th>Perihal Surat</th>
-        <th>File</th>
-        <th>Keterangan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Kode Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Judul Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perusahaan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Tanggal Masuk</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perihal Surat</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">File</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
     </tr>
 
     @foreach($dataarsip as $a)
@@ -65,8 +74,12 @@
 
         <td>{{ $a->perihal_surat }}</td>
         <td>
-        <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn btn-success col-12 text-center" target="_blank">Preview</a><br>
-            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn btn-info col-12 text-center" download>Download</a><br>
+            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" target="_blank" style="background-color: var(--bs-color2); color: white;">
+                <i class="ri-eye-line"></i>
+            </a><br><br>
+            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" style="background-color: var(--bs-color1); color: white;" download>
+                <i class="ri-file-download-line"></i>
+            </a><br>
         </td>
 
         <td>{{ $a->keterangan }}</td>
