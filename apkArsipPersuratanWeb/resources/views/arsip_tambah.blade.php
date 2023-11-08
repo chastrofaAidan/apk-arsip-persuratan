@@ -1,4 +1,6 @@
 @extends('partials/sidebar')
+
+@section('css')
 <style>
     .custom-input {
     width: 100%; /* Make the input element span the full width of its parent */
@@ -8,9 +10,9 @@
     color: black; /* Set text color to contrast with the gray background */
     border-radius: 1vh;
 }
-
-
 </style>
+@endsection
+
 @section('Judul')
 <i class="ri-inbox-unarchive-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
     Pengarsipan Surat

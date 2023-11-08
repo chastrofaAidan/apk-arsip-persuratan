@@ -46,12 +46,15 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     Route::get('/surat_arsip/search', 'ArsipController@searchArsip');
     Route::post('/arsip/store', 'ArsipController@store');
     Route::get('/arsip/hapus/{id}', 'ArsipController@hapus');
-    Route::get('/arsip/edit/{id}', 'ArsipController@edit');
+    Route::get('/surat_arsip/edit/{id}', 'ArsipController@edit');
     Route::post('/arsip/update', 'ArsipController@update');
     Route::get('/pengarsipan_surat', 'ArsipController@tambah');
     // Route::get('/surat_masuk', 'ArsipController@masuk')->name('masuk');
     // Route::get('/surat_keluar', 'ArsipController@keluar')->name('keluar');
-    Route::get('/pembuatan_surat', 'TemplateSuratController@index');
+    Route::get('/pembuatan_surat_ijin', 'TemplateSuratController@ijin');
+    Route::get('/pembuatan_surat_pengantar', 'TemplateSuratController@index');
+    Route::get('/pembuatan_surat_perintah', 'TemplateSuratController@index');
+    Route::get('/pembuatan_surat_pernyataan', 'TemplateSuratController@index');
     Route::get('/settings', 'TemplateSuratController@settings');
     Route::get('/profile', 'TemplateSuratController@profile');
     Route::get('/profile/update', 'TemplateSuratController@profileUpdate');
@@ -61,14 +64,20 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     Route::get('/surat_pernyataan', 'TemplateSuratController@suratPernyataan');
 });
 
-Route::middleware(['auth', 'userAkses:admin'])->group(function () {
+// Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     // Route::get('/surat_masuk', 'ArsipController@masuk')->name('masuk');
     // Route::get('/surat_keluar','ArsipController@keluar')->name('keluar');
-});
+// });
+
+Route::get('/pembuatan_surat_ijin', [TemplateSuratController::class, 'ijin'])->middleware('userAkses:superadmin');
+Route::get('/pembuatan_surat_pengantar', [TemplateSuratController::class, 'pengantar'])->middleware('userAkses:superadmin');
+Route::get('/pembuatan_surat_perintah', [TemplateSuratController::class, 'perintah'])->middleware('userAkses:superadmin');
+Route::get('/pembuatan_surat_pernyataan', [TemplateSuratController::class, 'pernyataan'])->middleware('userAkses:superadmin');
 
 Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->middleware('userAkses:superadmin,admin')->name('masuk');
 Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin')->name('keluar');
 Route::get('/surat_keluar/edit/{id}', [ArsipController::class, 'keluarEdit'])->middleware('userAkses:superadmin');
+Route::post('/surat_keluar/store', [ArsipController::class, 'keluarStore'])->middleware('userAkses:superadmin');
 Route::post('/surat_keluar/update', [ArsipController::class, 'keluarUpdate'])->middleware('userAkses:superadmin');
 
 

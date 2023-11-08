@@ -137,9 +137,13 @@
 <div class="text-center">Nomor : 800/515/SMKN.1.Cadisdik WIL.VII</div>
 <div class="text-center">Tanggal : 01 November 2023</div>
 
+<p>{{ $paragraf1 }}</p>
+<p>{{ $paragraf2 }}</p>
+<p>{{ $paragraf3 }}</p>
+
+<!-- <div class="page-break"></div>
 <div class="page-break"></div>
-<div class="page-break"></div>
-<div class="page-break"></div>
+<div class="page-break"></div> -->
 
 
 <table class="footer" style="width: 100%;">
@@ -157,7 +161,7 @@
             <b>{{ $kepala_sekolah->nama_kepala_sekolah }}</b><br>
             {{$kepala_sekolah->golongan_kepala_sekolah}} <br>
             NIP. {{$kepala_sekolah->nip_kepala_sekolah}} <br>
-        </div>
+        </div> 
     </div>
     </td>
 </tr>

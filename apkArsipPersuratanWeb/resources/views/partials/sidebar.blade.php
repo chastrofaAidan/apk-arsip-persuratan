@@ -109,7 +109,7 @@
         </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Tools</li>
             <li class="sidebar-menu-item" id="pembuatan_surat">
-                <a href="/pembuatan_surat">
+                <a href="/pembuatan_surat_ijin">
                     <i class="ri-mail-add-line sidebar-menu-item-icon"></i>
                     Pembuatan Surat
                 </a>
@@ -274,10 +274,16 @@
         
         // Define the URL of the link you want to check
         var dashboard = '/dashboard';
-        var surat_masuk = '/surat_masuk';
-        var surat_keluar = '/surat_keluar';
-        var surat_arsip = '/surat_arsip';
-        var pembuatan_surat = '/pembuatan_surat';
+        var surat_masuk1 = '/surat_masuk';
+        var surat_masuk2 = '/surat_masuk/edit';
+        var surat_keluar1 = '/surat_keluar';
+        var surat_keluar2 = '/surat_keluar/edit';
+        var surat_arsip1 = '/surat_arsip';
+        var surat_arsip2 = '/surat_arsip/edit';
+        var pembuatan_surat1 = '/pembuatan_surat_ijin';
+        var pembuatan_surat2 = '/pembuatan_surat_pengantar';
+        var pembuatan_surat3 = '/pembuatan_surat_perintah';
+        var pembuatan_surat4 = '/pembuatan_surat_pernyataan';
         var pengarsipan_surat = '/pengarsipan_surat';
         var profile = '/profile';
         var settings = '/settings';
@@ -289,26 +295,61 @@
             // Add the "active" class to the list item
             $("#dashboard").addClass("active");
         } 
-        else if (currentPath === surat_masuk) 
+
+        else if (currentPath === surat_masuk1) 
         {
             // Add the "active" class to the list item
             $("#surat_masuk").addClass("active");
         }
-        else if (currentPath === surat_keluar) 
+        else if (currentPath === surat_masuk2) 
+        {
+            // Add the "active" class to the list item
+            $("#surat_masuk").addClass("active");
+        }
+
+        else if (currentPath === surat_keluar1) 
         {
             // Add the "active" class to the list item
             $("#surat_keluar").addClass("active");
         }
-        else if (currentPath === surat_arsip) 
+        else if (currentPath === surat_keluar2) 
+        {
+            // Add the "active" class to the list item
+            $("#surat_keluar").addClass("active");
+        }
+
+        else if (currentPath === surat_arsip1) 
         {
             // Add the "active" class to the list item
             $("#surat_arsip").addClass("active");
         }
-        else if (currentPath === pembuatan_surat) 
+        else if (currentPath === surat_arsip2) 
+        {
+            // Add the "active" class to the list item
+            $("#surat_arsip").addClass("active");
+        }
+
+        else if (currentPath === pembuatan_surat1) 
         {
             // Add the "active" class to the list item
             $("#pembuatan_surat").addClass("active");
         }
+        else if (currentPath === pembuatan_surat2) 
+        {
+            // Add the "active" class to the list item
+            $("#pembuatan_surat").addClass("active");
+        }
+        else if (currentPath === pembuatan_surat3) 
+        {
+            // Add the "active" class to the list item
+            $("#pembuatan_surat").addClass("active");
+        }
+        else if (currentPath === pembuatan_surat4) 
+        {
+            // Add the "active" class to the list item
+            $("#pembuatan_surat").addClass("active");
+        }
+        
         else if (currentPath === pengarsipan_surat) 
         {
             // Add the "active" class to the list item

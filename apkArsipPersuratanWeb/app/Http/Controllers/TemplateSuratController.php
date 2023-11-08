@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
 use App\Models\ArsipModel;
+use App\Models\SuratKeluarModel;
 use App\Models\KopSuratModel;
 use App\Models\KepalaSekolahModel;
 use App\Models\User;
@@ -19,6 +20,32 @@ class TemplateSuratController extends Controller
     public function index(){
         $user = Auth::user(); // Get the currently logged-in user
         return view('pembuatan_surat', ['user' => $user]);
+    }
+
+    public function ijin(){
+        $user = Auth::user(); // Get the currently logged-in user
+        $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
+    
+        $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
+        $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
+    
+        return view('ijin_template', ['user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 'kode_surat' => $kode_surat]);
+    }
+    
+
+    public function pengantar(){
+        $user = Auth::user(); // Get the currently logged-in user
+        return view('pengantar_template', ['user' => $user]);
+    }
+
+    public function perintah(){
+        $user = Auth::user(); // Get the currently logged-in user
+        return view('perintah_template', ['user' => $user]);
+    }
+
+    public function pernyataan(){
+        $user = Auth::user(); // Get the currently logged-in user
+        return view('pernyataan_template', ['user' => $user]);
     }
     
     public function profile(){
@@ -68,8 +95,13 @@ class TemplateSuratController extends Controller
     }
 
 
-    public function suratIjin()
+    public function suratIjin(Request $request)
     {
+        // Retrieve the values of paragraf from the request
+        $paragraf1 = $request->input('paragraf1');
+        $paragraf2 = $request->input('paragraf2');
+        $paragraf3 = $request->input('paragraf3');
+
         $kop_surat = KopSuratModel::latest()->first();
         $kepala_sekolah = KepalaSekolahModel::latest()->first();
 
@@ -93,6 +125,9 @@ class TemplateSuratController extends Controller
                 'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
                 'kop_surat' => $kop_surat,
                 'kepala_sekolah' => $kepala_sekolah,
+                'paragraf1' => $paragraf1, // Pass the paragraf values to the view
+                'paragraf2' => $paragraf2,
+                'paragraf3' => $paragraf3,
             ])->setOptions([
                 'defaultFont' => 'Arial',
             ]);
@@ -105,6 +140,7 @@ class TemplateSuratController extends Controller
             return "Image file not found.";
         }
     }
+
 
 
     public function suratPengantar()

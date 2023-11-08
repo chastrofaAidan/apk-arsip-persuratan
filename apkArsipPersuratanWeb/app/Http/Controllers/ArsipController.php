@@ -300,6 +300,45 @@ class ArsipController extends Controller
     }
 
 
+    public function keluarStore(Request $request)
+    {
+        // Validate the request data
+        // $validatedData = $request->validate([
+        //     'kode_surat' => 'required', 
+        //     'judul_surat' => 'required',
+        //     'perusahaan' => 'required',
+        //     'jenis_surat' => 'required|in:Surat Masuk,Surat Keluar',
+        //     'tanggal_surat' => 'required|date',
+        //     'perihal_surat' => 'required',
+        //     'file' => 'required|file',
+        //     'keterangan' => 'required',
+        // ]);
+
+        // Get the uploaded file
+        // $file = $request->file('file');
+        // $pdf = time() . "_" . $file->getClientOriginalName();
+        // $tujuanupload = 'data_file';
+        // $file->move($tujuanupload, $pdf);
+
+        // Create a new ArsipModel instance and populate it with the validated data
+        // $keluar = new ArsipModel();
+        // $keluar->kode_surat = $validatedData['kode_surat'];
+        // $keluar->judul_surat = $validatedData['judul_surat'];
+        // $keluar->perusahaan = $validatedData['perusahaan'];
+        // $keluar->jenis_surat = $validatedData['jenis_surat'];
+        // $keluar->tanggal_surat = $validatedData['tanggal_surat'];
+        // $keluar->perihal_surat = $validatedData['perihal_surat'];
+        // $keluar->file_surat = $pdf;
+        // $keluar->keterangan = $validatedData['keterangan'];
+
+        // Save the new record to the database
+        // $keluar->save();
+
+        // Redirect to a success page or another appropriate action
+        return redirect('/surat_keluar');
+    }
+
+
 
     public function keluarEdit($no_keluar)
     {
