@@ -50,43 +50,49 @@
 
 <table class="table table-bordered table-striped" border="1"> 
     <tr> 
-        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Kode Surat</th>
-        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Judul Surat</th>
-        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perusahaan</th>
-        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Tanggal Masuk</th>
-        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perihal Surat</th>
-        <th class="text-center" style="background-color: var(--bs-color1); color: white;">File</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">No</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Tanggal</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Nomor Surat Masuk</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Pengirim</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Nomor dan Tanggal Masuk</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Pokok Isi Surat</th>
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
     </tr>
 
-    @foreach($dataarsip as $a)
+    @foreach($datamasuk as $m)
     <tr>
-        <td>{{ $a->kode_surat }}</td>
-        <td>{{ $a->judul_surat }}</td>
-        <td>{{ $a->perusahaan }}</td>
+        <td>{{ $m->no_masuk }}</td>
         <td>
-            @if ($a->tanggal_surat)
-                {{ $a->tanggal_surat->format('Y-m-d') }}
+            @if ($m->tanggal_masuk)
+                {{ $m->tanggal_masuk->format('Y-m-d') }}
             @else
                 No Date Available
             @endif
         </td>
+        <td>{{ $m->kode_masuk }}</td>
+        <td>{{ $m->pengirim }}</td>
 
-        <td>{{ $a->perihal_surat }}</td>
+        <td>{{ $m->identitas_masuk }}</td>
+        <td>{{ $m->pokok_masuk }}</td>
+        <td>{{ $m->keterangan_masuk }}</td>
+
+        @if (Auth::user()->role == 'superadmin')
         <td>
-            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" target="_blank" style="background-color: var(--bs-color2); color: white;">
-                <i class="ri-eye-line"></i>
+            <a href="/surat_masuk/edit/{{ $m->no_masuk }}" class="btn col-12 text-center" style="background-color: var(--bs-color2); color: white;">
+            <i class="ri-edit-box-line"></i>
             </a><br><br>
-            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" style="background-color: var(--bs-color1); color: white;" download>
-                <i class="ri-file-download-line"></i>
+            
+            <a href="/surat_masuk/hapus/{{ $m->no_masuk }}" class="btn col-12 text-center" style="background-color: var(--bs-color1); color: white;">
+                <i class="ri-delete-bin-line"></i>
             </a><br>
-        </td>
 
-        <td>{{ $a->keterangan }}</td>
+        </td>
+        @endif
     </tr>
     @endforeach
 </table>
 
 <!-- Pagination links -->
-{{ $dataarsip->appends(['per_page' => $perPage])->links() }}
+{{ $datamasuk->appends(['per_page' => $perPage])->links() }}
 @endsection

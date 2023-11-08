@@ -74,11 +74,21 @@ Route::get('/pembuatan_surat_pengantar', [TemplateSuratController::class, 'penga
 Route::get('/pembuatan_surat_perintah', [TemplateSuratController::class, 'perintah'])->middleware('userAkses:superadmin');
 Route::get('/pembuatan_surat_pernyataan', [TemplateSuratController::class, 'pernyataan'])->middleware('userAkses:superadmin');
 
+
 Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->middleware('userAkses:superadmin,admin')->name('masuk');
+Route::get('/surat_masuk/tambah', [ArsipController::class, 'masukTambah'])->middleware('userAkses:superadmin');
+Route::post('/surat_masuk/store', [ArsipController::class, 'masukStore'])->middleware('userAkses:superadmin');
+Route::get('/surat_masuk/edit/{id}', [ArsipController::class, 'masukEdit'])->middleware('userAkses:superadmin');
+Route::post('/surat_masuk/update', [ArsipController::class, 'masukUpdate'])->middleware('userAkses:superadmin');
+Route::get('/surat_masuk/hapus/{id}', [ArsipController::class, 'masukHapus'])->middleware('userAkses:superadmin');
+
+
 Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:superadmin,admin')->name('keluar');
 Route::get('/surat_keluar/edit/{id}', [ArsipController::class, 'keluarEdit'])->middleware('userAkses:superadmin');
 Route::post('/surat_keluar/store', [ArsipController::class, 'keluarStore'])->middleware('userAkses:superadmin');
 Route::post('/surat_keluar/update', [ArsipController::class, 'keluarUpdate'])->middleware('userAkses:superadmin');
+Route::get('/surat_keluar/hapus/{id}', [ArsipController::class, 'keluarHapus'])->middleware('userAkses:superadmin');
+
 
 
 

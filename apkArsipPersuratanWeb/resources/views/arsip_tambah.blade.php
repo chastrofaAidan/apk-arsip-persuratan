@@ -37,7 +37,7 @@
                 <input class="custom-input" type="text" name="perusahaan" id="perusahaan" required="required"><br>
         
                 <label for="tanggal_surat">Tanggal Surat Berlaku</label>
-                <input class="custom-input" type="date" name="tanggal_surat" id="tanggal_surat" required="required"><br>
+                <input class="custom-input" type="date" name="tanggal_surat" id="tanggal_surat" required="required" value="{{ now()->toDateString() }}"><br>
             </div>
         
             <div class="col-md-6">
@@ -58,7 +58,7 @@
             <div class="col-md-4">
                 <label for="file">File</label>
                 <!-- <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i> -->
-                <input class="custom-input" type="file" name="file" id="file" required="required"><br>
+                <input class="custom-input" type="file" name="file" id="file" required="required" accept=".pdf"><br>
             </div>
             <div class="col-md-8">
                 <label for="keterangan">Keterangan</label>

@@ -106,7 +106,7 @@
                 <i class="ri-archive-2-line sidebar-menu-item-icon"></i>
                 Surat Arsip
             </a>
-        </li>
+            </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Tools</li>
             <li class="sidebar-menu-item" id="pembuatan_surat">
                 <a href="/pembuatan_surat_ijin">
@@ -118,6 +118,12 @@
                 <a href="/pengarsipan_surat">
                     <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i>
                     Pengarsipan Surat
+                </a>
+            </li>
+            <li class="sidebar-menu-item" id="pendataan_surat_masuk">
+                <a href="/surat_masuk/tambah">
+                    <i class="ri-git-repository-line sidebar-menu-item-icon"></i>
+                    Pendataan Surat Masuk
                 </a>
             </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
@@ -285,6 +291,7 @@
         var pembuatan_surat3 = '/pembuatan_surat_perintah';
         var pembuatan_surat4 = '/pembuatan_surat_pernyataan';
         var pengarsipan_surat = '/pengarsipan_surat';
+        var pendataan_surat_masuk = '/surat_masuk/tambah';
         var profile = '/profile';
         var settings = '/settings';
         
@@ -355,6 +362,12 @@
             // Add the "active" class to the list item
             $("#pengarsipan_surat").addClass("active");
         }
+        else if (currentPath === pendataan_surat_masuk) 
+        {
+            // Add the "active" class to the list item
+            $("#pendataan_surat_masuk").addClass("active");
+        }
+
         else if (currentPath === profile) 
         {
             // Add the "active" class to the list item
