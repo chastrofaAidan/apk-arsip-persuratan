@@ -17,6 +17,50 @@
         tools:targetApi="31">
 
         <activity
+            android:name=".VIEW_B21.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_B21.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_A21.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_A21.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_B20.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_B20.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_A20.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_A20.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_B19.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_B19.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_A19.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VIEW_A19.MainActivity"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".ViewAngkatanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".B21.UploadActivity"
             android:exported="false" />
         <activity
@@ -28,7 +72,6 @@
         <activity
             android:name=".B21.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".A21.UploadActivity"
             android:exported="false" />
@@ -41,7 +84,6 @@
         <activity
             android:name=".A21.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".B20.UploadActivity"
             android:exported="false" />
@@ -54,7 +96,6 @@
         <activity
             android:name=".B20.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".A20.UploadActivity"
             android:exported="false" />
@@ -67,7 +108,6 @@
         <activity
             android:name=".A20.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".B19.UploadActivity"
             android:exported="false" />
@@ -80,7 +120,6 @@
         <activity
             android:name=".B19.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".A19.UploadActivity"
             android:exported="false" />
@@ -93,7 +132,6 @@
         <activity
             android:name=".A19.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".AboutActivity"
             android:exported="false" />

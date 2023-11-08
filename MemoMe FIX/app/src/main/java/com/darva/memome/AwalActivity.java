@@ -11,15 +11,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class AwalActivity extends AppCompatActivity {
 
     Dialog dialog;
     Button about, datasiswa;
+    FloatingActionButton login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_awal);
+
+        login = (FloatingActionButton) findViewById(R.id.btn_login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent tombol = new Intent(AwalActivity.this, LoginActivity.class);
+                startActivity(tombol);
+                finish();
+            }
+        });
 
         dialog = new Dialog(AwalActivity.this);
         dialog.setContentView(R.layout.alert_dialog);
@@ -71,7 +84,7 @@ public class AwalActivity extends AppCompatActivity {
         datasiswa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent tombol = new Intent(AwalActivity.this, AngkatanActivity.class);
+                Intent tombol = new Intent(AwalActivity.this, ViewAngkatanActivity.class);
                 startActivity(tombol);
                 finish();
             }
