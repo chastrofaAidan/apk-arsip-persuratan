@@ -21,8 +21,18 @@
             background-color: var(--bs-color4);
         } */
         
+
+        @media screen and (max-width: 623px) {
+            .ha6 {
+                font-size: 1rem; /* Anda dapat menyesuaikan ukuran font sesuai kebutuhan */
+            }
+        }
+
+
         .kepala {
             background-color: #9A4444;
+            padding-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .navigasi {
@@ -35,6 +45,10 @@
         }
 
         .left-container {
+            display: flex;
+        }
+
+        .containerd {
             display: block;
         }
 
@@ -47,6 +61,7 @@
 
         
         .konten {
+
             max-width: 100%; /* Set the maximum width to 100% of the screen width */
             overflow-x: auto; /* Add horizontal scrollbar if needed */
             margin: 0 2vh; /* Center align the content horizontally */
@@ -57,14 +72,6 @@
         th{
             background-color: var(--bs-color1);
         }
-
-        /* .sidebar-minimized {
-            width: 60px; Adjust to your desired width
-        }
-
-        .content-minimized {
-            width: calc(100% - 60px);
-        } */
 
     </style>
 </head>
@@ -221,8 +228,11 @@
             <!-- Navbar -->
             <nav class="navigasi">
                 <div class="left-container">
+                <i class="ri-menu-line sidebar-toggle me-3 d-block d-lg-none"></i>
+                    <div class="containerd">
                     <h6 class="mb-0 me-auto">SMK Negeri 1 Cimahi</h6>
-                    <h4 class="fw-bold mb-0 me-auto">Surat & Arsip Tata Usaha</h4>
+                    <h4 class="fw-bold mb-0 me-auto ha6">Surat & Arsip Tata Usaha</h4>
+                    </div>
                 </div>
                 <a href="/profile" style="text-decoration: none; cursor: default;">
                     <div class="d-flex align-items-center cursor-pointer">
@@ -235,15 +245,16 @@
             </nav>
         </div>
         <div class="konten p-2">
-            <div class="px-3 py-2 bg-white rounded shadow" >
-                <h1 class="fw-bold">
+            <div class="px-3 py-2 bg-white rounded shadow" style="display: flex; align-items: center; margin: 5px 0;">
+                <h1 class="fw-bold" style="margin: 5px 0;">
                     @yield('Judul')
                     <br>
                 </h1>
-            </div>
+            </div>            
             <br>
             @yield('isi')
         </div>
+        
         <hr>
         <footer class="p-3">
             <div class="container">

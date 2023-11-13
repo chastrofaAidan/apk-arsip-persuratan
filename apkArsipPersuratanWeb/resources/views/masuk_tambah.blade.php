@@ -20,12 +20,8 @@
 
 @section('isi')
 <div class="px-3 py-2 bg-white rounded shadow">
-    <h4 class="fw-bold">
-        <i class="ri-git-repository-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
-        Pendataan Surat Masuk
-    </h4>
-    <hr>
-<form action="/surat_masuk/store" method="post" enctype="multipart/form-data">
+
+<form action="/surat_masuk/store" method="post" enctype="multipart/form-data" style="padding: 20px 0px 20px 0px;">
     {{ csrf_field() }}
     <div class="container">
         <div class="row">
@@ -62,9 +58,60 @@
                 <input class="custom-input" type="text" name="keterangan_masuk" id="keterangan_masuk"><br>
             </div>
         </div>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Simpan Data">
+        <input class="btn btn-danger" type="button" value="Batal" id="btn-batal">
     </div>
-    <br>
-    <input class="btn btn-primary" type="submit" value="Simpan Data">
 </form>
 </div>
+
+<!-- Pastikan Anda sudah memasukkan Sweet Alert di sini -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    // Variable untuk menandai apakah formulir telah diisi
+    var formIsFilled = false;
+
+    // Fungsi untuk menghapus isi formulir
+    function clearForm() {
+        document.getElementById('tanggal_masuk').value = '';
+        document.getElementById('kode_masuk').value = '';
+        document.getElementById('pengirim').value = '';
+        document.getElementById('identitas_masuk').value = '';
+        document.getElementById('pokok_masuk').value = '';
+        document.getElementById('keterangan_masuk').value = '';
+
+        // Tandai bahwa formulir kosong
+        formIsFilled = false;
+    }
+
+    // Fungsi untuk menandai bahwa formulir telah diisi
+    function markFormIsFilled() {
+        formIsFilled = true;
+    }
+    
+    // Tambahkan event listener untuk tombol "Batal"
+    document.getElementById('btn-batal').addEventListener('click', function () {
+        // Tampilkan konfirmasi sebelum menghapus formulir
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Anda yakin ingin menghapus seluruh isian formulir?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, hapus isian',
+            cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Jika pengguna memilih Ya, hapus isian formulir
+                clearForm();
+            }
+        });
+    });
+</script>
+
 @endsection
+
+
+

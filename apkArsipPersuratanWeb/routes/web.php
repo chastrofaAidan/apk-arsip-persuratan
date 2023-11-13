@@ -6,19 +6,6 @@ use App\Http\Controllers\TemplateSuratController;
 use Illuminate\Support\Facades\Route;
 
 
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 // Middleware Login
 Route::middleware(['guest'])->group(function () {
     Route::get('/', [SessionController::class, 'index'])->name('login');
@@ -65,8 +52,8 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
 });
 
 // Route::middleware(['auth', 'userAkses:admin'])->group(function () {
-    // Route::get('/surat_masuk', 'ArsipController@masuk')->name('masuk');
-    // Route::get('/surat_keluar','ArsipController@keluar')->name('keluar');
+// Route::get('/surat_masuk', 'ArsipController@masuk')->name('masuk');
+// Route::get('/surat_keluar','ArsipController@keluar')->name('keluar');
 // });
 
 Route::get('/pembuatan_surat_ijin', [TemplateSuratController::class, 'ijin'])->middleware('userAkses:superadmin');
