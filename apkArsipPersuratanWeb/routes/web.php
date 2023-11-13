@@ -94,6 +94,9 @@ Route::get('/surat_keluar/hapus/{id}', [ArsipController::class, 'keluarHapus'])-
 
 Route::get('/profile', [TemplateSuratController::class, 'profile'])->middleware('userAkses:superadmin,admin');
 Route::get('/settings', [TemplateSuratController::class, 'settings'])->middleware('userAkses:superadmin');
+Route::get('/kop_surat/store', [TemplateSuratController::class, 'kopSuratStore'])->middleware('userAkses:superadmin');
+Route::get('/kepala_sekolah/store', [TemplateSuratController::class, 'kepalaSekolahStore'])->middleware('userAkses:superadmin');
+Route::get('/kop_surat/store', [TemplateSuratController::class, 'kopSuratStore'])->middleware('userAkses:superadmin');
 
 
 // Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');

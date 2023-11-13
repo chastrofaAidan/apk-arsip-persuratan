@@ -10,6 +10,7 @@ use Intervention\Image\Facades\Image;
 use App\Models\ArsipModel;
 use App\Models\SuratKeluarModel;
 use App\Models\KopSuratModel;
+use App\Models\KodePosModel;
 use App\Models\KepalaSekolahModel;
 use App\Models\User;
 use PDF;
@@ -87,11 +88,6 @@ class TemplateSuratController extends Controller
         ]);
 
         return redirect('/');
-    }
-    
-    public function settings(){
-        $user = Auth::user(); // Get the currently logged-in user
-        return view('settings', ['user' => $user]);
     }
 
 
@@ -222,6 +218,55 @@ class TemplateSuratController extends Controller
             // Handle the case when the image file does not exist
             return "Image file not found.";
         }
+    }
+    
+    
+    public function settings(){
+
+        $kop_surat = KopSuratModel::latest()->first();
+        $kepala_sekolah = KepalaSekolahModel::latest()->first();
+        $kode_pos = KodePosModel::all();
+        $user = Auth::user(); // Get the currently logged-in user
+        return view('settings', ['user' => $user, 'kop_surat' => $kop_surat, 'kepala_sekolah' => $kepala_sekolah, 'kode_pos' => $kode_pos, ]);
+    }
+
+
+    public function kopSuratStore(Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'kode_surat' => 'required', 
+            'judul_surat' => 'required',
+            'perusahaan' => 'required',
+            'jenis_surat' => 'required|in:Surat Masuk,Surat Keluar',
+            'tanggal_surat' => 'required|date',
+            'perihal_surat' => 'required',
+            'file' => 'required|file', // Ensure the "file" field is a file
+            'keterangan' => 'required',
+        ]);
+
+        // Get the uploaded file
+        $file = $request->file('file');
+        $pdf = time() . "_" . $file->getClientOriginalName();
+        $tujuanupload = 'data_file';
+        $file->move($tujuanupload, $pdf);
+
+        // Create a new ArsipModel instance and populate it with the validated data
+        $arsip = new ArsipModel();
+        $arsip->kode_surat = $validatedData['kode_surat'];
+        $arsip->judul_surat = $validatedData['judul_surat'];
+        $arsip->perusahaan = $validatedData['perusahaan'];
+        $arsip->jenis_surat = $validatedData['jenis_surat'];
+        $arsip->tanggal_surat = $validatedData['tanggal_surat'];
+        $arsip->perihal_surat = $validatedData['perihal_surat'];
+        $arsip->file_surat = $pdf; // Store only the file name
+        $arsip->keterangan = $validatedData['keterangan'];
+
+        // Save the new record to the database
+        $arsip->save();
+
+        // Redirect to a success page or another appropriate action
+        return redirect('/surat_arsip');
     }
 }
 // $path = public_path() . 'data_file/kop_surat.png';

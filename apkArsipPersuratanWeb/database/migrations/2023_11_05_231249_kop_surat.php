@@ -22,7 +22,7 @@ return new class extends Migration
             $table ->string('email_instansi');
             $table ->string('kode_pos');
             $table ->string('lingkup_wilayah');
-            $table  ->timestamps();            
+            $table  ->timestamps();
             // $table->softDeletes();
         });
     }
