@@ -122,11 +122,11 @@
     <td width=80% class="text-center">
         <div class="txt-light title">PEMERINTAH DAERAH PROVINSI JAWA BARAT</div>
         <div class="txt-light title">DINAS PENDIDIKAN</div>
-        <div class="txt-light title">CABANG DINAS PENDIDIKAN WILAYAH VII</div>
+        <div class="txt-light title">{{ $kop_surat->lingkup_wilayah }}</div>
         <div class="txt-bold big">{{ $kop_surat->nama_instansi }}</div>
         <div class="txt-light">{{ $kop_surat->alamat_instansi }}, Telp./Fax. {{ $kop_surat->kontak_instansi }}</div>
         <div class="txt-light">Website : {{ $kop_surat->website_instansi }} - email : <a href="{{ $kop_surat->email_instansi }}">{{ $kop_surat->email_instansi }}</a></div>
-        <div class="txt-light">Kota Cimahi - 40533</div>
+        <div class="txt-light">{{ $kop_surat->kode_pos }}</div>
     </td>
 </tr>
 </table>
@@ -137,9 +137,13 @@
 <div class="text-center">Nomor : 800/515/SMKN.1.Cadisdik WIL.VII</div>
 <div class="text-center">Tanggal : 01 November 2023</div>
 
+<p>{{ $paragraf1 }}</p>
+<p>{{ $paragraf2 }}</p>
+<p>{{ $paragraf3 }}</p>
+
+<!-- <div class="page-break"></div>
 <div class="page-break"></div>
-<div class="page-break"></div>
-<div class="page-break"></div>
+<div class="page-break"></div> -->
 
 
 <table class="footer" style="width: 100%;">
@@ -157,7 +161,7 @@
             <b>{{ $kepala_sekolah->nama_kepala_sekolah }}</b><br>
             {{$kepala_sekolah->golongan_kepala_sekolah}} <br>
             NIP. {{$kepala_sekolah->nip_kepala_sekolah}} <br>
-        </div>
+        </div> 
     </div>
     </td>
 </tr>

@@ -15,14 +15,14 @@
 
 </style>
 @section('Judul')
-<i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i>
+<i class="ri-inbox-unarchive-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
     Surat Arsip - Edit
 @endsection
 
 @section('isi')
 <div class="px-3 py-2 bg-white rounded shadow">
     <h4 class="fw-bold">
-        <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i>
+        <i class="ri-inbox-unarchive-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
         Pengarsipan Surat
     </h4>
     <hr>
@@ -60,12 +60,12 @@
             <div class="col-md-4">
                 <label for="file">File</label>
                 <!-- <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i> -->
-                <input class="custom-input" type="file" name="file" id="file" required="required"><br>
+                <input class="custom-input" type="file" name="file" id="file" accept=".pdf"><br>
                 <label for="file">Previous File: {{ $a->file_surat }}</label><br>
             </div>
             <div class="col-md-8">
                 <label for="keterangan">Keterangan</label>
-                <input class="custom-input" type="text" name="keterangan" id="keterangan" required="required" size="50" value="{{ $a->keterangan }}"><br>
+                <input class="custom-input" type="text" name="keterangan" id="keterangan" size="50" value="{{ $a->keterangan }}"><br>
             </div>
         </div>
     </div>

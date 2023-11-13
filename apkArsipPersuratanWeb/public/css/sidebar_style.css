@@ -331,7 +331,7 @@ nav {
 }
 
  /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     /* start: Sidebar */
     .sidebar-overlay {
         opacity: 0;
@@ -372,6 +372,7 @@ nav {
 
     /* start: Main */
     main {
+        background-color: #EDEDED;
         transition: padding-left .2s;
         padding-left: 16rem;
     }

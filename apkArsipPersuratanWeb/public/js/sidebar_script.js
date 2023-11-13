@@ -30,7 +30,7 @@ $(document).ready(function() {
       $('.sidebar-menu-item.has-dropdown, .sidebar-dropdown-menu-item.has-dropdown').removeClass('focused')
   })
 
-  if(window.innerWidth < 768) {
+  if(window.innerWidth < 992) {
       $('.sidebar').addClass('collapsed')
   }
   // end: Sidebar

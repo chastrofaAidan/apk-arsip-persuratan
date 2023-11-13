@@ -21,8 +21,18 @@
             background-color: var(--bs-color4);
         } */
         
+
+        @media screen and (max-width: 623px) {
+            .ha6 {
+                font-size: 1rem; /* Anda dapat menyesuaikan ukuran font sesuai kebutuhan */
+            }
+        }
+
+
         .kepala {
             background-color: #9A4444;
+            padding-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .navigasi {
@@ -35,6 +45,10 @@
         }
 
         .left-container {
+            display: flex;
+        }
+
+        .containerd {
             display: block;
         }
 
@@ -47,6 +61,7 @@
 
         
         .konten {
+
             max-width: 100%; /* Set the maximum width to 100% of the screen width */
             overflow-x: auto; /* Add horizontal scrollbar if needed */
             margin: 0 2vh; /* Center align the content horizontally */
@@ -57,14 +72,6 @@
         th{
             background-color: var(--bs-color1);
         }
-
-        /* .sidebar-minimized {
-            width: 60px; Adjust to your desired width
-        }
-
-        .content-minimized {
-            width: calc(100% - 60px);
-        } */
 
     </style>
 </head>
@@ -106,10 +113,10 @@
                 <i class="ri-archive-2-line sidebar-menu-item-icon"></i>
                 Surat Arsip
             </a>
-        </li>
+            </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Tools</li>
             <li class="sidebar-menu-item" id="pembuatan_surat">
-                <a href="/pembuatan_surat">
+                <a href="/pembuatan_surat_ijin">
                     <i class="ri-mail-add-line sidebar-menu-item-icon"></i>
                     Pembuatan Surat
                 </a>
@@ -118,6 +125,12 @@
                 <a href="/pengarsipan_surat">
                     <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i>
                     Pengarsipan Surat
+                </a>
+            </li>
+            <li class="sidebar-menu-item" id="pendataan_surat_masuk">
+                <a href="/surat_masuk/tambah">
+                    <i class="ri-git-repository-line sidebar-menu-item-icon"></i>
+                    Pendataan Surat Masuk
                 </a>
             </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
@@ -215,8 +228,11 @@
             <!-- Navbar -->
             <nav class="navigasi">
                 <div class="left-container">
+                <i class="ri-menu-line sidebar-toggle me-3 d-block d-lg-none"></i>
+                    <div class="containerd">
                     <h6 class="mb-0 me-auto">SMK Negeri 1 Cimahi</h6>
-                    <h4 class="fw-bold mb-0 me-auto">Surat & Arsip Tata Usaha</h4>
+                    <h4 class="fw-bold mb-0 me-auto ha6">Surat & Arsip Tata Usaha</h4>
+                    </div>
                 </div>
                 <a href="/profile" style="text-decoration: none; cursor: default;">
                     <div class="d-flex align-items-center cursor-pointer">
@@ -229,15 +245,16 @@
             </nav>
         </div>
         <div class="konten p-2">
-            <div class="px-3 py-2 bg-white rounded shadow" >
-                <h1 class="fw-bold">
+            <div class="px-3 py-2 bg-white rounded shadow" style="display: flex; align-items: center; margin: 5px 0;">
+                <h1 class="fw-bold" style="margin: 5px 0;">
                     @yield('Judul')
                     <br>
                 </h1>
-            </div>
+            </div>            
             <br>
             @yield('isi')
         </div>
+        
         <hr>
         <footer class="p-3">
             <div class="container">
@@ -274,11 +291,18 @@
         
         // Define the URL of the link you want to check
         var dashboard = '/dashboard';
-        var surat_masuk = '/surat_masuk';
-        var surat_keluar = '/surat_keluar';
-        var surat_arsip = '/surat_arsip';
-        var pembuatan_surat = '/pembuatan_surat';
+        var surat_masuk1 = '/surat_masuk';
+        var surat_masuk2 = '/surat_masuk/edit';
+        var surat_keluar1 = '/surat_keluar';
+        var surat_keluar2 = '/surat_keluar/edit';
+        var surat_arsip1 = '/surat_arsip';
+        var surat_arsip2 = '/surat_arsip/edit';
+        var pembuatan_surat1 = '/pembuatan_surat_ijin';
+        var pembuatan_surat2 = '/pembuatan_surat_pengantar';
+        var pembuatan_surat3 = '/pembuatan_surat_perintah';
+        var pembuatan_surat4 = '/pembuatan_surat_pernyataan';
         var pengarsipan_surat = '/pengarsipan_surat';
+        var pendataan_surat_masuk = '/surat_masuk/tambah';
         var profile = '/profile';
         var settings = '/settings';
         
@@ -289,31 +313,72 @@
             // Add the "active" class to the list item
             $("#dashboard").addClass("active");
         } 
-        else if (currentPath === surat_masuk) 
+
+        else if (currentPath === surat_masuk1) 
         {
             // Add the "active" class to the list item
             $("#surat_masuk").addClass("active");
         }
-        else if (currentPath === surat_keluar) 
+        else if (currentPath === surat_masuk2) 
+        {
+            // Add the "active" class to the list item
+            $("#surat_masuk").addClass("active");
+        }
+
+        else if (currentPath === surat_keluar1) 
         {
             // Add the "active" class to the list item
             $("#surat_keluar").addClass("active");
         }
-        else if (currentPath === surat_arsip) 
+        else if (currentPath === surat_keluar2) 
+        {
+            // Add the "active" class to the list item
+            $("#surat_keluar").addClass("active");
+        }
+
+        else if (currentPath === surat_arsip1) 
         {
             // Add the "active" class to the list item
             $("#surat_arsip").addClass("active");
         }
-        else if (currentPath === pembuatan_surat) 
+        else if (currentPath === surat_arsip2) 
+        {
+            // Add the "active" class to the list item
+            $("#surat_arsip").addClass("active");
+        }
+
+        else if (currentPath === pembuatan_surat1) 
         {
             // Add the "active" class to the list item
             $("#pembuatan_surat").addClass("active");
         }
+        else if (currentPath === pembuatan_surat2) 
+        {
+            // Add the "active" class to the list item
+            $("#pembuatan_surat").addClass("active");
+        }
+        else if (currentPath === pembuatan_surat3) 
+        {
+            // Add the "active" class to the list item
+            $("#pembuatan_surat").addClass("active");
+        }
+        else if (currentPath === pembuatan_surat4) 
+        {
+            // Add the "active" class to the list item
+            $("#pembuatan_surat").addClass("active");
+        }
+        
         else if (currentPath === pengarsipan_surat) 
         {
             // Add the "active" class to the list item
             $("#pengarsipan_surat").addClass("active");
         }
+        else if (currentPath === pendataan_surat_masuk) 
+        {
+            // Add the "active" class to the list item
+            $("#pendataan_surat_masuk").addClass("active");
+        }
+
         else if (currentPath === profile) 
         {
             // Add the "active" class to the list item
