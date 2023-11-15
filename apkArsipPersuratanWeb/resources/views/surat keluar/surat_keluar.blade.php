@@ -57,7 +57,9 @@
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perihal</th>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">File Template</th>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
-                <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
+                @if (Auth::user()->role == 'admin')
+                    <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
+                @endif
             </tr>
 
             @foreach ($datakeluar as $k)

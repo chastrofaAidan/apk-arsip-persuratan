@@ -74,7 +74,7 @@ class TemplateSuratController extends Controller
             $resizedLogo = 'data:image/png;base64,' . base64_encode($logo->stream()->__toString());
 
             // Load the view and set the default font to Arial
-            $pdf = PDF::loadView('surat.ijin', [
+            $pdf = PDF::loadView('surat-pdf.ijin', [
                 'image' => $resizedLogo,
                 'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
                 'kop_surat' => $kop_surat,
@@ -109,7 +109,7 @@ class TemplateSuratController extends Controller
             $namaFile = 'NamaSurat.pdf';
 
             // Load the view and set the default font to Arial
-            $pdf = PDF::loadView('surat.pengantar', ['image' => $image])->setOptions([
+            $pdf = PDF::loadView('surat-pdf.pengantar', ['image' => $image])->setOptions([
                 'defaultFont' => 'Arial', // Set the default font to Arial
             ]);
             $pdf->setPaper('a4', 'portrait');
@@ -136,7 +136,7 @@ class TemplateSuratController extends Controller
             $namaFile = 'NamaSurat.pdf';
 
             // Load the view and set the default font to Arial
-            $pdf = PDF::loadView('surat.perintah', ['image' => $image])->setOptions([
+            $pdf = PDF::loadView('surat-pdf.perintah', ['image' => $image])->setOptions([
                 'defaultFont' => 'Arial', // Set the default font to Arial
             ]);
             $pdf->setPaper('a4', 'portrait');
@@ -163,7 +163,7 @@ class TemplateSuratController extends Controller
             $namaFile = 'NamaSurat.pdf';
 
             // Load the view and set the default font to Arial
-            $pdf = PDF::loadView('surat.pernyataan', ['image' => $image])->setOptions([
+            $pdf = PDF::loadView('surat-pdf.pernyataan', ['image' => $image])->setOptions([
                 'defaultFont' => 'Arial', // Set the default font to Arial
             ]);
             $pdf->setPaper('a4', 'portrait');

@@ -246,11 +246,17 @@
                 </a>
             </li>
             <li class="sidebar-menu-item" id="surat_keluar">
-              <a href="/surat_keluar">
-                  <i class="ri-mail-send-line sidebar-menu-item-icon"></i>
-                  Surat Keluar
-              </a>
-          </li>
+                <a href="/surat_keluar">
+                    <i class="ri-mail-send-line sidebar-menu-item-icon"></i>
+                    Surat Keluar
+                </a>
+            </li>
+            <li class="sidebar-menu-item" id="surat_arsip">
+                <a href="/surat_arsip">
+                    <i class="ri-archive-2-line sidebar-menu-item-icon"></i>
+                    Surat Arsip
+                </a>
+            </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
             <li class="sidebar-menu-item" id="profile">
                 <a href="/profile">

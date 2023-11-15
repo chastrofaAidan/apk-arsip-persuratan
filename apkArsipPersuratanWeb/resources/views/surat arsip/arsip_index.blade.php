@@ -87,7 +87,9 @@
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perihal Surat</th>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">File</th>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
-                <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
+                @if (Auth::user()->role == 'admin')
+                    <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
+                @endif
             </tr>
 
             @foreach ($dataarsip as $a)
@@ -118,6 +120,7 @@
                     </td>
 
                     <td>{{ $a->keterangan }}</td>
+                    @if (Auth::user()->role == 'admin')
                     <td>
                         <a href="/surat_arsip/edit/{{ $a->id_surat }}" class="btn col-12 text-center"
                             style="background-color: var(--bs-color2); color: white;">
@@ -129,6 +132,7 @@
                             <i class="ri-delete-bin-line"></i>
                         </a><br>
                     </td>
+                    @endif
                 </tr>
             @endforeach
         </table>

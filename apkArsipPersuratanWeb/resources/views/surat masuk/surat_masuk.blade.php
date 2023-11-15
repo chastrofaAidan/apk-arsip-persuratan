@@ -53,7 +53,9 @@
                 </th>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Pokok Isi Surat</th>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
-                <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
+                @if (Auth::user()->role == 'admin')
+                    <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
+                @endif
             </tr>
 
             @foreach ($datamasuk as $m)
