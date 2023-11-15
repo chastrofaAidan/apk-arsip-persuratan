@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
 use App\Models\ArsipModel;
 use App\Models\SuratKeluarModel;
+use App\Models\KodePosModel;
 use App\Models\KopSuratModel;
 use App\Models\KepalaSekolahModel;
 use App\Models\User;
@@ -93,8 +94,11 @@ class TemplateSuratController extends Controller
 
     public function settings()
     {
+        $kop_surat = KopSuratModel::latest()->first();
+        $kepala_sekolah = KepalaSekolahModel::latest()->first();
+        $kode_pos = KodePosModel::all();
         $user = Auth::user(); // Get the currently logged-in user
-        return view('settings', ['user' => $user]);
+        return view('settings', ['user' => $user, 'kop_surat' => $kop_surat, 'kepala_sekolah' => $kepala_sekolah, 'kode_pos' => $kode_pos,]);
     }
 
 
