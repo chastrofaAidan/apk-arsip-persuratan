@@ -30,6 +30,8 @@ class SessionController extends Controller
                 return redirect('dashboard');
             } elseif (Auth::user()->role == 'admin') {
                 return redirect('dashboard');
+            } elseif (Auth::user()->role == 'user') {
+                return redirect('dashboard');
             }
         } else {
             return redirect('')->withErrors('Username dan Passord tidak sesuai')->withInput();

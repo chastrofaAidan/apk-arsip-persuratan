@@ -7,7 +7,14 @@ Be sure to follow the following steps in order for your aplication to work
   CREATE DATABASE arsip_persuratan;
 3. Extract Laravel Project and change the file named ".env.example" on the main project folder to ".env"
 4.  In Command Prompt directing to your project, run this:
-  php artisan migrate
-  php artisan db:seed --class=ArsipSeeder
-  php artisan db:seed --class=AkunSeeder
+- php artisan migrate
+- php artisan db:seed --class=ArsipSeeder
+- php artisan db:seed --class=SuratKeluarSeeder
+- php artisan db:seed --class=SuratMasukSeeder
+- php artisan db:seed
+- 
+5. Open Command-Prompt
+- php.ini
+- delete the (;) in ';extension=gd'
+6. restart XAMPP and/or PC's to update 'php.ini' changes
 etc.

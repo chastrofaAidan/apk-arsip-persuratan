@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'profile'
     ];
 
     /**
@@ -49,5 +50,4 @@ class User extends Authenticatable
     {
         return in_array($this->role, $roles);
     }
-
 }
