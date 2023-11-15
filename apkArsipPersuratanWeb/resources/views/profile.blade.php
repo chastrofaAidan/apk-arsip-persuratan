@@ -106,11 +106,26 @@
                 </div>
             </div>
         </form>
-
-        <!-- Pastikan Anda sudah memasukkan Sweet Alert di sini -->
+    @endsection
+    
+    @section('js')
+    <!-- Pastikan Anda sudah memasukkan Sweet Alert di sini -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
         <script>
+            function checkPassword() {
+                const newPasswordInput = document.getElementById('email');
+                const verifyPasswordDiv = document.getElementById('verifyPasswordDiv');
+
+                if (newPasswordInput.value) {
+                    verifyPasswordDiv.style.display = 'block';
+                } else {
+                    verifyPasswordDiv.style.display = 'none';
+                }
+            }
+
+
+
             function restorePreviousFile() {
                 var output = document.getElementById('output');
                 var previousFileLabel = document.getElementById('previousFileLabel');
@@ -206,20 +221,5 @@
                     }
                 });
             });
-        </script>
-    @endsection
-
-    @section('js')
-        <script>
-            function checkPassword() {
-                const newPasswordInput = document.getElementById('email');
-                const verifyPasswordDiv = document.getElementById('verifyPasswordDiv');
-
-                if (newPasswordInput.value) {
-                    verifyPasswordDiv.style.display = 'block';
-                } else {
-                    verifyPasswordDiv.style.display = 'none';
-                }
-            }
         </script>
     @endsection

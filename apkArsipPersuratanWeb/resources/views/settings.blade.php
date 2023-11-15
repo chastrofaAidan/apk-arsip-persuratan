@@ -68,18 +68,34 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8">
-                <label for="file">Photo Instansi</label>
-                <input class="custom-input" type="file" name="file" id="file" accept=".png, .jpeg, .jpg"><br>
-                <label for="file">Previous File: {{ $kop_surat->logo_instansi }}</label><br>
+            <div>
+                <label for="profile">Foto Instansi (Ukuran File: 90*105)</label>
             </div>
-            <!-- <div class="col-md-4">
-                <img class="img-preview img-fluid" alt="Profile" width="100">
-            </div> -->
+
+            <div class="col-md-8" style="position: relative;">
+                <input class="custom-input" type="file" name="profile" id="file" accept=".png, .jpeg, .jpg"
+                    onchange="loadFile(event)">
+                <br>
+            </div>
+
+            <div class="col-md-4 text-center">
+                @if ($kop_surat->logo_instansi)
+                    <!-- Tampilkan gambar profil sebelumnya jika ada -->
+                    <img id="output" src="data_file/{{ $kop_surat->logo_instansi }}" class="img-thumbnail"
+                        alt="Profile Image" style="width: 200px; height: 200px; object-fit: cover;"
+                        crossorigin="anonymous">
+                    <label id="previousFileLabel" for="profile">Previous File: {{ $kop_surat->logo_instansi }}</label>
+                @else
+                    <!-- Tampilkan gambar default jika tidak ada gambar profil sebelumnya -->
+                    <img src="https://picsum.photos/200/" class="img-thumbnail" alt="Profile Image" style="width: 200px; height: 200px; object-fit: cover;" crossorigin="anonymous">
+                    <label for="profile">Previous File: {{ $kop_surat->logo_instansi }}</label><br>
+                @endif
+            </div>
         </div>
     </div>
     <br>
-    <input class="btn btn-primary" type="submit" value="Simpan Data">
+    <input class="btn btn-primary" type="submit" value="Simpan Data" id="btn-simpan">
+    <input class="btn btn-danger" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()"></form>
 </form>
 </div>
 <br><br>
@@ -109,19 +125,35 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-8">
-                <label for="tanda_tangan">Photo Instansi</label>
-                <input class="custom-input" type="file" name="tanda_tangan" id="tanda_tangan" accept=".png, .jpeg, .jpg"><br>
-                <label for="tanda_tangan">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label><br>
+            <div>
+                <label for="profile">Tanda Tangan Kepala Sekolah (Ukuran File: 150*115)</label>
             </div>
-            <!-- <div class="col-md-4">
-                <img class="img-preview img-fluid" alt="Profile" width="100">
-            </div> -->
+
+            <div class="col-md-8" style="position: relative;">
+                <input class="custom-input" type="file" name="profile" id="file" accept=".png, .jpeg, .jpg"
+                    onchange="loadFile(event)">
+                <br>
+            </div>
+
+            <div class="col-md-4 text-center">
+                @if ($kepala_sekolah->tanda_tangan)
+                    <!-- Tampilkan gambar profil sebelumnya jika ada -->
+                    <img id="output" src="data_file/{{ $kepala_sekolah->tanda_tangan }}" class="img-thumbnail"
+                        alt="Profile Image" style="width: 200px; height: 200px; object-fit: cover;"
+                        crossorigin="anonymous">
+                    <label id="previousFileLabel" for="profile">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label>
+                @else
+                    <!-- Tampilkan gambar default jika tidak ada gambar profil sebelumnya -->
+                    <img src="https://picsum.photos/200/" class="img-thumbnail" alt="Profile Image"
+                        style="width: 200px; height: 200px; object-fit: cover;" crossorigin="anonymous">
+                    <label for="profile">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label><br>
+                @endif
+            </div>
         </div>
     </div>
     <br>
-    <input class="btn btn-primary" type="submit" value="Simpan Data">
-</form>
+    <input class="btn btn-primary" type="submit" value="Simpan Data" id="btn-simpan">
+    <input class="btn btn-danger" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()"></form>
 </div>
 <br><br>
 
@@ -163,4 +195,104 @@
 </div>
 <br><br>
 
+@endsection
+
+@section('js')
+<script>
+function restorePreviousFile() {
+    var output = document.getElementById('output');
+    var previousFileLabel = document.getElementById('previousFileLabel');
+
+    // Periksa apakah ada file sebelumnya
+    @if ($user->profile)
+        // Tampilkan gambar profil sebelumnya
+        output.src = "data_file/{!! $user->profile !!}";
+        previousFileLabel.innerText = 'Previous File: {!! $user->profile !!}';
+    @else
+        // Tampilkan gambar default jika tidak ada file sebelumnya
+        output.src = "https://picsum.photos/200/";
+        previousFileLabel.innerText = 'Previous File: {!! $user->profile !!}';
+    @endif
+}
+
+var previousFile; // Variabel untuk menyimpan nama file sebelumnya
+
+var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+
+    // Update teks label "Previous File" sesuai dengan nama file yang baru dipilih
+    var fileName = event.target.files[0].name;
+    var previousFileLabel = document.getElementById('previousFileLabel');
+
+    // Ganti label menjadi "File"
+    previousFileLabel.innerText = 'File: ' + fileName;
+
+    // Simpan nama file sebelumnya
+    previousFile = fileName;
+};
+
+function togglePasswordVisibility() {
+    var passwordInput = document.getElementById('password');
+    var verifyPasswordInput = document.getElementById('verify_password');
+
+    // Periksa apakah checkbox dicentang
+    var showPasswordCheckbox = document.getElementById('showPassword');
+    var showPassword = showPasswordCheckbox.checked;
+
+    // Set tipe input berdasarkan checkbox
+    passwordInput.type = showPassword ? 'text' : 'password';
+    verifyPasswordInput.type = showPassword ? 'text' : 'password';
+}
+
+// Variable untuk menandai apakah formulir telah diisi
+var formIsFilled = false;
+
+// Fungsi untuk menghapus isi formulir
+function clearForm() {
+    document.getElementById('file').value = '';
+    document.getElementById('password').value = '';
+
+    // Tandai bahwa formulir kosong
+    formIsFilled = false;
+
+    // Ambil gambar sebelumnya dari database
+    restorePreviousFile();
+
+    // Isi kembali formulir dengan data dari database
+    document.getElementById('name').value = "{{ $user->name }}";
+    document.getElementById('email').value = "{{ $user->email }}";
+    // Jika perlu, Anda bisa menambahkan logika lainnya untuk mengisi formulir sesuai kebutuhan
+
+    // Kembalikan gambar ke gambar sebelumnya dari database
+    var output = document.getElementById('output');
+    output.src = "data_file/{!! $user->profile !!}";
+}
+
+// Fungsi untuk menandai bahwa formulir telah diisi
+function markFormIsFilled() {
+    formIsFilled = true;
+}
+
+// Tambahkan event listener untuk tombol "Batal"
+document.getElementById('btn-batal').addEventListener('click', function() {
+    // Tampilkan konfirmasi sebelum menghapus formulir
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Anda yakin ingin menghapus seluruh isian formulir?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Ya, hapus isian',
+        cancelButtonText: 'Tidak'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Jika pengguna memilih Ya, hapus isian formulir
+            clearForm();
+            restorePreviousFile();
+        }
+    });
+});
+</script>
 @endsection
