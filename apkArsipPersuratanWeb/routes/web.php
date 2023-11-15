@@ -81,9 +81,11 @@ Route::get('/surat_keluar/hapus/{id}', [ArsipController::class, 'keluarHapus'])-
 
 Route::get('/profile', [TemplateSuratController::class, 'profile'])->middleware('userAkses:superadmin,admin');
 Route::get('/settings', [TemplateSuratController::class, 'settings'])->middleware('userAkses:superadmin');
-Route::get('/kop_surat/store', [TemplateSuratController::class, 'kopSuratStore'])->middleware('userAkses:superadmin');
-Route::get('/kepala_sekolah/store', [TemplateSuratController::class, 'kepalaSekolahStore'])->middleware('userAkses:superadmin');
-Route::get('/kop_surat/store', [TemplateSuratController::class, 'kopSuratStore'])->middleware('userAkses:superadmin');
+Route::get('/kop_surat/tambah', [TemplateSuratController::class, 'masukTambah'])->middleware('userAkses:superadmin');
+Route::post('/kop_surat/store', [TemplateSuratController::class, 'masukStore'])->middleware('userAkses:superadmin');
+Route::get('/kop_surat/edit/{id}', [TemplateSuratController::class, 'masukEdit'])->middleware('userAkses:superadmin');
+Route::post('/kop_surat/update', [TemplateSuratController::class, 'kopSuratUpdate'])->middleware('userAkses:superadmin');
+Route::post('/kepala_sekolah/update', [TemplateSuratController::class, 'kepalaSekolahUpdate'])->middleware('userAkses:superadmin');
 
 
 // Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');

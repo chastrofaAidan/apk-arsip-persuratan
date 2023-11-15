@@ -10,6 +10,17 @@
         color: black; /* Set text color to contrast with the gray background */
         border-radius: 1vh;
     }
+
+    .custom-button {
+        background-color: #9A4444;
+        color: #fff;
+        /* Text color */
+        padding: 8px 20px;
+        /* Adjust padding as needed */
+        border-radius: 10px;
+        /* Rounded corners */
+        border: 2px solid white;
+    }
 </style>
 @endsection
 
@@ -24,7 +35,7 @@
     <i class="ri-award-fill" style="font-size: 20px;"></i>
     Format Kop Surat 
 </h4>
-<form action="/kop_surat/store" method="post" enctype="multipart/form-data">
+<form action="/kop_surat/update" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="container">
         <div class="row">
@@ -58,9 +69,9 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <label for="logo_instansi">Photo Instansi</label>
-                <input class="custom-input" type="file" name="logo_instansi" id="logo_instansi" accept=".png, .jpeg, .jpg" required="required"><br>
-                <label for="logo_instansi">Previous File: {{ $kop_surat->logo_instansi }}</label><br>
+                <label for="file">Photo Instansi</label>
+                <input class="custom-input" type="file" name="file" id="file" accept=".png, .jpeg, .jpg"><br>
+                <label for="file">Previous File: {{ $kop_surat->logo_instansi }}</label><br>
             </div>
             <!-- <div class="col-md-4">
                 <img class="img-preview img-fluid" alt="Profile" width="100">
@@ -78,7 +89,7 @@
     <i class="ri-account-circle-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
     Biodata Kepala Sekolah
 </h4>
-<form action="/kepala_sekolah/store" method="post" enctype="multipart/form-data">
+<form action="/kepala_sekolah/update" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="container">
         <div class="row">
@@ -100,7 +111,7 @@
         <div class="row">
             <div class="col-md-8">
                 <label for="tanda_tangan">Photo Instansi</label>
-                <input class="custom-input" type="file" name="tanda_tangan" id="tanda_tangan" accept=".png, .jpeg, .jpg" required="required"><br>
+                <input class="custom-input" type="file" name="tanda_tangan" id="tanda_tangan" accept=".png, .jpeg, .jpg"><br>
                 <label for="tanda_tangan">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label><br>
             </div>
             <!-- <div class="col-md-4">
@@ -119,6 +130,12 @@
     <i class="ri-list-settings-line" style="font-size: 20px;"></i>
     Format Kode Surat
 </h4>
+<a href="/kode_pos_ambah">
+    <button class="custom-button" style="margin-right: 5px;">
+        <i class="ri-list-settings-line"></i>
+        <span>Tambah Kode Surat</span>
+    </button>
+</a>
 <table class="table table-bordered table-striped" border="1">
 <tr>
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">No</th>
