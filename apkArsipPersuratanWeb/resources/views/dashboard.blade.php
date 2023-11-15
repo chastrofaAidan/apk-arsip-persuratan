@@ -82,7 +82,7 @@
             <br>
             <br>
 
-            @if (Auth::user()->role == 'superadmin')
+            @if (Auth::user()->role == 'admin')
                 <div>
                     <div>
                         <div class="col-md py-2">
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                 </div>
-            @elseif (Auth::user()->role == 'admin')
+            @elseif (Auth::user()->role == 'user')
                 <div>
                     <div>
                         <div class="col-md py-2">
@@ -132,7 +132,7 @@
         </div>
     </div>
     <br>
-    @if (Auth::user()->role == 'superadmin')
+    @if (Auth::user()->role == 'admin')
         <div class="containers text-center" style="overflow: hidden; padding-bottom: 10px;">
             <div class="row">
                 <div class="col-md" style="margin-bottom: 10px;">
@@ -180,7 +180,7 @@
                 </div>
             </div>
         </div>
-    @elseif (Auth::user()->role == 'admin')
+    @elseif (Auth::user()->role == 'user')
         <div class="containers text-center" style="overflow: hidden; padding-bottom: 10px;">
             <div class="row">
                 <div class="col-md" style="margin-bottom: 10px;">

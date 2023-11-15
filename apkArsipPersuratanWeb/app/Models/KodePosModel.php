@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class KodePosModel extends Model
 {
     use HasFactory;
-
-
     protected $table = 'kode_pos';
     protected $primaryKey = 'id_kode_pos';
     protected $keyType = 'string';

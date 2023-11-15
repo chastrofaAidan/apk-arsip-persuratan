@@ -9,73 +9,79 @@ use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
 use App\Models\ArsipModel;
 use App\Models\SuratKeluarModel;
-use App\Models\KopSuratModel;
 use App\Models\KodePosModel;
+use App\Models\KopSuratModel;
 use App\Models\KepalaSekolahModel;
 use App\Models\User;
 use PDF;
 // use Barryvdh\DomPDF\PDF;
 
-class TemplateSuratController extends Controller 
+class TemplateSuratController extends Controller
 {
-    public function index(){
-        $user = Auth::user(); // Get the currently logged-in user
-        return view('pembuatan_surat', ['user' => $user]);
-    }
-
-    public function ijin(){
+    public function ijin()
+    {
         $user = Auth::user(); // Get the currently logged-in user
         $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
-    
+
         $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
         $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
-    
-        return view('ijin_template', ['user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 'kode_surat' => $kode_surat]);
-    }
-    
 
-    public function pengantar(){
-        $user = Auth::user(); // Get the currently logged-in user
-        return view('pengantar_template', ['user' => $user]);
+        return view('surat keluar/template surat/ijin_template', ['user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 'kode_surat' => $kode_surat]);
     }
 
-    public function perintah(){
+
+    public function pengantar()
+    {
         $user = Auth::user(); // Get the currently logged-in user
-        return view('perintah_template', ['user' => $user]);
+        return view('surat keluar/template surat/pengantar_template', ['user' => $user]);
     }
 
-    public function pernyataan(){
+    public function perintah()
+    {
         $user = Auth::user(); // Get the currently logged-in user
-        return view('pernyataan_template', ['user' => $user]);
+        return view('surat keluar/template surat/perintah_template', ['user' => $user]);
     }
-    
-    public function profile(){
+
+    public function pernyataan()
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+        return view('surat keluar/template surat/pernyataan_template', ['user' => $user]);
+    }
+
+    public function profile()
+    {
         $user = Auth::user(); // Get the currently logged-in user
         return view('profile', ['user' => $user]);
     }
 
-    public function profileUpdate(){
-        // Validate the request data
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
+    public function updateProfile(Request $request)
+    {
+        // Validasi data jika diperlukan
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
             'password' => 'required',
-            'profile' => 'required',
         ]);
 
-        $user = Auth::user();
+        // Perbarui data user berdasarkan ID atau data yang unik lainnya
+        $user = User::find($request->input('user_id'));
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
 
-        // Check if the "fotowalas" input is empty
-        if (!$request->hasFile('fotowalas')) {
-            // Assign the previous value to the "fotowalas" field
-            $fotowalas = $record->fotowalas;
-        } else {
-            // Handle the case when a new file is uploaded
-            $file = $request->file('fotowalas');
-            $photo = time() . "_" . $file->getClientOriginalName();
-            $tujuanupload = 'data_file';
-            $file->move($tujuanupload, $photo);
-            $fotowalas = $photo;
+        // Perbarui password jika diisi
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        // Proses dan simpan gambar profil jika ada
+        if ($request->hasFile('profile')) {
+            // Tambahkan logika penyimpanan gambar sesuai kebutuhan
+            $image = $request->file('profile');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('data_file'), $imageName);
+
+            // Simpan nama gambar ke dalam kolom profile
+            $user->profile = $imageName;
         }
         
         DB::table('tbl_walas')->where('idwalas',$request->idwalas)->update([
@@ -143,19 +149,19 @@ class TemplateSuratController extends Controller
     {
         // Use the correct directory separator for your OS
         $path = public_path() . '/data_file/kop_surat.png';
-    
+
         // Check if the image file exists
         if (file_exists($path)) {
             $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
-    
+
             $namaFile = 'NamaSurat.pdf';
-    
+
             // Load the view and set the default font to Arial
             $pdf = PDF::loadView('surat.pengantar', ['image' => $image])->setOptions([
                 'defaultFont' => 'Arial', // Set the default font to Arial
             ]);
             $pdf->setPaper('a4', 'portrait');
-    
+
             // Save the PDF to a file or return it as a download
             return $pdf->stream($namaFile);
             // return $pdf->download($namaFile);
@@ -170,19 +176,19 @@ class TemplateSuratController extends Controller
     {
         // Use the correct directory separator for your OS
         $path = public_path() . '/data_file/kop_surat.png';
-    
+
         // Check if the image file exists
         if (file_exists($path)) {
             $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
-    
+
             $namaFile = 'NamaSurat.pdf';
-    
+
             // Load the view and set the default font to Arial
             $pdf = PDF::loadView('surat.perintah', ['image' => $image])->setOptions([
                 'defaultFont' => 'Arial', // Set the default font to Arial
             ]);
             $pdf->setPaper('a4', 'portrait');
-    
+
             // Save the PDF to a file or return it as a download
             return $pdf->stream($namaFile);
             // return $pdf->download($namaFile);
@@ -197,19 +203,19 @@ class TemplateSuratController extends Controller
     {
         // Use the correct directory separator for your OS
         $path = public_path() . '/data_file/kop_surat.png';
-    
+
         // Check if the image file exists
         if (file_exists($path)) {
             $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
-    
+
             $namaFile = 'NamaSurat.pdf';
-    
+
             // Load the view and set the default font to Arial
             $pdf = PDF::loadView('surat.pernyataan', ['image' => $image])->setOptions([
                 'defaultFont' => 'Arial', // Set the default font to Arial
             ]);
             $pdf->setPaper('a4', 'portrait');
-    
+
             // Save the PDF to a file or return it as a download
             return $pdf->stream($namaFile);
             // return $pdf->download($namaFile);
