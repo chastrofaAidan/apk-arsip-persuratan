@@ -1,6 +1,3 @@
-
-
-
 @extends('partials/sidebar')
 <style>
     .custom-input {
@@ -11,7 +8,6 @@
     color: black; /* Set text color to contrast with the gray background */
     border-radius: 1vh;
 }
-
 
 </style>
 @section('Judul')
@@ -59,7 +55,6 @@
         <div class="row">
             <div class="col-md-4">
                 <label for="file">File</label>
-                <!-- <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i> -->
                 <input class="custom-input" type="file" name="file" id="file" accept=".pdf"><br>
                 <label for="file">Previous File: {{ $a->file_surat }}</label><br>
             </div>

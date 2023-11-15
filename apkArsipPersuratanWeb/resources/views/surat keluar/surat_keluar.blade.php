@@ -86,7 +86,7 @@
                     </td>
                     <td>{{ $k->keterangan_keluar }}</td>
 
-                    @if (Auth::user()->role == 'superadmin')
+                    @if (Auth::user()->role == 'admin')
                         <td>
                             <a href="/surat_keluar/edit/{{ $k->no_keluar }}" class="btn col-12 text-center"
                                 style="background-color: var(--bs-color2); color: white;">

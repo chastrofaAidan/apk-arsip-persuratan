@@ -12,6 +12,7 @@
     <link href="{{ asset('css/sidebar_style.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://unpkg.com/chart.js"></script>
     <title>Archie</title>
@@ -155,7 +156,84 @@
         </ul>
     </div>
 
+    <!-- Sidebar -->
     @elseif (Auth::user()->role == 'admin')
+    <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
+        <div class="d-flex align-items-center p-3">
+            <a href="/" class="sidebar-logo">
+                <img src="{{ asset('images/logo_archie.png') }}" alt="Error" width="120">
+            </a>
+            <i class="sidebar-toggle ri-arrow-left-circle-line ms-auto fs-5 d-none d-md-block"></i>
+        </div>
+        <ul class="sidebar-menu p-3 m-0 mb-0">
+            <li class="sidebar-menu-item" id="dashboard">
+                <a href="/">
+                    <i class="ri-dashboard-line sidebar-menu-item-icon"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Arsip</li>
+            <li class="sidebar-menu-item" id="surat_masuk">
+                <a href="/surat_masuk">
+                    <i class="ri-mail-unread-line sidebar-menu-item-icon"></i>
+                    Surat Masuk
+                </a>
+            </li>
+            <li class="sidebar-menu-item" id="surat_keluar">
+              <a href="/surat_keluar">
+                  <i class="ri-mail-send-line sidebar-menu-item-icon"></i>
+                  Surat Keluar
+              </a>
+          </li>
+          <li class="sidebar-menu-item" id="surat_arsip">
+            <a href="/surat_arsip">
+                <i class="ri-archive-2-line sidebar-menu-item-icon"></i>
+                Surat Arsip
+            </a>
+            </li>
+            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Tools</li>
+            <li class="sidebar-menu-item" id="pembuatan_surat">
+                <a href="/pembuatan_surat_ijin">
+                    <i class="ri-mail-add-line sidebar-menu-item-icon"></i>
+                    Pembuatan Surat
+                </a>
+            </li>
+            <li class="sidebar-menu-item" id="pengarsipan_surat">
+                <a href="/pengarsipan_surat">
+                    <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i>
+                    Pengarsipan Surat
+                </a>
+            </li>
+            <li class="sidebar-menu-item" id="pendataan_surat_masuk">
+                <a href="/surat_masuk/tambah">
+                    <i class="ri-git-repository-line sidebar-menu-item-icon"></i>
+                    Pendataan Surat Masuk
+                </a>
+            </li>
+            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
+            <li class="sidebar-menu-item" id="profile">
+                <a href="/profile">
+                    <i class="ri-account-circle-line sidebar-menu-item-icon"></i>
+                    Profile
+                </a>
+            </li>
+            <li class="sidebar-menu-item" id="settings">
+                <a href="/settings">
+                    <i class="ri-settings-line sidebar-menu-item-icon"></i>
+                    Settings
+                </a>
+            </li>
+            <li class="sidebar-menu-item">
+              <a href="/logout">
+                  <i class="ri-logout-box-line sidebar-menu-item-icon"></i>
+                  Logout
+              </a>
+          </li>
+        </ul>
+    </div>
+
+    @elseif (Auth::user()->role == 'user')
 
     <div class="sidebar position-fixed top-0 bottom-0 bg-white border-end">
         <div class="d-flex align-items-center p-3">

@@ -73,7 +73,7 @@
                     <td>{{ $m->pokok_masuk }}</td>
                     <td>{{ $m->keterangan_masuk }}</td>
 
-                    @if (Auth::user()->role == 'superadmin')
+                    @if (Auth::user()->role == 'admin')
                         <td>
                             <a href="/surat_masuk/edit/{{ $m->no_masuk }}" class="btn col-12 text-center"
                                 style="background-color: var(--bs-color2); color: white;">

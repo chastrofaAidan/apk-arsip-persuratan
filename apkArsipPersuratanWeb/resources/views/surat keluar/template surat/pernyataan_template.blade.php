@@ -1,4 +1,4 @@
-@extends('pembuatan_surat')
+@extends('partials/pembuatan_surat')
 
 @section('template')
 
