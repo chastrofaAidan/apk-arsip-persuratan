@@ -12,7 +12,7 @@ use App\Models\SuratKeluarModel;
 use App\Models\KodePosModel;
 use App\Models\KopSuratModel;
 use App\Models\KepalaSekolahModel;
-use App\Models\User;
+
 use PDF;
 // use Barryvdh\DomPDF\PDF;
 
@@ -46,54 +46,6 @@ class TemplateSuratController extends Controller
     {
         $user = Auth::user(); // Get the currently logged-in user
         return view('surat keluar/template surat/pernyataan_template', ['user' => $user]);
-    }
-
-    public function profile()
-    {
-        $user = Auth::user(); // Get the currently logged-in user
-        return view('profile', ['user' => $user]);
-    }
-
-    public function updateProfile(Request $request)
-    {
-        // Validasi data jika diperlukan
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
-            'password' => 'required',
-        ]);
-
-        // Perbarui data user berdasarkan ID atau data yang unik lainnya
-        $user = User::find($request->input('user_id'));
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-
-        // Perbarui password jika diisi
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->input('password'));
-        }
-
-        // Proses dan simpan gambar profil jika ada
-        if ($request->hasFile('profile')) {
-            // Tambahkan logika penyimpanan gambar sesuai kebutuhan
-            $image = $request->file('profile');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('data_file'), $imageName);
-
-            // Simpan nama gambar ke dalam kolom profile
-            $user->profile = $imageName;
-        }
-        
-        DB::table('tbl_walas')->where('idwalas',$request->idwalas)->update([
-
-            'fotowalas' => $fotowalas,
-            'namawalas' => $request->namawalas,
-            'nip' => $request->nip,
-            'kelaswalas' => $request->kelaswalas,
-            'mapel' => $request->mapel
-        ]);
-
-        return redirect('/');
     }
 
 
@@ -225,14 +177,15 @@ class TemplateSuratController extends Controller
             return "Image file not found.";
         }
     }
-    
-    
-    public function settings(){
+
+
+    public function settings()
+    {
         $kop_surat = KopSuratModel::latest()->first();
         $kepala_sekolah = KepalaSekolahModel::latest()->first();
         $kode_pos = KodePosModel::all();
         $user = Auth::user(); // Get the currently logged-in user
-        return view('settings', ['user' => $user, 'kop_surat' => $kop_surat, 'kepala_sekolah' => $kepala_sekolah, 'kode_pos' => $kode_pos, ]);
+        return view('settings', ['user' => $user, 'kop_surat' => $kop_surat, 'kepala_sekolah' => $kepala_sekolah, 'kode_pos' => $kode_pos,]);
     }
 
 
@@ -296,7 +249,7 @@ class TemplateSuratController extends Controller
         if ($record) {
             // Delete the existing record
             DB::table('kepala_sekolah')->where('id_kepala_sekolah', $request->id_kepala_sekolah)->delete();
-            
+
             // Handle file deletion (optional)
             $this->deleteFile($record->tanda_tangan);
 
@@ -334,9 +287,6 @@ class TemplateSuratController extends Controller
             unlink($filePath);
         }
     }
-
-
-
 }
 // $path = public_path() . 'data_file/kop_surat.png';
 // $type = pathinfo($path, PATHINFO_EXTENSION);
