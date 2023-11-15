@@ -96,6 +96,13 @@
                 </a>
             </li>
 
+            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Account</li>
+            <li class="sidebar-menu-item" id="profile">
+                <a href="/profile">
+                    <i class="ri-account-circle-line sidebar-menu-item-icon"></i>
+                    Profile
+                </a>
+            </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Arsip</li>
             <li class="sidebar-menu-item" id="surat_masuk">
                 <a href="/surat_masuk">
@@ -114,25 +121,6 @@
                 <i class="ri-archive-2-line sidebar-menu-item-icon"></i>
                 Surat Arsip
             </a>
-            </li>
-            <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Tools</li>
-            <li class="sidebar-menu-item" id="pembuatan_surat">
-                <a href="/pembuatan_surat_ijin">
-                    <i class="ri-mail-add-line sidebar-menu-item-icon"></i>
-                    Pembuatan Surat
-                </a>
-            </li>
-            <li class="sidebar-menu-item" id="pengarsipan_surat">
-                <a href="/pengarsipan_surat">
-                    <i class="ri-inbox-unarchive-line sidebar-menu-item-icon"></i>
-                    Pengarsipan Surat
-                </a>
-            </li>
-            <li class="sidebar-menu-item" id="pendataan_surat_masuk">
-                <a href="/surat_masuk/tambah">
-                    <i class="ri-git-repository-line sidebar-menu-item-icon"></i>
-                    Pendataan Surat Masuk
-                </a>
             </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
             <li class="sidebar-menu-item" id="profile">
@@ -270,12 +258,6 @@
                     Profile
                 </a>
             </li>
-            <!-- <li class="sidebar-menu-item" id="setting">
-                <a href="/settings">
-                    <i class="ri-settings-line sidebar-menu-item-icon"></i>
-                    Settings
-                </a>
-            </li> -->
             <li class="sidebar-menu-item">
               <a href="/logout">
                   <i class="ri-logout-box-line sidebar-menu-item-icon"></i>
