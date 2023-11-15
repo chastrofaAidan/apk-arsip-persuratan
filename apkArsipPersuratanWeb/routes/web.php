@@ -58,21 +58,21 @@ Route::get('/surat_masuk/edit/{id}', [ArsipController::class, 'masukEdit'])->mid
 Route::post('/surat_masuk/update', [ArsipController::class, 'masukUpdate'])->middleware('userAkses:admin');
 Route::get('/surat_masuk/hapus/{id}', [ArsipController::class, 'masukHapus'])->middleware('userAkses:admin');
 
-// Rute untuk manajemen surat keluar
-Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->middleware('userAkses:admin,user')->name('keluar');
-Route::get('/surat_keluar/edit/{id}', [ArsipController::class, 'keluarEdit'])->middleware('userAkses:admin');
-Route::post('/surat_keluar/store', [ArsipController::class, 'keluarStore'])->middleware('userAkses:admin');
-Route::post('/surat_keluar/update', [ArsipController::class, 'keluarUpdate'])->middleware('userAkses:admin');
-Route::get('/surat_keluar/hapus/{id}', [ArsipController::class, 'keluarHapus'])->middleware('userAkses:admin');
-
-// Rute untuk pembaruan profil pengguna
-Route::post('/user/update', 'TemplateSuratController@updateProfile');
 
 // Rute untuk melihat profil dan pengaturan berdasarkan hak akses
 Route::get('/profile', [TemplateSuratController::class, 'profile'])->middleware('userAkses:admin,user');
 Route::get('/settings', [TemplateSuratController::class, 'settings'])->middleware('userAkses:admin');
 
-// Rute untuk melihat pratinjau berdasarkan hak akses
+Route::get('/kop_surat/tambah', [TemplateSuratController::class, 'masukTambah'])->middleware('userAkses:superadmin');
+Route::post('/kop_surat/store', [TemplateSuratController::class, 'masukStore'])->middleware('userAkses:superadmin');
+Route::get('/kop_surat/edit/{id}', [TemplateSuratController::class, 'masukEdit'])->middleware('userAkses:superadmin');
+Route::post('/kop_surat/update', [TemplateSuratController::class, 'kopSuratUpdate'])->middleware('userAkses:superadmin');
+Route::post('/kepala_sekolah/update', [TemplateSuratController::class, 'kepalaSekolahUpdate'])->middleware('userAkses:superadmin');
+
+
+// Route::get('/surat_masuk/search', 'ArsipController@searchSuratMasuk');
+// Route::get('/surat_keluar/search', 'ArsipController@searchSuratKeluar');
+
 Route::get('/preview/{pdf}', 'ArsipController@preview')->name('preview');
 
 // Rute untuk manajemen soft deletes pada Wali Kelas (tidak aktifkan untuk sementara)

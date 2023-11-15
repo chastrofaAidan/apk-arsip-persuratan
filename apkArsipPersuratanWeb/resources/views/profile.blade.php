@@ -1,5 +1,6 @@
 @extends('partials/sidebar')
 
+@section('css')
 <style>
     .custom-input {
         width: 100%;
@@ -29,6 +30,7 @@
         border-radius: 1vh;
     }
 </style>
+@endsection
 
 @section('Judul')
     <i class="ri-account-circle-line sidebar-menu-item-icon" style="font-size: 40px;"></i>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ArsipModel;
@@ -139,7 +140,7 @@ class ArsipController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request, ArsipModel $arsip)
     {
         // Validate the request data
         $validatedData = $request->validate([
@@ -149,24 +150,20 @@ class ArsipController extends Controller
             'jenis_surat' => 'required|in:Surat Masuk,Surat Keluar',
             'tanggal_surat' => 'required|date',
             'perihal_surat' => 'required',
-            'file' => 'file', // You can add file validation rules here if needed
+            'file' => 'file', // Add file validation rules here if needed
             'keterangan' => '',
         ]);
 
-        // Find the Arsip record by its ID
-        $arsip = ArsipModel::find($request->input('id_surat'));
+        // Retrieve the existing record from the database using model binding
+        // Laravel automatically resolves the model instance from the route parameter
+        // $arsip = ArsipModel::findOrFail($request->id_surat); // You can use findOrFail for automatic 404 handling
 
         // Check if the record was found
         if ($arsip) {
-            // Retrieve the existing record from the database
-            $record = DB::table('arsip')->where('id_surat', $request->id_surat)->first();
-            $pdf;
-
             // Check if the "file" input is empty
-            if (!$request->hasFile('file')) {
-                // Assign the previous value to the "file" field
-                $pdf = $record->file_surat;
-            } else {
+            $pdf = $arsip->file_surat; // Default to the existing file
+
+            if ($request->hasFile('file')) {
                 // Handle the case when a new file is uploaded
                 $file = $request->file('file');
                 $pdf = time() . "_" . $file->getClientOriginalName();
@@ -175,17 +172,16 @@ class ArsipController extends Controller
             }
 
             // Update the record with the validated data
-            $arsip->kode_surat = $validatedData['kode_surat'];
-            $arsip->judul_surat = $validatedData['judul_surat'];
-            $arsip->perusahaan = $validatedData['perusahaan'];
-            $arsip->jenis_surat = $validatedData['jenis_surat'];
-            $arsip->tanggal_surat = $validatedData['tanggal_surat'];
-            $arsip->perihal_surat = $validatedData['perihal_surat'];
-            $arsip->file_surat = $pdf;
-            $arsip->keterangan = $validatedData['keterangan'];
-
-            // Save the updated record to the database
-            $arsip->save();
+            $arsip->update([
+                'kode_surat' => $validatedData['kode_surat'],
+                'judul_surat' => $validatedData['judul_surat'],
+                'perusahaan' => $validatedData['perusahaan'],
+                'jenis_surat' => $validatedData['jenis_surat'],
+                'tanggal_surat' => $validatedData['tanggal_surat'],
+                'perihal_surat' => $validatedData['perihal_surat'],
+                'file_surat' => $pdf,
+                'keterangan' => $validatedData['keterangan'],
+            ]);
 
             // Redirect to a success page or another appropriate action
             return redirect('/surat_arsip')->with('success', 'Arsip updated successfully.');
@@ -194,6 +190,7 @@ class ArsipController extends Controller
             return redirect('/surat_arsip')->with('error', 'Arsip not found.');
         }
     }
+
 
 
 

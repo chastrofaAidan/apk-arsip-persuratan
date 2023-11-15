@@ -122,11 +122,11 @@
     <td width=80% class="text-center">
         <div class="txt-light title">PEMERINTAH DAERAH PROVINSI JAWA BARAT</div>
         <div class="txt-light title">DINAS PENDIDIKAN</div>
-        <div class="txt-light title">CABANG DINAS PENDIDIKAN WILAYAH VII</div>
+        <div class="txt-light title">{{ $kop_surat->lingkup_wilayah }}</div>
         <div class="txt-bold big">{{ $kop_surat->nama_instansi }}</div>
         <div class="txt-light">{{ $kop_surat->alamat_instansi }}, Telp./Fax. {{ $kop_surat->kontak_instansi }}</div>
         <div class="txt-light">Website : {{ $kop_surat->website_instansi }} - email : <a href="{{ $kop_surat->email_instansi }}">{{ $kop_surat->email_instansi }}</a></div>
-        <div class="txt-light">Kota Cimahi - 40533</div>
+        <div class="txt-light">{{ $kop_surat->kode_pos }}</div>
     </td>
 </tr>
 </table>
