@@ -27,6 +27,12 @@
     {{ csrf_field() }}
     <div class="container">
         <div class="row">
+            <div class="col-md-12">
+                <label for="id_surat">ID Surat</label>
+                <input class="custom-input" type="text" name="id_surat" id="id_surat" required="required" value="{{ $a->id_surat }}" readonly>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <label for="kode_surat">Kode Surat</label>
                 <input class="custom-input" type="text" name="kode_surat" id="kode_surat" required="required" value="{{ $a->kode_surat }}">
@@ -55,7 +61,7 @@
         <div class="row">
             <div class="col-md-4">
                 <label for="file">File</label>
-                <input class="custom-input" type="file" name="file" id="file" accept=".pdf"><br>
+                <input class="custom-input" type="file" name="file_surat" id="file_surat" accept=".pdf"><br>
                 <label for="file">Previous File: {{ $a->file_surat }}</label><br>
             </div>
             <div class="col-md-8">

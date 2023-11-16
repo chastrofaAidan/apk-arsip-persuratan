@@ -49,7 +49,14 @@ Route::middleware(['auth', 'userAkses:superadmin,admin,user'])->group(function (
 Route::middleware(['auth', 'userAkses:superadmin,admin'])->group(function () {
     // Settings
     Route::get('/settings', [TemplateSuratController::class, 'settings']);
-    Route::get('/settings', [TemplateSuratController::class, 'settings']);
+
+    // CRUD Kode Pos 
+    Route::get('/kode_pos/tambah', [TemplateSuratController::class, 'kodePosTambah']);
+    Route::post('/kode_pos/store', [TemplateSuratController::class, 'kodePosStore']);
+    Route::get('/kode_pos/edit/{id}', [TemplateSuratController::class, 'kodePosEdit']);
+    Route::post('/kode_pos/update', [TemplateSuratController::class, 'kodePosUpdate']);
+    Route::get('/kode_pos/hapus/{id}', [TemplateSuratController::class, 'kodePosHapus']);
+    
 });
 
 
@@ -70,7 +77,7 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
 
 
     // CRUD Kop Surat
-    Route::post('/kop_surat/update', [ArsipController::class, 'kopSuratUpdate']);
+    // Route::post('/kop_surat/update', [ArsipController::class, 'kopSuratUpdate']);
     
 
     // CRUD Kepala Sekolah
@@ -122,5 +129,8 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::post('/arsip/update', [ArsipController::class, 'update']);
     Route::get('/arsip/hapus/{id}', [ArsipController::class, 'hapus']);
 
+
+    Route::post('/kop_surat/update', [TemplateSuratController::class, 'kopSuratUpdate']);
+    Route::post('/kepala_sekolah/update', [TemplateSuratController::class, 'kepalaSekolahUpdate']);
 
 });

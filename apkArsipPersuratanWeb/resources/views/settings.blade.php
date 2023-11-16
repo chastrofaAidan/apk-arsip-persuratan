@@ -35,9 +35,17 @@
     <i class="ri-award-fill" style="font-size: 20px;"></i>
     Format Kop Surat 
 </h4>
+<br>
+
 <form action="/kop_surat/update" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <label for="id_kop_surat">ID Kop Surat</label>
+                <input class="custom-input" type="text" name="id_kop_surat" id="id_kop_surat" required="required" value="{{ $kop_surat->id_kop_surat }}" readonly>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <label for="kode_surat">Kode Wilayah SMK 1 Cimahi</label>
@@ -69,33 +77,32 @@
         </div>
         <div class="row">
             <div>
-                <label for="profile">Foto Instansi (Ukuran File: 90*105)</label>
+                <label for="logo_instansi">Foto Instansi (Ukuran File: 90*105)</label>
             </div>
 
             <div class="col-md-8" style="position: relative;">
-                <input class="custom-input" type="file" name="profile" id="file" accept=".png, .jpeg, .jpg"
-                    onchange="loadFile(event)">
+                <input class="custom-input" type="file" name="logo_instansi" id="file" accept=".png, .jpeg, .jpg" onchange="loadFile1(event)">
                 <br>
             </div>
 
             <div class="col-md-4 text-center">
                 @if ($kop_surat->logo_instansi)
                     <!-- Tampilkan gambar profil sebelumnya jika ada -->
-                    <img id="output" src="data_file/{{ $kop_surat->logo_instansi }}" class="img-thumbnail"
-                        alt="Profile Image" style="width: 200px; height: 200px; object-fit: cover;"
+                    <img id="output1" src="data_file/{{ $kop_surat->logo_instansi }}" class="img-thumbnail"
+                        alt="Logo Image" style="width: 200px; height: 200px; object-fit: cover;"
                         crossorigin="anonymous">
-                    <label id="previousFileLabel" for="profile">Previous File: {{ $kop_surat->logo_instansi }}</label>
+                    <label id="previousFileLabel" for="logo_instansi">Previous File: {{ $kop_surat->logo_instansi }}</label>
                 @else
                     <!-- Tampilkan gambar default jika tidak ada gambar profil sebelumnya -->
-                    <img src="https://picsum.photos/200/" class="img-thumbnail" alt="Profile Image" style="width: 200px; height: 200px; object-fit: cover;" crossorigin="anonymous">
-                    <label for="profile">Previous File: {{ $kop_surat->logo_instansi }}</label><br>
+                    <img src="https://picsum.photos/200/" class="img-thumbnail" alt="Logo Image" style="width: 200px; height: 200px; object-fit: cover;" crossorigin="anonymous">
+                    <label for="logo_instansi">Previous File: {{ $kop_surat->logo_instansi }}</label><br>
                 @endif
             </div>
         </div>
     </div>
     <br>
     <input class="btn btn-primary" type="submit" value="Simpan Data" id="btn-simpan">
-    <input class="btn btn-danger" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()"></form>
+    <input class="btn btn-danger" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()">
 </form>
 </div>
 <br><br>
@@ -105,9 +112,19 @@
     <i class="ri-account-circle-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
     Biodata Kepala Sekolah
 </h4>
+<br>
+@if (isset($kepala_sekolah->updated_at))
+    <h6><b>Updated At: {{ $kepala_sekolah->updated_at->timezone('Asia/Jakarta')->format('d F Y') }}</b></h6>
+@endif
 <form action="/kepala_sekolah/update" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <label for="id_kepala_sekolah">ID Kepala Sekolah</label>
+                <input class="custom-input" type="text" name="id_kepala_sekolah" id="id_kepala_sekolah" required="required" value="{{ $kepala_sekolah->id_kepala_sekolah }}" readonly>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <label for="nama_kepala_sekolah">Nama Kepala Sekolah</label>
@@ -126,34 +143,35 @@
         </div>
         <div class="row">
             <div>
-                <label for="profile">Tanda Tangan Kepala Sekolah (Ukuran File: 150*115)</label>
+                <label for="tanda_tangan">Tanda Tangan Kepala Sekolah (Ukuran File: 150*115)</label>
             </div>
 
             <div class="col-md-8" style="position: relative;">
-                <input class="custom-input" type="file" name="profile" id="file" accept=".png, .jpeg, .jpg"
-                    onchange="loadFile(event)">
+                <input class="custom-input" type="file" name="tanda_tangan" id="file" accept=".png, .jpeg, .jpg"
+                    onchange="loadFile2(event)">
                 <br>
             </div>
 
             <div class="col-md-4 text-center">
                 @if ($kepala_sekolah->tanda_tangan)
                     <!-- Tampilkan gambar profil sebelumnya jika ada -->
-                    <img id="output" src="data_file/{{ $kepala_sekolah->tanda_tangan }}" class="img-thumbnail"
-                        alt="Profile Image" style="width: 200px; height: 200px; object-fit: cover;"
+                    <img id="output2" src="data_file/{{ $kepala_sekolah->tanda_tangan }}" class="img-thumbnail"
+                        alt="Signature Image" style="width: 200px; height: 200px; object-fit: cover;"
                         crossorigin="anonymous">
-                    <label id="previousFileLabel" for="profile">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label>
+                    <label id="previousFileLabel" for="tanda_tangan">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label>
                 @else
                     <!-- Tampilkan gambar default jika tidak ada gambar profil sebelumnya -->
-                    <img src="https://picsum.photos/200/" class="img-thumbnail" alt="Profile Image"
+                    <img src="https://picsum.photos/200/" class="img-thumbnail" alt="Signature Image"
                         style="width: 200px; height: 200px; object-fit: cover;" crossorigin="anonymous">
-                    <label for="profile">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label><br>
+                    <label for="tanda_tangan">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label><br>
                 @endif
             </div>
         </div>
     </div>
     <br>
     <input class="btn btn-primary" type="submit" value="Simpan Data" id="btn-simpan">
-    <input class="btn btn-danger" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()"></form>
+    <input class="btn btn-danger" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()">
+</form>
 </div>
 <br><br>
 
@@ -162,7 +180,7 @@
     <i class="ri-list-settings-line" style="font-size: 20px;"></i>
     Format Kode Surat
 </h4>
-<a href="/kode_pos_ambah">
+<a href="/kode_pos/tambah">
     <button class="custom-button" style="margin-right: 5px;">
         <i class="ri-list-settings-line"></i>
         <span>Tambah Kode Surat</span>
@@ -173,6 +191,7 @@
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">No</th>
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">Kode Pos</th>
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Tanggal Diperbaharui</th>
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
     </tr>
 
@@ -182,10 +201,20 @@
         <td>{{ $kp->kode_pos }}</td>
         <td>{{ $kp->keterangan_kode_pos }}</td>
         <td>
-            <a href="/setting/kode_pos/edit/{{ $kp->id_surat }}" class="btn col-12 text-center" style="background-color: var(--bs-color2); color: white;">
+            @if ($kp->updated_at)
+                {{ $kp->updated_at->timezone('Asia/Jakarta')->format('d F Y') }}
+            @else
+                N/A
+            @endif
+        </td>
+
+
+
+        <td>
+            <a href="/kode_pos/edit/{{ $kp->id_kode_pos }}" class="btn col-12 text-center" style="background-color: var(--bs-color2); color: white;">
             <i class="ri-edit-box-line"></i>
             </a><br><br>
-            <a href="/setting/kode_pos/hapus/{{ $kp->id_surat }}" class="btn col-12 text-center" style="background-color: var(--bs-color1); color: white;">
+            <a href="/kode_pos/hapus/{{ $kp->id_kode_pos }}" class="btn col-12 text-center" style="background-color: var(--bs-color1); color: white;">
                 <i class="ri-delete-bin-line"></i>            
             </a><br>
         </td>
@@ -217,8 +246,23 @@ function restorePreviousFile() {
 
 var previousFile; // Variabel untuk menyimpan nama file sebelumnya
 
-var loadFile = function(event) {
-    var output = document.getElementById('output');
+var loadFile1 = function(event) {
+    var output = document.getElementById('output1');
+    output.src = URL.createObjectURL(event.target.files[0]);
+
+    // Update teks label "Previous File" sesuai dengan nama file yang baru dipilih
+    var fileName = event.target.files[0].name;
+    var previousFileLabel = document.getElementById('previousFileLabel');
+
+    // Ganti label menjadi "File"
+    previousFileLabel.innerText = 'File: ' + fileName;
+
+    // Simpan nama file sebelumnya
+    previousFile = fileName;
+};
+
+var loadFile2 = function(event) {
+    var output = document.getElementById('output2');
     output.src = URL.createObjectURL(event.target.files[0]);
 
     // Update teks label "Previous File" sesuai dengan nama file yang baru dipilih

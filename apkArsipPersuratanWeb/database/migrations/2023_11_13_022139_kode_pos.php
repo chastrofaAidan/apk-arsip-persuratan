@@ -15,6 +15,7 @@ return new class extends Migration
             $table ->id('id_kode_pos');
             $table ->string('kode_pos');
             $table ->string('keterangan_kode_pos');
+            $table  ->timestamps();  
         });
     }
 
