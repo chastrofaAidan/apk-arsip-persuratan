@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class UserController extends Controller
 {
@@ -50,5 +52,33 @@ class UserController extends Controller
 
         // Redirect atau kirim respons sesuai kebutuhan
         return redirect()->back()->with('success', 'Profil berhasil diperbarui');
+    }
+
+    public function pegawai()
+    {
+        $Role = ['admin', 'user'];
+
+        $totalPegawai = User::whereIn('role', $Role)->count(); // Menghitung total pegawai dengan peran admin atau user
+        $user = User::whereIn('role', $Role)->get(); // Dapatkan data user dengan peran admin atau user
+
+        return view('pegawai.pegawai', [
+            'user' => $user,
+            'totalPegawai' => $totalPegawai,
+        ]);
+    }
+
+    public function pegawaiTambah()
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+
+        return view('pegawai.pegawai_tambah', ['user' => $user]);
+    }
+
+    public function pegawaiHapus($id)
+    {
+        DB::table('users')->where('id', $id)->delete();
+
+        // alihkan halaman ke halaman arsip
+        return redirect('/pegawai');
     }
 }
