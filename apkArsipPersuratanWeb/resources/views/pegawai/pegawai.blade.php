@@ -34,11 +34,12 @@
                         <span
                             class="font-poppins font-bold text-[#8AA7FF] text-2xl p-2 text-center">{{ $totalPegawai }}</span>
                     </div>
-                    <div class="w-2/12 relative flex flex-col shadow-lg mb-6 rounded-lg p-4 mr-4 hover:bg-[#8AA7FF] transition ease-linear font-poppins font-semibold text-gray-500 hover:text-white cursor-pointer text-center" onclick="window.location.href='/pegawai/tambah'">
+                    <div class="w-2/12 relative flex flex-col shadow-lg mb-6 rounded-lg p-4 mr-4 hover:bg-[#8AA7FF] transition ease-linear font-poppins font-semibold text-gray-500 hover:text-white cursor-pointer text-center"
+                        onclick="window.location.href='/pegawai/tambah'">
                         Tambah
                         <i class="fa-solid fa-plus w-full h-full flex justify-center items-center text-2xl"></i>
                     </div>
-                    
+
                 </div>
 
                 <!-- Search Input -->
@@ -50,7 +51,6 @@
                             placeholder="Nama Pegawai...">
                     </div>
 
-                    <!-- Placeholder Data -->
                     <div class="grid grid-cols-2 gap-4">
                         @php $counter = 1; @endphp
                         @foreach ($user as $user)
@@ -60,7 +60,7 @@
                                         <div class="font-bold text-md text-gray-500 bg-gray-300 rounded-lg p-1 px-3">
                                             {{ $counter }}</div>
                                         <div>
-                                            <button
+                                            <button onclick="window.location.href = '{{ route('pegawai.edit', ['id' => $user->id]) }}'"
                                                 class="bg-white hover:bg-blue-500 p-1 pl-2 rounded-lg text-blue-500 hover:text-white transition ease-linear cursor-pointer">
                                                 <i class="fa-solid fa-pen-to-square font-bold text-lg mr-1"></i>
                                             </button>

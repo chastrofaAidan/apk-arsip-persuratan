@@ -72,6 +72,10 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     Route::get('/pegawai', [UserController::class, 'pegawai']);
     Route::get('/pegawai/hapus/{id}', [UserController::class, 'pegawaiHapus']);
     Route::get('/pegawai/tambah', [UserController::class, 'pegawaiTambah']);
+    Route::post('/pegawai/store', [UserController::class, 'pegawaiStore']);
+    Route::get('/pegawai/edit/{id}', [UserController::class, 'pegawaiViewUpdate'])->name('pegawai.edit');
+    Route::put('/pegawai/update/{id}', [UserController::class, 'pegawaiUpdate'])->name('pegawai.update');
+
 
     // CRUD Kop Surat
     Route::post('/kop_surat/update', [ArsipController::class, 'kopSuratUpdate']);
@@ -80,8 +84,6 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     // CRUD Kepala Sekolah
     Route::post('/kepala_sekolah/update', [ArsipController::class, 'kepalaSekolahUpdate']);
 });
-
-
 
 
 // Rute ADMIN bisa akses

@@ -35,8 +35,8 @@
                     </a>
                 </div>
                 <br>
-                <form action="/admin/daftarsiswa/store" method="POST" enctype="multipart/form-data">
-                    @csrf
+                <form action="/pegawai/store" method="POST" enctype="multipart/form-data">
+                    {{ csrf_field() }}
                     <input type="hidden" name="id">
                     <div class="relative flex flex-col shadow-lg mb-6 rounded-lg p-4">
                         <div class="block bg-transparent w-full overflow-x-auto">
@@ -49,7 +49,7 @@
                                                 class="w-full flex justify-center text-md font-poppins font-semibold text-black">Foto</span>
                                         </div>
                                         <div class="w-full rounded-b-lg h-64 p-2">
-                                            <input type="file" name="gambar" onchange="loadFile(event)" required>
+                                            <input type="file" name="profile" onchange="loadFile(event)" required>
                                             <div class="w-full flex justify-center items-center">
                                                 <img class="mt-2 h-48" id="output">
                                             </div>
@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="w-8/12 p-2 rounded-l-lg">
                                             <input class="h-full w-full outline-none font-poppins" type="text"
-                                                name="Nama" placeholder="Masukkan Nama" required>
+                                                name="name" placeholder="Masukkan Nama" required>
                                         </div>
                                     </div>
                                     <div class="w-full flex border-solid border rounded-lg mt-2">
@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="w-8/12 p-2 rounded-l-lg">
                                             <input class="h-full w-full outline-none font-poppins" type="email"
-                                                name="Email" placeholder="Masukkan Email" required>
+                                                name="email" placeholder="Masukkan Email" required>
                                         </div>
                                     </div>
                                     <div class="w-full flex border-solid border rounded-lg mt-2">
@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="w-8/12 p-2 rounded-l-lg">
                                             <input class="h-full w-full outline-none font-poppins" type="password"
-                                                name="Password" placeholder="Masukkan Password" required>
+                                                name="password" placeholder="Masukkan Password" required>
                                         </div>
                                     </div>
                                     <div class="w-full flex border-solid border rounded-lg mt-2">
@@ -89,11 +89,10 @@
                                             <span class="text-md font-poppins font-semibold text-black">Role</span>
                                         </div>
                                         <div class="w-8/12 p-1 rounded-l-lg">
-                                            <select class="h-full w-full outline-none font-poppins" name="jenis_kelamin"
-                                                placeholder="Pilih Jenis Kelamin" required>
+                                            <select class="h-full w-full outline-none font-poppins" name="role" required>
                                                 <option value="" disabled selected>Pilih Role</option>
-                                                <option value="l">admin</option>
-                                                <option value="p">user</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="user">User</option>
                                             </select>
                                         </div>
                                     </div>
