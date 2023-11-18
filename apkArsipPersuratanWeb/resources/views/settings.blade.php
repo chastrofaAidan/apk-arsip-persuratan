@@ -36,7 +36,9 @@
     Format Kop Surat 
 </h4>
 <br>
-
+@if (isset($kop_surat->updated_at))
+    <h6><b>Updated At: {{ $kop_surat->updated_at->timezone('Asia/Jakarta')->format('d F Y') }}</b></h6>
+@endif
 <form action="/kop_surat/update" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="container">

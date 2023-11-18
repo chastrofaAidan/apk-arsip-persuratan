@@ -97,7 +97,6 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::post('/surat_masuk/update', [ArsipController::class, 'masukUpdate']);
     Route::get('/surat_masuk/hapus/{id}', [ArsipController::class, 'masukHapus']);
 
-    
     // CRUD Surat Keluar
     Route::get('/surat_keluar/edit/{id}', [ArsipController::class, 'keluarEdit']);
     Route::post('/surat_keluar/update', [ArsipController::class, 'keluarUpdate']);
@@ -116,7 +115,7 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::get('/pembuatan_surat_pernyataan', [TemplateSuratController::class, 'index']);
 
     // Penyimpanan Template Surat (Store - Surat Keluar)
-    // Route::post('/surat_ijin/store', [ArsipController::class, 'ijinStore']);
+    Route::post('/surat_ijin/store', [ArsipController::class, 'ijinStore']);
     // Route::post('/surat_pengantar/store', [ArsipController::class, 'pengantarStore']);
     // Route::post('/surat_perintah/store', [ArsipController::class, 'perintahStore']);
     // Route::post('/surat_pernyataan/store', [ArsipController::class, 'pernyataanStore']);

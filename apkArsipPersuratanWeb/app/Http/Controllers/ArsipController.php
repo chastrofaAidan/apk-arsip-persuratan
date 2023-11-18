@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\ArsipModel;
 use App\Models\SuratMasukModel;
 use App\Models\SuratKeluarModel;
@@ -138,47 +139,7 @@ class ArsipController extends Controller
 
         return view('surat arsip/arsip_edit', ['user' => $user, 'dataarsip' => $arsip]);
     }
-
-
-    // public function update(Request $request, ArsipModel $arsip)
-    // {
-    //     // Validate the request data
-    //     $validatedData = $request->validate([
-    //         'kode_surat' => 'required',
-    //         'judul_surat' => 'required',
-    //         'perusahaan' => 'required',
-    //         'jenis_surat' => 'required|in:Surat Masuk,Surat Keluar',
-    //         'tanggal_surat' => 'required|date',
-    //         'perihal_surat' => 'required',
-    //         'keterangan' => '',
-    //     ]);
-
-    //     // Check if the "file" input is empty
-    //     $pdf = $arsip->file_surat; // Default to the existing file
-
-    //     if ($request->hasFile('file')) {
-    //         // Handle the case when a new file is uploaded
-    //         $file = $request->file('file');
-    //         $pdf = time() . "_" . $file->getClientOriginalName();
-    //         $tujuanupload = 'data_file';
-    //         $file->move($tujuanupload, $pdf);
-    //     }
-
-    //     // Update the record with the validated data
-    //     $arsip->update([
-    //         'kode_surat' => $validatedData['kode_surat'],
-    //         'judul_surat' => $validatedData['judul_surat'],
-    //         'perusahaan' => $validatedData['perusahaan'],
-    //         'jenis_surat' => $validatedData['jenis_surat'],
-    //         'tanggal_surat' => $validatedData['tanggal_surat'],
-    //         'perihal_surat' => $validatedData['perihal_surat'],
-    //         'file_surat' => $pdf,
-    //         'keterangan' => $validatedData['keterangan'],
-    //     ]);
-
-    //     // Redirect to a success page or another appropriate action
-    //     return redirect('/surat_arsip')->with('success', 'Arsip updated successfully.');
-    // }
+    
 
     public function update(Request $request)
     {
@@ -412,44 +373,54 @@ class ArsipController extends Controller
     }
 
 
-    public function keluarStore(Request $request)
+    public function ijinStore(Request $request)
     {
         // Validate the request data
-        // $validatedData = $request->validate([
-        //     'kode_surat' => 'required', 
-        //     'judul_surat' => 'required',
-        //     'perusahaan' => 'required',
-        //     'jenis_surat' => 'required|in:Surat Masuk,Surat Keluar',
-        //     'tanggal_surat' => 'required|date',
-        //     'perihal_surat' => 'required',
-        //     'file' => 'required|file',
-        //     'keterangan' => 'required',
-        // ]);
+        $validatedData = $request->validate([
+            'no_keluar' => 'required',
+            'tanggal_keluar' => 'required',
+            'kode_keluar' => 'required',
+            'ditujukan' => 'required',
+            'perihal_keluar' => 'required',
+            'keterangan_keluar' => 'required',
 
-        // Get the uploaded file
-        // $file = $request->file('file');
-        // $pdf = time() . "_" . $file->getClientOriginalName();
-        // $tujuanupload = 'data_file';
-        // $file->move($tujuanupload, $pdf);
+            'paragraf.*' => 'required', // Validate each dynamic paragraph input
+        ]);
 
-        // Create a new ArsipModel instance and populate it with the validated data
-        // $keluar = new ArsipModel();
-        // $keluar->kode_surat = $validatedData['kode_surat'];
-        // $keluar->judul_surat = $validatedData['judul_surat'];
-        // $keluar->perusahaan = $validatedData['perusahaan'];
-        // $keluar->jenis_surat = $validatedData['jenis_surat'];
-        // $keluar->tanggal_surat = $validatedData['tanggal_surat'];
-        // $keluar->perihal_surat = $validatedData['perihal_surat'];
-        // $keluar->file_surat = $pdf;
-        // $keluar->keterangan = $validatedData['keterangan'];
+        // Create a new SuratKeluarModel instance and populate it with the validated data
+        $ijin = new SuratKeluarModel();
+        $ijin->no_keluar = $validatedData['no_keluar'];
+        $ijin->tanggal_keluar = $validatedData['tanggal_keluar'];
+        $ijin->kode_keluar = $validatedData['kode_keluar'];
+        $ijin->ditujukan = $validatedData['ditujukan'];
+        $ijin->perihal_keluar = $validatedData['perihal_keluar'];
+        $ijin->surat_keluar = "EWOWcopy.pdf";
+        $ijin->keterangan_keluar = $validatedData['keterangan_keluar'];
 
+        
+        // Process dynamic paragraph inputs
+        foreach ($validatedData['paragraf'] as $index => $paragraphContent) {
+            // Create a new ParagraphModel instance and save it to the database
+            $paragraph = new ParagraphModel();
+            $paragraph->ijin_id = $ijin->id; // Assuming a foreign key relationship
+            $paragraph->content = $paragraphContent;
+            $paragraph->save();
+        }
+
+
+        
         // Save the new record to the database
-        // $keluar->save();
-
+        $ijin->save();
+        
         // Redirect to a success page or another appropriate action
         return redirect('/surat_keluar');
     }
-
+    
+    // Get the uploaded file
+    // $file = $request->file('file');
+    // $pdf = time() . "_" . $file->getClientOriginalName();
+    // $tujuanupload = 'data_file';
+    // $file->move($tujuanupload, $pdf);
 
 
     public function keluarEdit($no_keluar)

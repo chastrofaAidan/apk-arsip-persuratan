@@ -54,7 +54,7 @@
         Pembuatan Surat - Izin
     </h4>
 
-    <form action="/surat_keluar/store" method="post" enctype="multipart/form-data">
+    <form action="/surat_ijin/store" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="container">
         <br>
@@ -64,8 +64,8 @@
                 <label for="no_keluar">No</label>
                 <input class="custom-input" type="text" name="no_keluar" id="no_keluar" value="{{ $newNoKeluarValue }}" readonly>
 
-                <label for="tanggal_surat">Tanggal</label>
-                <input class="custom-input" type="date" name="tanggal_surat" id="tanggal_surat" required="required" value="{{ now()->toDateString() }}"><br>
+                <label for="tanggal_keluar">Tanggal</label>
+                <input class="custom-input" type="date" name="tanggal_keluar" id="tanggal_keluar" required="required" value="{{ now()->toDateString() }}"><br>
 
                 <label for="perihal_keluar">Perihal</label>
                 <input class="custom-input" type="text" name="perihal_keluar" id="perihal_keluar" required="required" value="Surat Ijin"><br>      
@@ -83,24 +83,26 @@
             </div>
         </div>
         <br>
-            <h5 class="fw-bold">Konten Surat Ijin</h5>
+        <h5 class="fw-bold">Konten Surat Ijin</h5>
 
-            
-            <div class="container">
-                <div id="forms-container"></div>
-                <br><br>
-                <button class="custom-button" onclick="addParagraph()">
-                    <span>Add Paragraph</span>
-                </button>
-                <br>
-                <button class="custom-button" onclick="addTable()">
-                    <span>Add Table</span>
-                </button>
-                <label for="tableRowCount">Jumlah Kolom:</label>
-                <input type="number" id="tableRowCount" min="1" max="5" value="1" oninput="handleInputChange(this)">
-            </div>
+        <div class="container">
+            <div id="forms-container"></div>
+            <br><br>
+            <button class="custom-button" onclick="addParagraph()">
+                <span>Add Paragraph</span>
+            </button>
+            <br>
+            <button class="custom-button" onclick="addTable()">
+                <span>Add Table</span>
+            </button>
+            <label for="tableRowCount">Jumlah Kolom:</label>
+            <input type="number" id="tableRowCount" min="1" max="5" value="1" oninput="handleInputChange(this)">
+            <br>
+            <!-- <button class="custom-button" onclick="addPageBreak()">
+                <span>Add Page Break</span>
+            </button> -->
         </div>
-    </form>
+    </div>
 </div>
 
 <br><br>
@@ -115,16 +117,13 @@
     <div class="container">
         <div class="row">
             <input class="btn format-surat col-md-6" type="submit" value="Catat Surat Keluar & Unduh Sebagai PDF" style="background-color: var(--bs-color1); color: white;">
-            <!-- <a href="/surat_ijin" class="btn col-md-6 text-center" target="_blank">
-                <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;"> Catat Surat Keluar & Unduh Sebagai PDF</div>
-            </a><br> -->
+
             <a href="/surat_ijin" class="btn col-md-6 text-center" id="preview-link" target="_blank">
             <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;">Preview Surat</div>
             </a><br>
         </div>
     </div>
 </div>
-
 </form>
 @endsection
 
@@ -160,10 +159,10 @@
         newLabel.setAttribute('for', 'paragraf-' + elementCounter);
         newLabel.textContent = 'Paragraf ' + elementCounter;
 
-        // Create textarea
+        // Create textarea for paragraph content
         const newTextarea = document.createElement('textarea');
         newTextarea.className = 'custom-input paragraph';
-        newTextarea.name = 'paragraf-' + elementCounter;
+        newTextarea.name = 'paragraf[' + elementCounter + ']'; // Use an array for dynamic names
         newTextarea.id = 'paragraf-' + elementCounter;
         newTextarea.required = true;
 
@@ -186,6 +185,10 @@
         // Increment the counter for the next element
         elementCounter++;
     }
+
+    // function addPageBreak(){
+
+    // }
 
     function addTable() {
         const tableRowCount = document.getElementById('tableRowCount').value;
@@ -249,6 +252,12 @@
 
         // Increment the counter for the next element
         elementCounter++;
+
+        // Assuming you have a button to trigger the page transition
+        // const transitionButton = document.getElementById('transitionButton');
+        // transitionButton.addEventListener('click', function () {
+        //     navigateToAnotherPage();
+        // });
     }
 
     function addRow(table, rowCount) {
@@ -285,7 +294,6 @@
         table.appendChild(newRow);
         table.appendChild(lineBreak);
     }
-
 
 
     function deleteRow(row) {

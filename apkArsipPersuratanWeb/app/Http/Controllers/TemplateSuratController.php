@@ -52,11 +52,6 @@ class TemplateSuratController extends Controller
 
     public function suratIjin(Request $request)
     {
-        // Retrieve the values of paragraf from the request
-        $paragraf1 = $request->input('paragraf1');
-        $paragraf2 = $request->input('paragraf2');
-        $paragraf3 = $request->input('paragraf3');
-
         $kop_surat = KopSuratModel::latest()->first();
         $kepala_sekolah = KepalaSekolahModel::latest()->first();
 
@@ -80,9 +75,9 @@ class TemplateSuratController extends Controller
                 'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
                 'kop_surat' => $kop_surat,
                 'kepala_sekolah' => $kepala_sekolah,
-                'paragraf1' => $paragraf1, // Pass the paragraf values to the view
-                'paragraf2' => $paragraf2,
-                'paragraf3' => $paragraf3,
+                // 'paragraf1' => $paragraf1, // Pass the paragraf values to the view
+                // 'paragraf2' => $paragraf2,
+                // 'paragraf3' => $paragraf3,
             ])->setOptions([
                 'defaultFont' => 'Arial',
             ]);
