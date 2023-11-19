@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
 use App\Models\ArsipModel;
 use App\Models\SuratKeluarModel;
-use App\Models\KodePosModel;
+use App\Models\KodeSuratModel;
 use App\Models\KopSuratModel;
 use App\Models\KepalaSekolahModel;
 use App\Models\User;
@@ -23,11 +23,13 @@ class TemplateSuratController extends Controller
     {
         $user = Auth::user(); // Get the currently logged-in user
         $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
+        $datakodesurat = KodeSuratModel::all();
+        
 
         $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
         $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
 
-        return view('surat keluar/template surat/ijin_template', ['user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 'kode_surat' => $kode_surat]);
+        return view('surat keluar/template surat/ijin_template', ['user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 'kode_surat' => $kode_surat, 'datakodesurat' => $datakodesurat]);
     }
 
 
@@ -179,9 +181,9 @@ class TemplateSuratController extends Controller
     {
         $kop_surat = KopSuratModel::latest()->first();
         $kepala_sekolah = KepalaSekolahModel::latest()->first();
-        $kode_pos = KodePosModel::all();
+        $kode_surat = KodeSuratModel::all();
         $user = Auth::user(); // Get the currently logged-in user
-        return view('settings', ['user' => $user, 'kop_surat' => $kop_surat, 'kepala_sekolah' => $kepala_sekolah, 'kode_pos' => $kode_pos,]);
+        return view('settings', ['user' => $user, 'kop_surat' => $kop_surat, 'kepala_sekolah' => $kepala_sekolah, 'kode_surat' => $kode_surat,]);
     }
 
 
@@ -196,7 +198,7 @@ class TemplateSuratController extends Controller
             'kontak_instansi' => 'required',
             'website_instansi' => 'required',
             'email_instansi' => 'required|email',
-            'kode_pos' => 'required',
+            'kode_surat' => 'required',
             'lingkup_wilayah' => 'required',
         ]);
 
@@ -209,7 +211,7 @@ class TemplateSuratController extends Controller
         $kop_surat->kontak_instansi = $request->input('kontak_instansi');
         $kop_surat->website_instansi = $request->input('website_instansi');
         $kop_surat->email_instansi = $request->input('email_instansi');
-        $kop_surat->kode_pos = $request->input('kode_pos');
+        $kop_surat->kode_surat = $request->input('kode_surat');
         $kop_surat->lingkup_wilayah = $request->input('lingkup_wilayah');
 
         // Proses dan simpan gambar profil jika ada
@@ -286,72 +288,72 @@ class TemplateSuratController extends Controller
         return redirect()->back()->with('success', 'Kepala Sekolah updated successfully');
     }
 
-    public function kodePosTambah(){
+    public function kodeSuratTambah(){
         $user = Auth::user(); // Get the currently logged-in user
-        $lastRecord = kodePosModel::latest('id_kode_pos')->first();
-        $newNoMasukValue = ($lastRecord) ? $lastRecord->id_kode_pos + 1 : 1;
+        $lastRecord = kodeSuratModel::latest('id_kode_surat')->first();
+        $newNoMasukValue = ($lastRecord) ? $lastRecord->id_kode_surat + 1 : 1;
 
-        return view('kode-pos.kode_pos_tambah', ['user' => $user, 'newNoMasukValue' => $newNoMasukValue]);
+        return view('kode-surat.kode_surat_tambah', ['user' => $user, 'newNoMasukValue' => $newNoMasukValue]);
     }
 
-    public function kodePosStore(Request $request)
+    public function kodeSuratStore(Request $request)
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'id_kode_pos' => 'required',
-            'kode_pos' => 'required',
-            'keterangan_kode_pos' => 'required',
+            'id_kode_surat' => 'required',
+            'kode_surat' => 'required',
+            'keterangan_kode_surat' => 'required',
         ]);
 
         // Create a new ArsipModel instance and populate it with the validated data
-        $kodePos = new kodePosModel();
-        $kodePos->id_kode_pos = $validatedData['id_kode_pos'];
-        $kodePos->kode_pos = $validatedData['kode_pos'];
-        $kodePos->keterangan_kode_pos = $validatedData['keterangan_kode_pos'];
+        $kodeSurat = new kodeSuratModel();
+        $kodeSurat->id_kode_surat = $validatedData['id_kode_surat'];
+        $kodeSurat->kode_surat = $validatedData['kode_surat'];
+        $kodeSurat->keterangan_kode_surat = $validatedData['keterangan_kode_surat'];
 
         // Save the new record to the database
-        $kodePos->save();
+        $kodeSurat->save();
 
         // Redirect to a success page or another appropriate action
         return redirect('/settings');   
     }
 
-    public function kodePosEdit($id_kode_pos)
+    public function kodeSuratEdit($id_kode_surat)
     {
         $user = Auth::user(); // Get the currently logged-in user
-        $kode_pos = DB::table('kode_pos')->where('id_kode_pos', $id_kode_pos)->get();
+        $kode_surat = DB::table('kode_surat')->where('id_kode_surat', $id_kode_surat)->get();
 
-        return view('kode-pos.kode_pos_edit', ['user' => $user, 'datakodepos' => $kode_pos]);
+        return view('kode-surat.kode_surat_edit', ['user' => $user, 'datakodesurat' => $kode_surat]);
     }
 
-    public function kodePosUpdate(Request $request)
+    public function kodeSuratUpdate(Request $request)
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'id_kode_pos' => 'required',
-            'kode_pos' => 'required',
-            'keterangan_kode_pos' => 'required',
+            'id_kode_surat' => 'required',
+            'kode_surat' => 'required',
+            'keterangan_kode_surat' => 'required',
         ]);
 
         // Find the Arsip record by its ID
-        $kodePos = kodePosModel::find($request->input('id_kode_pos'));
+        $kodeSurat = kodeSuratModel::find($request->input('id_kode_surat'));
 
         // Update the record with the validated data
-        $kodePos->id_kode_pos = $validatedData['id_kode_pos'];
-        $kodePos->kode_pos = $validatedData['kode_pos'];
-        $kodePos->keterangan_kode_pos = $validatedData['keterangan_kode_pos'];
+        $kodeSurat->id_kode_surat = $validatedData['id_kode_surat'];
+        $kodeSurat->kode_surat = $validatedData['kode_surat'];
+        $kodeSurat->keterangan_kode_surat = $validatedData['keterangan_kode_surat'];
 
 
         // Save the updated record to the database
-        $kodePos->save();
+        $kodeSurat->save();
 
         // Redirect to a success page or another appropriate action
         return redirect('/settings')->with('success', 'Surat Masuk updated successfully.');
     }
 
-    public function kodePosHapus($id_kode_pos)
+    public function kodeSuratHapus($id_kode_surat)
     {
-        DB::table('kode_pos')->where('id_kode_pos', $id_kode_pos)->delete();
+        DB::table('kode_surat')->where('id_kode_surat', $id_kode_surat)->delete();
 
         // Redirect or return a response as needed
         return redirect()->back()->with('success', 'Kode Surat deleted successfully');

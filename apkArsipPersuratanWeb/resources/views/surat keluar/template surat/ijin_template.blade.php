@@ -72,8 +72,23 @@
             </div>
         
             <div class="col-md-6">
-                <label for="kode_keluar">Nomor Surat Keluar</label>
-                <input class="custom-input" type="text" name="kode_keluar" id="kode_keluar" required="required" value="Keperluan-Surat/{{ $newNoKeluarValue }}/{{ $kode_surat->kode_surat }}">
+                <label for="kode_keluar1">Nomor Surat Keluar</label>
+                <div class="row">
+                    <div class="col-md-4">
+                        <select class="custom-input form-select" name="kode_keluar1" id="kode_keluar1" required="required">
+                            <option value="" disabled selected>Pilih Kode Surat</option>
+                            @foreach($datakodesurat as $ks)
+                            <option value="{{ $ks->kode_surat }}">{{ $ks->kode_surat }} / {{ $ks->keterangan_kode_surat }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <b>/</b>
+                    </div>
+                    <div class="col-md-7">
+                        <input class="custom-input" type="text" name="kode_keluar2" id="kode_keluar2" required="required" value="{{ $newNoKeluarValue }}/{{ $kode_surat->kode_surat }}">
+                    </div>
+                </div>
 
                 <label for="ditujukan">Ditujukan Kepada</label>
                 <input class="custom-input" type="text" name="ditujukan" id="ditujukan" required="required"><br>

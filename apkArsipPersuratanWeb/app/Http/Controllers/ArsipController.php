@@ -102,7 +102,7 @@ class ArsipController extends Controller
             'tanggal_surat' => 'required|date',
             'perihal_surat' => 'required',
             'file' => 'required|file', // Ensure the "file" field is a file
-            'keterangan' => 'required',
+            'keterangan' => 'nullable', // Allow the 'keterangan' field to be nullable
         ]);
 
         // Get the uploaded file
@@ -321,6 +321,15 @@ class ArsipController extends Controller
         return redirect('/surat_masuk')->with('success', 'Surat Masuk updated successfully.');
     }
 
+    public function masukArsip($no_masuk)
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+
+        $masuk = DB::table('surat_masuk')->where('no_masuk', $no_masuk)->get();
+
+        return view('surat arsip/arsip_tambah_masuk', ['user' => $user, 'datamasuk' => $masuk]);
+    }
+
     public function masukHapus($no_masuk)
     {
         DB::table('surat_masuk')->where('no_masuk', $no_masuk)->delete();
@@ -379,19 +388,26 @@ class ArsipController extends Controller
         $validatedData = $request->validate([
             'no_keluar' => 'required',
             'tanggal_keluar' => 'required',
-            'kode_keluar' => 'required',
+            'kode_keluar1' => 'required',
+            'kode_keluar2' => 'required',
             'ditujukan' => 'required',
             'perihal_keluar' => 'required',
             'keterangan_keluar' => 'required',
 
-            'paragraf.*' => 'required', // Validate each dynamic paragraph input
+            // 'paragraf.*' => 'required', // Validate each dynamic paragraph input
         ]);
+
+        // Combine Kode Keluar Inputs
+        $kode_keluar1 = $request->input('kode_keluar1');
+        $kode_keluar2 = $request->input('kode_keluar2');
+        $kode_keluar = $kode_keluar1 . '/' . $kode_keluar2;
+
 
         // Create a new SuratKeluarModel instance and populate it with the validated data
         $ijin = new SuratKeluarModel();
         $ijin->no_keluar = $validatedData['no_keluar'];
         $ijin->tanggal_keluar = $validatedData['tanggal_keluar'];
-        $ijin->kode_keluar = $validatedData['kode_keluar'];
+        $ijin->kode_keluar = $kode_keluar;
         $ijin->ditujukan = $validatedData['ditujukan'];
         $ijin->perihal_keluar = $validatedData['perihal_keluar'];
         $ijin->surat_keluar = "EWOWcopy.pdf";
@@ -399,13 +415,13 @@ class ArsipController extends Controller
 
         
         // Process dynamic paragraph inputs
-        foreach ($validatedData['paragraf'] as $index => $paragraphContent) {
-            // Create a new ParagraphModel instance and save it to the database
-            $paragraph = new ParagraphModel();
-            $paragraph->ijin_id = $ijin->id; // Assuming a foreign key relationship
-            $paragraph->content = $paragraphContent;
-            $paragraph->save();
-        }
+        // foreach ($validatedData['paragraf'] as $index => $paragraphContent) {
+        //     // Create a new ParagraphModel instance and save it to the database
+        //     $paragraph = new ParagraphModel();
+        //     $paragraph->ijin_id = $ijin->id; // Assuming a foreign key relationship
+        //     $paragraph->content = $paragraphContent;
+        //     $paragraph->save();
+        // }
 
 
         
@@ -480,6 +496,15 @@ class ArsipController extends Controller
 
         // Redirect to a success page or another appropriate action
         return redirect('/surat_keluar')->with('success', 'Surat Keluar updated successfully.');
+    }
+
+    public function keluarArsip($no_keluar)
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+
+        $keluar = DB::table('surat_keluar')->where('no_keluar', $no_keluar)->get();
+
+        return view('surat arsip/arsip_tambah_keluar', ['user' => $user, 'datakeluar' => $keluar]);
     }
 
     public function keluarHapus($no_keluar)

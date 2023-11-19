@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AkunSeeder::class);
         $this->call(KopSuratSeeder::class);
-        $this->call(KodePosSeeder::class);
+        $this->call(KodeSuratSeeder::class);
         $this->call(KepalaSekolahSeeder::class);
     }
 }

@@ -59,8 +59,8 @@
                 <label for="website_instansi">Website Instansi</label>
                 <input class="custom-input" type="text" name="website_instansi" id="website_instansi" required="required" value="{{ $kop_surat->website_instansi }}"><br>
 
-                <label for="kode_pos">Kode Pos</label>
-                <input class="custom-input" type="text" name="kode_pos" id="kode_pos" required="required" value="{{ $kop_surat->kode_pos }}"><br>
+                <label for="kode_surat">Kode Pos</label>
+                <input class="custom-input" type="text" name="kode_surat" id="kode_surat" required="required" value="{{ $kop_surat->kode_surat }}"><br>
             </div>
         
             <div class="col-md-6">
@@ -182,7 +182,7 @@
     <i class="ri-list-settings-line" style="font-size: 20px;"></i>
     Format Kode Surat
 </h4>
-<a href="/kode_pos/tambah">
+<a href="/kode_surat/tambah">
     <button class="custom-button" style="margin-right: 5px;">
         <i class="ri-list-settings-line"></i>
         <span>Tambah Kode Surat</span>
@@ -191,17 +191,17 @@
 <table class="table table-bordered table-striped" border="1">
 <tr>
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">No</th>
-        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Kode Pos</th>
+        <th class="text-center" style="background-color: var(--bs-color1); color: white;">Kode Surat</th>
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">Tanggal Diperbaharui</th>
         <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
     </tr>
 
-    @foreach($kode_pos as $kp)
+    @foreach($kode_surat as $kp)
     <tr>
-        <td>{{ $kp->id_kode_pos }}</td>
-        <td>{{ $kp->kode_pos }}</td>
-        <td>{{ $kp->keterangan_kode_pos }}</td>
+        <td>{{ $kp->id_kode_surat }}</td>
+        <td>{{ $kp->kode_surat }}</td>
+        <td>{{ $kp->keterangan_kode_surat }}</td>
         <td>
             @if ($kp->updated_at)
                 {{ $kp->updated_at->timezone('Asia/Jakarta')->format('d F Y') }}
@@ -213,10 +213,10 @@
 
 
         <td>
-            <a href="/kode_pos/edit/{{ $kp->id_kode_pos }}" class="btn col-12 text-center" style="background-color: var(--bs-color2); color: white;">
+            <a href="/kode_surat/edit/{{ $kp->id_kode_surat }}" class="btn col-12 text-center" style="background-color: var(--bs-color2); color: white;">
             <i class="ri-edit-box-line"></i>
             </a><br><br>
-            <a href="/kode_pos/hapus/{{ $kp->id_kode_pos }}" class="btn col-12 text-center" style="background-color: var(--bs-color1); color: white;">
+            <a href="/kode_surat/hapus/{{ $kp->id_kode_surat }}" class="btn col-12 text-center" style="background-color: var(--bs-color1); color: white;">
                 <i class="ri-delete-bin-line"></i>            
             </a><br>
         </td>
