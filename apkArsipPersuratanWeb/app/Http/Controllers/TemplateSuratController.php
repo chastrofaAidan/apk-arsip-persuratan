@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\App;
 use Intervention\Image\Facades\Image;
 use App\Models\ArsipModel;
 use App\Models\SuratKeluarModel;
-use App\Models\KodePosModel;
+use App\Models\KodeSuratModel;
 use App\Models\KopSuratModel;
 use App\Models\KepalaSekolahModel;
+use App\Models\User;
 
 use PDF;
 // use Barryvdh\DomPDF\PDF;
@@ -22,11 +23,13 @@ class TemplateSuratController extends Controller
     {
         $user = Auth::user(); // Get the currently logged-in user
         $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
+        $datakodesurat = KodeSuratModel::all();
+        
 
         $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
         $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
 
-        return view('surat keluar/template surat/ijin_template', ['user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 'kode_surat' => $kode_surat]);
+        return view('surat keluar/template surat/ijin_template', ['user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 'kode_surat' => $kode_surat, 'datakodesurat' => $datakodesurat]);
     }
 
 
@@ -51,11 +54,6 @@ class TemplateSuratController extends Controller
 
     public function suratIjin(Request $request)
     {
-        // Retrieve the values of paragraf from the request
-        $paragraf1 = $request->input('paragraf1');
-        $paragraf2 = $request->input('paragraf2');
-        $paragraf3 = $request->input('paragraf3');
-
         $kop_surat = KopSuratModel::latest()->first();
         $kepala_sekolah = KepalaSekolahModel::latest()->first();
 
@@ -79,9 +77,9 @@ class TemplateSuratController extends Controller
                 'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
                 'kop_surat' => $kop_surat,
                 'kepala_sekolah' => $kepala_sekolah,
-                'paragraf1' => $paragraf1, // Pass the paragraf values to the view
-                'paragraf2' => $paragraf2,
-                'paragraf3' => $paragraf3,
+                // 'paragraf1' => $paragraf1, // Pass the paragraf values to the view
+                // 'paragraf2' => $paragraf2,
+                // 'paragraf3' => $paragraf3,
             ])->setOptions([
                 'defaultFont' => 'Arial',
             ]);
@@ -183,131 +181,181 @@ class TemplateSuratController extends Controller
     {
         $kop_surat = KopSuratModel::latest()->first();
         $kepala_sekolah = KepalaSekolahModel::latest()->first();
-        $kode_pos = KodePosModel::all();
+        $kode_surat = KodeSuratModel::all();
         $user = Auth::user(); // Get the currently logged-in user
-        return view('settings', ['user' => $user, 'kop_surat' => $kop_surat, 'kepala_sekolah' => $kepala_sekolah, 'kode_pos' => $kode_pos,]);
+        return view('settings', ['user' => $user, 'kop_surat' => $kop_surat, 'kepala_sekolah' => $kepala_sekolah, 'kode_surat' => $kode_surat,]);
     }
 
 
+
+    
     public function kopSuratUpdate(Request $request)
     {
-        // Validate the request data
-        $validatedData = $request->validate([
+        // Validasi data jika diperlukan
+        $request->validate([
             'kode_surat' => 'required',
             'nama_instansi' => 'required',
-            'logo_instansi' => 'file',  // Assuming logo_instansi is expected to be a file
             'kontak_instansi' => 'required',
             'website_instansi' => 'required',
             'email_instansi' => 'required|email',
-            'kode_pos' => 'required',
+            'kode_surat' => 'required',
             'lingkup_wilayah' => 'required',
         ]);
 
-        // Find the Arsip record by its ID
+        // Find the KopSuratModel instance by its ID or create a new one
         $kop_surat = KopSuratModel::find($request->input('id_kop_surat'));
 
-        if (!$kop_surat) {
-            // Handle the case where the record with the given ID is not found
-            return redirect('/settings')->with('error', 'Kop Surat not found.');
-        }
+        // Update the properties of the $kop_surat object
+        $kop_surat->kode_surat = $request->input('kode_surat');
+        $kop_surat->nama_instansi = $request->input('nama_instansi');
+        $kop_surat->kontak_instansi = $request->input('kontak_instansi');
+        $kop_surat->website_instansi = $request->input('website_instansi');
+        $kop_surat->email_instansi = $request->input('email_instansi');
+        $kop_surat->kode_surat = $request->input('kode_surat');
+        $kop_surat->lingkup_wilayah = $request->input('lingkup_wilayah');
 
-        // Check if the "file" input is empty
-        if (!$request->hasFile('logo_instansi')) {
-            // Assign the previous value to the "logo_instansi" field
-            $photo = $kop_surat->logo_instansi;
+        // Proses dan simpan gambar profil jika ada
+        if ($request->hasFile('logo_instansi')) {
+            // Tambahkan logika penyimpanan gambar sesuai kebutuhan
+            $image = $request->file('logo_instansi');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('data_file'), $imageName);
+
+            // Simpan nama gambar ke dalam kolom logo_instansi
+            $kop_surat->logo_instansi = $imageName;
         } else {
-            // Handle the case when a new file is uploaded
-            $file = $request->file('logo_instansi');
-            $photo = time() . "_" . $file->getClientOriginalName();
-            $tujuanupload = 'data_file';
-            $file->move($tujuanupload, $photo);
+            // Read the latest record from the database
+            $record = DB::table('kop_surat')
+                ->where('id_kop_surat', $request->id_kop_surat)
+                ->latest() // Assuming you want the latest record based on some criteria
+                ->first();
+
+                // Access the property only if $record is not null
+                $image = $record->logo_instansi;
+                $kop_surat->logo_instansi = $image;
         }
-
-        // Update the record with the validated data
-        $kop_surat->kode_surat = $validatedData['kode_surat'];
-        $kop_surat->nama_instansi = $validatedData['nama_instansi'];
-        $kop_surat->logo_instansi = $photo;
-        $kop_surat->kontak_instansi = $validatedData['kontak_instansi'];
-        $kop_surat->website_instansi = $validatedData['website_instansi'];
-        $kop_surat->email_instansi = $validatedData['email_instansi'];
-        $kop_surat->kode_pos = $validatedData['kode_pos'];
-        $kop_surat->lingkup_wilayah = $validatedData['lingkup_wilayah'];
-
-        // Save the updated record to the database
+        // Simpan perubahan
         $kop_surat->save();
 
         // Redirect to a success page or another appropriate action
         return redirect('/settings')->with('success', 'Kop Surat updated successfully.');
     }
 
+
+
+
     public function kepalaSekolahUpdate(Request $request)
     {
-        // Retrieve the existing record from the database
-        $record = DB::table('kepala_sekolah')->where('id_kepala_sekolah', $request->id_kepala_sekolah)->first();
+        // Validate the form data
+        $request->validate([
+            'nama_kepala_sekolah' => 'required|string',
+            'golongan_kepala_sekolah' => 'required|string',
+            'nip_kepala_sekolah' => 'required|string',
+            'tanda_tangan' => 'image|mimes:jpeg,png,jpg|max:2048', // Adjust the validation rules for the image upload
+        ]);
 
-        // Check if the record exists
-        if ($record) {
-            // Delete the existing record
-            DB::table('kepala_sekolah')->where('id_kepala_sekolah', $request->id_kepala_sekolah)->delete();
+        // Find the existing kepala_sekolah record
+        $kepala_sekolah = kepalaSekolahModel::find($request->id_kepala_sekolah);
 
-            // Handle file deletion (optional)
-            $this->deleteFile($record->tanda_tangan);
+        // Update the kepala_sekolah attributes with the form data
+        $kepala_sekolah->nama_kepala_sekolah = $request->nama_kepala_sekolah;
+        $kepala_sekolah->golongan_kepala_sekolah = $request->golongan_kepala_sekolah;
+        $kepala_sekolah->nip_kepala_sekolah = $request->nip_kepala_sekolah;
 
-            // Handle the case when a new file is uploaded
+        // Check if a new file is uploaded
+        if ($request->hasFile('tanda_tangan')) {
             $file = $request->file('tanda_tangan');
             $photo = time() . "_" . $file->getClientOriginalName();
             $tujuanupload = 'data_file';
             $file->move($tujuanupload, $photo);
-            $tanda_tangan = $photo;
 
-            // Create a new record
-            DB::table('kepala_sekolah')->insert([
-                'id_kepala_sekolah' => $request->id_kepala_sekolah,
-                'nama_kepala_sekolah' => $request->nama_kepala_sekolah,
-                'golongan_kepala_sekolah' => $request->golongan_kepala_sekolah,
-                'nip_kepala_sekolah' => $request->nip_kepala_sekolah,
-                'tanda_tangan' => $tanda_tangan,
-            ]);
+            // Delete the old file if it exists
+            if ($kepala_sekolah->tanda_tangan) {
+                $oldFilePath = public_path('data_file/' . $kepala_sekolah->tanda_tangan);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
 
-            // Redirect to the settings page
-            return redirect('/settings');
-        } else {
-            // Handle the case when no record is found
-            return abort(404);
+            // Update the kepala_sekolah with the new file name
+            $kepala_sekolah->tanda_tangan = $photo;
         }
+
+        // Save the updated kepala_sekolah
+        $kepala_sekolah->save();
+
+        // Redirect or return a response as needed
+        return redirect()->back()->with('success', 'Kepala Sekolah updated successfully');
     }
 
-    // Optional: Method to delete a file
-    private function deleteFile($filename)
-    {
-        $filePath = public_path('data_file/' . $filename);
+    public function kodeSuratTambah(){
+        $user = Auth::user(); // Get the currently logged-in user
+        $lastRecord = kodeSuratModel::latest('id_kode_surat')->first();
+        $newNoMasukValue = ($lastRecord) ? $lastRecord->id_kode_surat + 1 : 1;
 
-        // Check if the file exists before attempting to delete it
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
+        return view('kode-surat.kode_surat_tambah', ['user' => $user, 'newNoMasukValue' => $newNoMasukValue]);
+    }
+
+    public function kodeSuratStore(Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'id_kode_surat' => 'required',
+            'kode_surat' => 'required',
+            'keterangan_kode_surat' => 'required',
+        ]);
+
+        // Create a new ArsipModel instance and populate it with the validated data
+        $kodeSurat = new kodeSuratModel();
+        $kodeSurat->id_kode_surat = $validatedData['id_kode_surat'];
+        $kodeSurat->kode_surat = $validatedData['kode_surat'];
+        $kodeSurat->keterangan_kode_surat = $validatedData['keterangan_kode_surat'];
+
+        // Save the new record to the database
+        $kodeSurat->save();
+
+        // Redirect to a success page or another appropriate action
+        return redirect('/settings');   
+    }
+
+    public function kodeSuratEdit($id_kode_surat)
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+        $kode_surat = DB::table('kode_surat')->where('id_kode_surat', $id_kode_surat)->get();
+
+        return view('kode-surat.kode_surat_edit', ['user' => $user, 'datakodesurat' => $kode_surat]);
+    }
+
+    public function kodeSuratUpdate(Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'id_kode_surat' => 'required',
+            'kode_surat' => 'required',
+            'keterangan_kode_surat' => 'required',
+        ]);
+
+        // Find the Arsip record by its ID
+        $kodeSurat = kodeSuratModel::find($request->input('id_kode_surat'));
+
+        // Update the record with the validated data
+        $kodeSurat->id_kode_surat = $validatedData['id_kode_surat'];
+        $kodeSurat->kode_surat = $validatedData['kode_surat'];
+        $kodeSurat->keterangan_kode_surat = $validatedData['keterangan_kode_surat'];
+
+
+        // Save the updated record to the database
+        $kodeSurat->save();
+
+        // Redirect to a success page or another appropriate action
+        return redirect('/settings')->with('success', 'Surat Masuk updated successfully.');
+    }
+
+    public function kodeSuratHapus($id_kode_surat)
+    {
+        DB::table('kode_surat')->where('id_kode_surat', $id_kode_surat)->delete();
+
+        // Redirect or return a response as needed
+        return redirect()->back()->with('success', 'Kode Surat deleted successfully');
     }
 }
-// $path = public_path() . 'data_file/kop_surat.png';
-// $type = pathinfo($path, PATHINFO_EXTENSION);
-// $data = file_get_contents($path);
-// $image = 'data:image/' . $type . ';base64' . base64_encode($data);
-
-// public function cetakpdf()
-// {
-//     //mengambil data dari table guru
-//     $dataguru = GuruModel::all();
-
-//     $pdf = PDF::loadview('v_gurupdf',['guru'=>$dataguru]);
-//     return $pdf->download('laporan-guru.pdf');
-// }
-
-
-// public function previewpdf()
-// {
-//     //mengambil data dari table guru
-//     $dataguru = GuruModel::all();
-
-//     $pdf = PDF::loadview('v_gurupdf',['guru'=>$dataguru]);
-//     return $pdf->stream();
-// }

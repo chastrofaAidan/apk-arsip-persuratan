@@ -20,8 +20,8 @@ return new class extends Migration
             $table ->date('tanggal_surat');
             $table ->string('perihal_surat');
             $table ->string('file_surat');
-            $table ->text('keterangan');
-            $table  ->timestamps();            
+            $table ->text('keterangan')->nullable();
+            $table  ->timestamps();
             // $table->softDeletes();
         });
     }
