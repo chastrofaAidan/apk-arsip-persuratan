@@ -21,5 +21,11 @@ class ArsipModel extends Model
         'tanggal_surat' => 'date',
     ];
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+
     // protected $dates = ['deleted_at'];
 }
