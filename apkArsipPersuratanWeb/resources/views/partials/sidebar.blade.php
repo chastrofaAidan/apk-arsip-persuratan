@@ -97,10 +97,10 @@
             </li>
 
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Account</li>
-            <li class="sidebar-menu-item" id="profile">
-                <a href="/profile">
-                    <i class="ri-account-circle-line sidebar-menu-item-icon"></i>
-                    Profile
+            <li class="sidebar-menu-item" id="pegawai">
+                <a href="/pegawai">
+                    <i class="ri-group-line sidebar-menu-item-icon"></i>
+                    Pegawai
                 </a>
             </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Arsip</li>
@@ -371,6 +371,7 @@
         var pendataan_surat_masuk = '/surat_masuk/tambah';
         var profile = '/profile';
         var settings = '/settings';
+        var pegawai = '/pegawai';
         
     
         // Check if the current URL matches the link's URL
@@ -454,6 +455,11 @@
         {
             // Add the "active" class to the list item
             $("#settings").addClass("active");
+        }        
+        else if (currentPath === pegawai) 
+        {
+            // Add the "active" class to the list item
+            $("#pegawai").addClass("active");
         }
     });
 

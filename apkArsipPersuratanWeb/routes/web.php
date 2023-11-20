@@ -23,8 +23,8 @@ Route::middleware(['auth', 'userAkses:superadmin,admin,user'])->group(function (
     Route::get('/logout', [SessionController::class, 'logout']);
 
     // Profile
-    Route::get('/profile', [UserController::class, 'profile'])->middleware('userAkses:admin,user');
-    Route::get('/profile/update', [UserController::class, 'profileUpdate'])->middleware('userAkses:admin,user');
+    Route::get('/profile', [UserController::class, 'profile']);
+    Route::get('/profile/update', [UserController::class, 'profileUpdate']);
     Route::post('/user/update', [UserController::class, 'updateProfile']);
 
 
@@ -32,7 +32,7 @@ Route::middleware(['auth', 'userAkses:superadmin,admin,user'])->group(function (
     Route::get('/surat_masuk', [ArsipController::class, 'masuk'])->name('masuk');
     Route::get('/surat_keluar', [ArsipController::class, 'keluar'])->name('keluar');
     Route::get('/surat_arsip', [ArsipController::class, 'arsip']);
-    
+
     // Search/Pagination/Filter Surat_Masuk / Surat_Keluar / Surat_Arsip
     // Route::get('/surat_masuk/search', [ArsipController::class, 'searchMasuk']);
     // Route::get('/surat_keluar/search', [ArsipController::class, 'searchKeluar']);
@@ -68,23 +68,27 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     // Registrasi (Add/Store - User)
     // Route::get('/registrasi', [UserController::class, 'registrasi']);
     // Route::post('/registrasi/store', [ArsipController::class, 'registrasiStore']);
-    
+
 
     // Manage User (View/Edit/Update/Delete - User) 
     // Route::get('/manage_user/edit/{id}', [ArsipController::class, 'userEdit']);
     // Route::post('/manage_user/update', [ArsipController::class, 'userUpdate']);
     // Route::get('/manage_user/hapus/{id}', [ArsipController::class, 'userHapus']);
 
+    // View Pegawai
+    Route::get('/pegawai', [UserController::class, 'pegawai']);
+    Route::get('/pegawai/hapus/{id}', [UserController::class, 'pegawaiHapus']);
+    Route::get('/pegawai/tambah', [UserController::class, 'pegawaiTambah']);
+    Route::post('/pegawai/store', [UserController::class, 'pegawaiStore']);
+    Route::get('/pegawai/edit/{id}', [UserController::class, 'pegawaiViewUpdate'])->name('pegawai.edit');
+    Route::put('/pegawai/update/{id}', [UserController::class, 'pegawaiUpdate'])->name('pegawai.update');
 
     // CRUD Kop Surat
-    // Route::post('/kop_surat/update', [ArsipController::class, 'kopSuratUpdate']);
+    Route::post('/kop_surat/update', [ArsipController::class, 'kopSuratUpdate']);
     
-
     // CRUD Kepala Sekolah
     Route::post('/kepala_sekolah/update', [ArsipController::class, 'kepalaSekolahUpdate']);
 });
-
-
 
 
 // Rute ADMIN bisa akses
@@ -131,9 +135,5 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::get('/surat_arsip/edit/{id}', [ArsipController::class, 'edit']);
     Route::post('/arsip/update', [ArsipController::class, 'update']);
     Route::get('/arsip/hapus/{id}', [ArsipController::class, 'hapus']);
-
-
-    Route::post('/kop_surat/update', [TemplateSuratController::class, 'kopSuratUpdate']);
-    Route::post('/kepala_sekolah/update', [TemplateSuratController::class, 'kepalaSekolahUpdate']);
-
 });
+

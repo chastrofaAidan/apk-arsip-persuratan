@@ -20,7 +20,6 @@ class ArsipModel extends Model
     protected $casts = [
         'tanggal_surat' => 'date',
     ];
-    
+
     // protected $dates = ['deleted_at'];
 }
-
