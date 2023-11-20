@@ -95,9 +95,14 @@
                                 <i class="ri-edit-box-line"></i>
                             </a><br><br>
 
+                            <a href="/surat_keluar/arsip/{{ $k->no_keluar }}" class="btn col-12 text-center"
+                                style="background-color: var(--bs-color1); color: white;">
+                                <i class="ri-book-2-line"></i>
+                            </a><br><br>
+
                             <a href="/surat_keluar/hapus/{{ $k->no_keluar }}" class="btn col-12 text-center delete-btn"
                                 data-url="/surat_keluar/hapus/{{ $k->no_keluar }}"
-                                style="background-color: var(--bs-color1); color: white;">
+                                style="background-color: var(--bs-color2); color: white;">
                                 <i class="ri-delete-bin-line"></i>
                             </a><br>
 

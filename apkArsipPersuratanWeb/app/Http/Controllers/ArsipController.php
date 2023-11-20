@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use App\Models\ArsipModel;
 use App\Models\SuratMasukModel;
 use App\Models\SuratKeluarModel;
@@ -101,7 +102,7 @@ class ArsipController extends Controller
             'tanggal_surat' => 'required|date',
             'perihal_surat' => 'required',
             'file' => 'required|file', // Ensure the "file" field is a file
-            'keterangan' => 'required',
+            'keterangan' => 'nullable', // Allow the 'keterangan' field to be nullable
         ]);
 
         // Get the uploaded file
@@ -138,9 +139,9 @@ class ArsipController extends Controller
 
         return view('surat arsip/arsip_edit', ['user' => $user, 'dataarsip' => $arsip]);
     }
+    
 
-
-    public function update(Request $request, ArsipModel $arsip)
+    public function update(Request $request)
     {
         // Validate the request data
         $validatedData = $request->validate([
@@ -150,45 +151,38 @@ class ArsipController extends Controller
             'jenis_surat' => 'required|in:Surat Masuk,Surat Keluar',
             'tanggal_surat' => 'required|date',
             'perihal_surat' => 'required',
-            'file' => 'file', // Add file validation rules here if needed
             'keterangan' => '',
         ]);
 
-        // Retrieve the existing record from the database using model binding
-        // Laravel automatically resolves the model instance from the route parameter
-        // $arsip = ArsipModel::findOrFail($request->id_surat); // You can use findOrFail for automatic 404 handling
+        // Find the ArsipModel instance by its ID or create a new one
+        $arsip = ArsipModel::find($request->input('id_surat'));
 
-        // Check if the record was found
-        if ($arsip) {
-            // Check if the "file" input is empty
-            $pdf = $arsip->file_surat; // Default to the existing file
+        // Update the properties of the $kop_surat object
+        $arsip->kode_surat = $request->input('kode_surat');
+        $arsip->judul_surat = $request->input('judul_surat');
+        $arsip->perusahaan = $request->input('perusahaan');
+        $arsip->jenis_surat = $request->input('jenis_surat');
+        $arsip->tanggal_surat = $request->input('tanggal_surat');
+        $arsip->perihal_surat = $request->input('perihal_surat');
+        $arsip->keterangan = $request->input('keterangan');
 
-            if ($request->hasFile('file')) {
-                // Handle the case when a new file is uploaded
-                $file = $request->file('file');
-                $pdf = time() . "_" . $file->getClientOriginalName();
-                $tujuanupload = 'data_file';
-                $file->move($tujuanupload, $pdf);
-            }
+        $pdf;
+        // Proses dan simpan File PDF jika ada
+        if ($request->hasFile('file_surat')) {
+            // Tambahkan logika penyimpanan gambar sesuai kebutuhan
+            $pdf = $request->file('file_surat');
+            $pdfName = time() . '.' . $pdf->getClientOriginalExtension();
+            $pdf->move(public_path('data_file'), $pdfName);
 
-            // Update the record with the validated data
-            $arsip->update([
-                'kode_surat' => $validatedData['kode_surat'],
-                'judul_surat' => $validatedData['judul_surat'],
-                'perusahaan' => $validatedData['perusahaan'],
-                'jenis_surat' => $validatedData['jenis_surat'],
-                'tanggal_surat' => $validatedData['tanggal_surat'],
-                'perihal_surat' => $validatedData['perihal_surat'],
-                'file_surat' => $pdf,
-                'keterangan' => $validatedData['keterangan'],
-            ]);
-
-            // Redirect to a success page or another appropriate action
-            return redirect('/surat_arsip')->with('success', 'Arsip updated successfully.');
-        } else {
-            // Handle the case when the record is not found
-            return redirect('/surat_arsip')->with('error', 'Arsip not found.');
+            // Simpan nama gambar ke dalam kolom file_surat
+            $arsip->file_surat = $pdfName;
         }
+        
+        // Simpan perubahan
+        $arsip->save();
+
+        // Redirect to a success page or another appropriate action
+        return redirect('/surat_arsip')->with('success', 'Surat Arsip updated successfully.');
     }
 
 
@@ -327,6 +321,15 @@ class ArsipController extends Controller
         return redirect('/surat_masuk')->with('success', 'Surat Masuk updated successfully.');
     }
 
+    public function masukArsip($no_masuk)
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+
+        $masuk = DB::table('surat_masuk')->where('no_masuk', $no_masuk)->get();
+
+        return view('surat arsip/arsip_tambah_masuk', ['user' => $user, 'datamasuk' => $masuk]);
+    }
+
     public function masukHapus($no_masuk)
     {
         DB::table('surat_masuk')->where('no_masuk', $no_masuk)->delete();
@@ -379,44 +382,61 @@ class ArsipController extends Controller
     }
 
 
-    public function keluarStore(Request $request)
+    public function ijinStore(Request $request)
     {
         // Validate the request data
-        // $validatedData = $request->validate([
-        //     'kode_surat' => 'required', 
-        //     'judul_surat' => 'required',
-        //     'perusahaan' => 'required',
-        //     'jenis_surat' => 'required|in:Surat Masuk,Surat Keluar',
-        //     'tanggal_surat' => 'required|date',
-        //     'perihal_surat' => 'required',
-        //     'file' => 'required|file',
-        //     'keterangan' => 'required',
-        // ]);
+        $validatedData = $request->validate([
+            'no_keluar' => 'required',
+            'tanggal_keluar' => 'required',
+            'kode_keluar1' => 'required',
+            'kode_keluar2' => 'required',
+            'ditujukan' => 'required',
+            'perihal_keluar' => 'required',
+            'keterangan_keluar' => 'required',
 
-        // Get the uploaded file
-        // $file = $request->file('file');
-        // $pdf = time() . "_" . $file->getClientOriginalName();
-        // $tujuanupload = 'data_file';
-        // $file->move($tujuanupload, $pdf);
+            // 'paragraf.*' => 'required', // Validate each dynamic paragraph input
+        ]);
 
-        // Create a new ArsipModel instance and populate it with the validated data
-        // $keluar = new ArsipModel();
-        // $keluar->kode_surat = $validatedData['kode_surat'];
-        // $keluar->judul_surat = $validatedData['judul_surat'];
-        // $keluar->perusahaan = $validatedData['perusahaan'];
-        // $keluar->jenis_surat = $validatedData['jenis_surat'];
-        // $keluar->tanggal_surat = $validatedData['tanggal_surat'];
-        // $keluar->perihal_surat = $validatedData['perihal_surat'];
-        // $keluar->file_surat = $pdf;
-        // $keluar->keterangan = $validatedData['keterangan'];
+        // Combine Kode Keluar Inputs
+        $kode_keluar1 = $request->input('kode_keluar1');
+        $kode_keluar2 = $request->input('kode_keluar2');
+        $kode_keluar = $kode_keluar1 . '/' . $kode_keluar2;
 
+
+        // Create a new SuratKeluarModel instance and populate it with the validated data
+        $ijin = new SuratKeluarModel();
+        $ijin->no_keluar = $validatedData['no_keluar'];
+        $ijin->tanggal_keluar = $validatedData['tanggal_keluar'];
+        $ijin->kode_keluar = $kode_keluar;
+        $ijin->ditujukan = $validatedData['ditujukan'];
+        $ijin->perihal_keluar = $validatedData['perihal_keluar'];
+        $ijin->surat_keluar = "EWOWcopy.pdf";
+        $ijin->keterangan_keluar = $validatedData['keterangan_keluar'];
+
+        
+        // Process dynamic paragraph inputs
+        // foreach ($validatedData['paragraf'] as $index => $paragraphContent) {
+        //     // Create a new ParagraphModel instance and save it to the database
+        //     $paragraph = new ParagraphModel();
+        //     $paragraph->ijin_id = $ijin->id; // Assuming a foreign key relationship
+        //     $paragraph->content = $paragraphContent;
+        //     $paragraph->save();
+        // }
+
+
+        
         // Save the new record to the database
-        // $keluar->save();
-
+        $ijin->save();
+        
         // Redirect to a success page or another appropriate action
         return redirect('/surat_keluar');
     }
-
+    
+    // Get the uploaded file
+    // $file = $request->file('file');
+    // $pdf = time() . "_" . $file->getClientOriginalName();
+    // $tujuanupload = 'data_file';
+    // $file->move($tujuanupload, $pdf);
 
 
     public function keluarEdit($no_keluar)
@@ -476,6 +496,15 @@ class ArsipController extends Controller
 
         // Redirect to a success page or another appropriate action
         return redirect('/surat_keluar')->with('success', 'Surat Keluar updated successfully.');
+    }
+
+    public function keluarArsip($no_keluar)
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+
+        $keluar = DB::table('surat_keluar')->where('no_keluar', $no_keluar)->get();
+
+        return view('surat arsip/arsip_tambah_keluar', ['user' => $user, 'datakeluar' => $keluar]);
     }
 
     public function keluarHapus($no_keluar)

@@ -29,19 +29,20 @@
 
 @section('isi')
 <div class="px-3 py-2 bg-white rounded shadow">
+@foreach($datakeluar as $k)
 <form action="/arsip/store" method="post" enctype="multipart/form-data" style="padding: 20px 0px 20px 0px;">
     {{ csrf_field() }}
     <div class="container">
         <div class="row">
             <div class="col-md-6">
                 <label for="kode_surat">Kode Surat</label>
-                <input class="custom-input" type="text" name="kode_surat" id="kode_surat" required="required" oninput="markFormIsFilled()">
+                <input class="custom-input" type="text" name="kode_surat" id="kode_surat" required="required" oninput="markFormIsFilled()" value="{{ $k->kode_keluar }}">
         
                 <label for="perusahaan">Perusahaan</label>
-                <input class="custom-input" type="text" name="perusahaan" id="perusahaan" required="required"><br>
+                <input class="custom-input" type="text" name="perusahaan" id="perusahaan" required="required" value="{{ $k->ditujukan }}"><br>
         
                 <label for="tanggal_surat">Tanggal Surat Berlaku</label>
-                <input class="custom-input" type="date" name="tanggal_surat" id="tanggal_surat" required="required" value="{{ now()->toDateString() }}"><br>
+                <input class="custom-input" type="date" name="tanggal_surat" id="tanggal_surat" required="required" value="{{ $k->tanggal_keluar }}"><br>
             </div>
         
             <div class="col-md-6">
@@ -50,12 +51,12 @@
         
                 <label for="jenis_surat">Jenis Surat</label>
                 <select class="custom-input form-select" name="jenis_surat" id="jenis_surat" required="required">
-                    <option value="" disabled selected>Pilih Jenis Surat</option>
+                    <option value="" disabled>Pilih Jenis Surat</option>
                     <option value="Surat Masuk">Surat Masuk</option>
-                    <option value="Surat Keluar">Surat Keluar</option>
+                    <option value="Surat Keluar" selected>Surat Keluar</option>
                 </select>
                 <label for="perihal_surat">Perihal Surat</label>
-            <input class="custom-input" type="text" name="perihal_surat" id="perihal_surat" required="required"><br>
+                <input class="custom-input" type="text" name="perihal_surat" id="perihal_surat" required="required" value="{{ $k->perihal_keluar }}"><br>
             </div>
         </div>
         <div class="row">
@@ -66,7 +67,7 @@
             </div>
             <div class="col-md-8">
                 <label for="keterangan">Keterangan</label>
-                <input class="custom-input1" type="text" name="keterangan" id="keterangan" size="50"><br>
+                <input class="custom-input1" type="text" name="keterangan" id="keterangan" size="50" value="{{ $k->keterangan_keluar }}"><br>
             </div>
         </div>
         <br>
@@ -75,6 +76,7 @@
     </div>
 
 </form>
+@endforeach
 </div>
 
 <!-- Pastikan Anda sudah memasukkan Sweet Alert di sini -->
