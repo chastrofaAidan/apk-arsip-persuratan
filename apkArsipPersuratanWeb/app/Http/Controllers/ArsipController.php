@@ -111,9 +111,13 @@ class ArsipController extends Controller
         $tujuanupload = 'data_file';
         $file->move($tujuanupload, $pdf);
 
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
         // Create a new ArsipModel instance and populate it with the validated data
         $arsip = new ArsipModel();
         $arsip->kode_surat = $validatedData['kode_surat'];
+        $arsip->id = $userId; // Set the user ID
         $arsip->judul_surat = $validatedData['judul_surat'];
         $arsip->perusahaan = $validatedData['perusahaan'];
         $arsip->jenis_surat = $validatedData['jenis_surat'];
@@ -204,11 +208,12 @@ class ArsipController extends Controller
 
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
 
-        // Use paginate() to paginate the results based on the selected number of records per page
-        $surat_masuk = SuratMasukModel::paginate($perPage);
+        // Eager load the user relationship
+        $surat_masuk = SuratMasukModel::with('user')->paginate($perPage);
 
         return view('surat masuk/surat_masuk', ['user' => $user, 'datamasuk' => $surat_masuk, 'perPage' => $perPage]);
     }
+
 
 
     public function searchSuratMasuk(Request $request)
@@ -259,9 +264,13 @@ class ArsipController extends Controller
             'keterangan_masuk' => 'required',
         ]);
 
-        // Create a new ArsipModel instance and populate it with the validated data
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
+        // Create a new ArsipModel instance and populate it with the validated data and user ID
         $masuk = new SuratMasukModel();
         $masuk->no_masuk = $validatedData['no_masuk'];
+        $masuk->id = $userId; // Set the user ID
         $masuk->tanggal_masuk = $validatedData['tanggal_masuk'];
         $masuk->kode_masuk = $validatedData['kode_masuk'];
         $masuk->pengirim = $validatedData['pengirim'];
@@ -275,6 +284,7 @@ class ArsipController extends Controller
         // Redirect to a success page or another appropriate action
         return redirect('/surat_masuk');
     }
+
 
 
     public function masukEdit($no_masuk)
@@ -402,10 +412,13 @@ class ArsipController extends Controller
         $kode_keluar2 = $request->input('kode_keluar2');
         $kode_keluar = $kode_keluar1 . '/' . $kode_keluar2;
 
+        // Get the authenticated user's ID
+        $userId = Auth::id();
 
         // Create a new SuratKeluarModel instance and populate it with the validated data
         $ijin = new SuratKeluarModel();
         $ijin->no_keluar = $validatedData['no_keluar'];
+        $ijin->id = $userId; // Set the user ID
         $ijin->tanggal_keluar = $validatedData['tanggal_keluar'];
         $ijin->kode_keluar = $kode_keluar;
         $ijin->ditujukan = $validatedData['ditujukan'];

@@ -50,4 +50,15 @@ class User extends Authenticatable
     {
         return in_array($this->role, $roles);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+
+
+    // public function suratMasuk()
+    // {
+    //     return $this->hasMany(SuratMasukModel::class, 'user_id');
+    // }
 }

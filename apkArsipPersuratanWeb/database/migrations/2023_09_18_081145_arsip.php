@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('arsip', function (Blueprint $table){
             $table ->id('id_surat');
+            $table ->string('id')->index()->nullable()->default(null);
             $table ->string('kode_surat');
             $table ->string('judul_surat');
             $table ->string('perusahaan');

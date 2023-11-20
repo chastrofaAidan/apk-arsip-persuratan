@@ -55,8 +55,9 @@
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Nomor Surat Keluar</th>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Ditujukan Kepada</th>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Perihal</th>
-                <th class="text-center" style="background-color: var(--bs-color1); color: white;">File Template</th>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">Keterangan</th>
+                <th class="text-center" style="background-color: var(--bs-color1); color: white;">File Template</th>
+                <th class="text-center" style="background-color: var(--bs-color1); color: white;">Pendata</th>
                 @if (Auth::user()->role == 'admin')
                     <th class="text-center" style="background-color: var(--bs-color1); color: white;">Action</th>
                 @endif
@@ -75,7 +76,8 @@
                     <td>{{ $k->kode_keluar }}</td>
                     <td>{{ $k->ditujukan }}</td>
                     <td>{{ $k->perihal_keluar }}</td>
-
+                    <td>{{ $k->keterangan_keluar }}</td>
+                    
                     <td>
                         <a href="{{ asset('preview/' . $k->surat_keluar) }}" class="btn col-12 text-center" target="_blank"
                             style="background-color: var(--bs-color2); color: white;">
@@ -86,7 +88,7 @@
                             <i class="ri-file-download-line"></i>
                         </a><br>
                     </td>
-                    <td>{{ $k->keterangan_keluar }}</td>
+                    <td>{{ optional($k->user)->name }}</td>
 
                     @if (Auth::user()->role == 'admin')
                         <td>

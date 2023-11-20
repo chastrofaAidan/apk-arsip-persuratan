@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('surat_keluar', function (Blueprint $table){
             $table ->id('no_keluar');
+            $table ->string('id')->index()->nullable()->default(null);
             $table ->date('tanggal_keluar');
             $table ->string('kode_keluar');
             $table ->string('ditujukan');
