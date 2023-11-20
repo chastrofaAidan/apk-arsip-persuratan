@@ -17,4 +17,9 @@ class SuratMasukModel extends Model
     protected $casts = [
         'tanggal_masuk' => 'date',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 }

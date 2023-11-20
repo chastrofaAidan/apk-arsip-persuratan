@@ -27,6 +27,13 @@ class AkunSeeder extends Seeder
                 'role' => 'admin',
                 'profile' => 'logo.png',
                 'password' => bcrypt('123')
+            ],
+            [
+                'name' => 'USER TATA USAHA',
+                'email' => 'user@gmail.com',
+                'role' => 'user',
+                'profile' => 'logo.png',
+                'password' => bcrypt('123')
             ]
         ];
         foreach ($userData as $key => $val) {

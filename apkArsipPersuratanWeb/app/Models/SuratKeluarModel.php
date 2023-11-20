@@ -17,4 +17,10 @@ class SuratKeluarModel extends Model
     protected $casts = [
         'tanggal_keluar' => 'date',
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 }

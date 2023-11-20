@@ -1,6 +1,5 @@
 @extends('partials/sidebar')
 
-@section('css')
 <style>
     .custom-input {
         width: 100%;
@@ -15,8 +14,21 @@
         /* Set text color to contrast with the gray background */
         border-radius: 1vh;
     }
+
+    .custom-input2 {
+        width: 100%;
+        /* Make the input element span the full width of its parent */
+        background-color: #dedede;
+        /* Set the background color to gray */
+        border: none;
+        /* Remove the default input border */
+        padding: 10px;
+        /* Add padding to style the input */
+        color: black;
+        /* Set text color to contrast with the gray background */
+        border-radius: 1vh;
+    }
 </style>
-@endsection
 
 @section('Judul')
     <i class="ri-account-circle-line sidebar-menu-item-icon" style="font-size: 40px;"></i>
@@ -26,8 +38,10 @@
 @section('isi')
     <div class="px-3 py-2 bg-white rounded shadow">
 
-        <form action="/user/update" method="post" enctype="multipart/form-data" style="padding: 20px 0px 20px 0px;">
+        <form action="/user/update" method="post" enctype="multipart/form-data" style="padding: 20px 0px 20px 0px;" id="form-update">
             {{ csrf_field() }}
+            <input type="hidden" name="user_id" value="{{ $user->id }}">
+
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
@@ -36,40 +50,58 @@
                             size="50" value="{{ $user->name }}"><br>
                     </div>
                     <div class="col-md-6">
-                        <label for="kode_surat">User Email</label>
-                        <input class="custom-input" type="text" name="kode_surat" id="kode_surat" required="required"
+                        <label for="email">User Email</label>
+                        <input class="custom-input" type="text" name="email" id="email" required="required"
                             value="{{ $user->email }}">
                     </div>
                 </div>
                 <br>
+
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="kode_surat">New User Password</label>
-                        <input id="password" class="custom-input" type="password" name="kode_surat" id="kode_surat"
+                        <label for="password">Password</label>
+                        <input class="custom-input" type="password" name="password" id="password" required="required"
                             oninput="checkPassword()">
-                    </div>
-                </div>
-                <div class="row" id="verifyPasswordDiv" style="display: none;">
-                    <div class="col-md-12">
-                        <label for="verify_kode_surat">Verify New Password</label>
-                        <input class="custom-input" type="password" name="verify_kode_surat" id="verify_kode_surat">
+                        <input type="checkbox" id="showPassword" onclick="togglePasswordVisibility()"> Tampilkan Password
                     </div>
                 </div>
                 <br>
+
                 <div class="row">
-                    <div class="col-md-8">
+                    <div>
                         <label for="profile">Photo Profile</label>
-                        <input class="custom-input" type="file" name="profile" id="file" id="profile"
-                            accept=".png, .jpeg, .jpg" required="required" onchange="previewImage()"><br>
-                        <label for="profile">Previous File: {{ $user->profile }}</label><br>
                     </div>
-                    <!-- <div class="col-md-4">
-                    <img class="img-preview img-fluid" alt="Profile" width="100">
-                </div> -->
+
+                    <div class="col-md-8" style="position: relative;">
+                        <input class="custom-input" type="file" name="profile" id="file" accept=".png, .jpeg, .jpg"
+                            onchange="loadFile(event)">
+                        <br>
+
+                        <!-- Tombol "Simpan Data" dan "Batal" ditempatkan di paling bawah -->
+                        <div style="position: absolute; bottom: 0;">
+                            <input class="btn btn-primary" type="submit" value="Simpan Data" id="btn-simpan">
+                            <input class="btn btn-danger" type="button" value="Batal" id="btn-batal"
+                                onclick="confirmAndClearForm()">
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 text-center">
+                        @if ($user->profile)
+                            <!-- Tampilkan gambar profil sebelumnya jika ada -->
+                            <img id="output" src="data_file/{{ $user->profile }}" class="img-thumbnail"
+                                alt="Profile Image" style="width: 200px; height: 200px; object-fit: cover;"
+                                crossorigin="anonymous">
+                            <label id="previousFileLabel" for="profile">Previous File: {{ $user->profile }}</label>
+                        @else
+                            <!-- Tampilkan gambar default jika tidak ada gambar profil sebelumnya -->
+                            <img src="https://picsum.photos/200/" class="img-thumbnail" alt="Profile Image"
+                                style="width: 200px; height: 200px; object-fit: cover;" crossorigin="anonymous">
+                            <label for="profile">Previous File: {{ $user->profile }}</label><br>
+                        @endif
+                    </div>
+
                 </div>
-                <br>
-                <input class="btn btn-primary" type="submit" value="Simpan Data">
-                <input class="btn btn-danger" type="button" value="Batal" id="btn-batal">
             </div>
         </form>
 
@@ -77,6 +109,52 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
         <script>
+            function restorePreviousFile() {
+                var output = document.getElementById('output');
+                var previousFileLabel = document.getElementById('previousFileLabel');
+
+                // Periksa apakah ada file sebelumnya
+                @if ($user->profile)
+                    // Tampilkan gambar profil sebelumnya
+                    output.src = "data_file/{!! $user->profile !!}";
+                    previousFileLabel.innerText = 'Previous File: {!! $user->profile !!}';
+                @else
+                    // Tampilkan gambar default jika tidak ada file sebelumnya
+                    output.src = "https://picsum.photos/200/";
+                    previousFileLabel.innerText = 'Previous File: {!! $user->profile !!}';
+                @endif
+            }
+
+            var previousFile; // Variabel untuk menyimpan nama file sebelumnya
+
+            var loadFile = function(event) {
+                var output = document.getElementById('output');
+                output.src = URL.createObjectURL(event.target.files[0]);
+
+                // Update teks label "Previous File" sesuai dengan nama file yang baru dipilih
+                var fileName = event.target.files[0].name;
+                var previousFileLabel = document.getElementById('previousFileLabel');
+
+                // Ganti label menjadi "File"
+                previousFileLabel.innerText = 'File: ' + fileName;
+
+                // Simpan nama file sebelumnya
+                previousFile = fileName;
+            };
+
+            function togglePasswordVisibility() {
+                var passwordInput = document.getElementById('password');
+                var verifyPasswordInput = document.getElementById('verify_password');
+
+                // Periksa apakah checkbox dicentang
+                var showPasswordCheckbox = document.getElementById('showPassword');
+                var showPassword = showPasswordCheckbox.checked;
+
+                // Set tipe input berdasarkan checkbox
+                passwordInput.type = showPassword ? 'text' : 'password';
+                verifyPasswordInput.type = showPassword ? 'text' : 'password';
+            }
+
             // Variable untuk menandai apakah formulir telah diisi
             var formIsFilled = false;
 
@@ -84,10 +162,21 @@
             function clearForm() {
                 document.getElementById('file').value = '';
                 document.getElementById('password').value = '';
-                document.getElementById('verify_kode_surat').value = '';
 
                 // Tandai bahwa formulir kosong
                 formIsFilled = false;
+
+                // Ambil gambar sebelumnya dari database
+                restorePreviousFile();
+
+                // Isi kembali formulir dengan data dari database
+                document.getElementById('name').value = "{{ $user->name }}";
+                document.getElementById('email').value = "{{ $user->email }}";
+                // Jika perlu, Anda bisa menambahkan logika lainnya untuk mengisi formulir sesuai kebutuhan
+
+                // Kembalikan gambar ke gambar sebelumnya dari database
+                var output = document.getElementById('output');
+                output.src = "data_file/{!! $user->profile !!}";
             }
 
             // Fungsi untuk menandai bahwa formulir telah diisi
@@ -111,15 +200,17 @@
                     if (result.isConfirmed) {
                         // Jika pengguna memilih Ya, hapus isian formulir
                         clearForm();
+                        restorePreviousFile();
                     }
                 });
             });
         </script>
     @endsection
+
     @section('js')
         <script>
             function checkPassword() {
-                const newPasswordInput = document.getElementById('kode_surat');
+                const newPasswordInput = document.getElementById('email');
                 const verifyPasswordDiv = document.getElementById('verifyPasswordDiv');
 
                 if (newPasswordInput.value) {
@@ -128,18 +219,5 @@
                     verifyPasswordDiv.style.display = 'none';
                 }
             }
-            /* function previewImage(){
-                const image = document.querySelector('#profile');
-                const imgPreview = document.querySelector('.img-preview');
-
-                imgPreview.style.display = 'block';
-
-                const oFReader = new FileReader();
-                oFReader.readAsDataURL(image.files[0]);
-
-                oFReader.onload = function(oFREvent){
-                    imgPreview.src = oFREvent.target.result;
-                }
-            } */
         </script>
     @endsection
