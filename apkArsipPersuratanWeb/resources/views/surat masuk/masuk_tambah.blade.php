@@ -34,7 +34,7 @@
             </div>
         
             <div class="col-md-6">
-            <label for="kode_masuk">Nomor Surat Keluar</label>
+            <label for="kode_masuk">Nomor Surat Masuk</label>
                 <input class="custom-input" type="text" name="kode_masuk" id="kode_masuk" required="required"><br>
 
                 <label for="pengirim">Pengirim</label>
