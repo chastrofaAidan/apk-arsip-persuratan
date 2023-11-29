@@ -116,17 +116,23 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::get('/surat_perintah', [TemplateSuratController::class, 'suratPerintah']);
     Route::get('/surat_pernyataan', [TemplateSuratController::class, 'suratPernyataan']);
 
-    // Pembuatan Surat (Add - Surat Keluar)
+    // Pembuatan Surat (Add - Pembuatan Surat)
     Route::get('/pembuatan_surat_ijin', [TemplateSuratController::class, 'ijin']);
     Route::get('/pembuatan_surat_pengantar', [TemplateSuratController::class, 'index']);
     Route::get('/pembuatan_surat_perintah', [TemplateSuratController::class, 'index']);
     Route::get('/pembuatan_surat_pernyataan', [TemplateSuratController::class, 'index']);
 
-    // Penyimpanan Template Surat (Store - Surat Keluar)
-    Route::post('/surat_ijin/store', [ArsipController::class, 'ijinStore']);
-    // Route::post('/surat_pengantar/store', [ArsipController::class, 'pengantarStore']);
-    // Route::post('/surat_perintah/store', [ArsipController::class, 'perintahStore']);
-    // Route::post('/surat_pernyataan/store', [ArsipController::class, 'pernyataanStore']);
+    // Penyimpanan Surat (Store - Pembuatan Surat)
+    Route::post('/pembuatan_surat/store', [ArsipController::class, 'pembuatanSurat'])->name('pembuatanSuratStore');
+    Route::post('/surat_ijin/download', [ArsipController::class, 'ijinStore']);
+    // Route::post('/surat_pengantar/download', [ArsipController::class, 'pengantarStore']);
+    // Route::post('/surat_perintah/download', [ArsipController::class, 'perintahStore']);
+    // Route::post('/surat_pernyataan/download', [ArsipController::class, 'pernyataanStore']);
+
+    // Pendataan Surat Keluar
+    Route::get('/surat_keluar/tambah', [ArsipController::class, 'keluarTambah']);
+    Route::get('/surat_keluar/tambah/{file}', [ArsipController::class, 'keluarTambahPembuatan']);
+    Route::post('/surat_keluar/store', [ArsipController::class, 'keluarStore']);
 
 
     // CRUD Surat Arsip

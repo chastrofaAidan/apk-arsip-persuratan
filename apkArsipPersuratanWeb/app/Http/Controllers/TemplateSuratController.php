@@ -24,12 +24,21 @@ class TemplateSuratController extends Controller
         $user = Auth::user(); // Get the currently logged-in user
         $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
         $datakodesurat = KodeSuratModel::all();
+
+        $kop_surat = KopSuratModel::latest()->first();
+        $kepala_sekolah = KepalaSekolahModel::latest()->first();
         
 
         $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
         $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
 
-        return view('surat keluar/template surat/ijin_template', ['user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 'kode_surat' => $kode_surat, 'datakodesurat' => $datakodesurat]);
+        return view('surat keluar/template surat/ijin_template', [
+            'user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 
+            'kode_surat' => $kode_surat, 
+            'datakodesurat' => $datakodesurat,
+            'kop_surat' => $kop_surat,
+            'kepala_sekolah' => $kepala_sekolah,
+        ]);
     }
 
 

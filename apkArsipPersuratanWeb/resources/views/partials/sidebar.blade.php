@@ -199,6 +199,12 @@
                     Pendataan Surat Masuk
                 </a>
             </li>
+            <li class="sidebar-menu-item" id="pendataan_surat_keluar">
+                <a href="/surat_keluar/tambah">
+                    <i class="ri-quill-pen-line"></i>
+                    Pendataan Surat Keluar
+                </a>
+            </li>
             <li class="sidebar-menu-divider mt-3 mb-1 text-uppercase">Option</li>
             <li class="sidebar-menu-item" id="profile">
                 <a href="/profile">
@@ -369,6 +375,7 @@
         var pembuatan_surat4 = '/pembuatan_surat_pernyataan';
         var pengarsipan_surat = '/pengarsipan_surat';
         var pendataan_surat_masuk = '/surat_masuk/tambah';
+        var pendataan_surat_keluar = '/surat_keluar/tambah';
         var profile = '/profile';
         var settings = '/settings';
         var pegawai = '/pegawai';
@@ -444,6 +451,11 @@
         {
             // Add the "active" class to the list item
             $("#pendataan_surat_masuk").addClass("active");
+        }
+        else if (currentPath === pendataan_surat_keluar) 
+        {
+            // Add the "active" class to the list item
+            $("#pendataan_surat_keluar").addClass("active");
         }
 
         else if (currentPath === profile) 

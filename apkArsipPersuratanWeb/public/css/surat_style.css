@@ -1,0 +1,96 @@
+@page {
+    size: a4 portrait;
+}
+
+.page-break {
+page-break-after: always;
+}
+
+header {
+    display: table-header-group;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: block;
+    font-size: 14px;
+    font-weight: bolder;
+    border-radius: 5px;
+    height: 100px;
+}
+
+.center-table {
+    margin: 0 auto;
+    margin-bottom: 0;
+}
+
+td.align-bottom {
+    vertical-align: bottom;
+}
+
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.txt-light{
+    font-weight: lighter; /* or use numeric values like 100 or 200 */
+}
+
+.txt-bold{
+    font-weight: bolder; /* or use numeric values like 100 or 200 */
+}
+
+.title{
+    font-size:19px;
+}
+
+.big{
+    font-size:22px;
+}
+
+
+body {
+    font-family: 'Arial', sans-serif; /* Change 'Arial' to an available font for Dompdf */
+}
+
+.spacing{
+    height: 200px;
+}
+
+.thick-hr {
+    border: none; /* Remove the default border */
+    border-top: 4px solid #000; /* Set the thickness (4px) and color (#000) of the top border */
+    margin: 20px 0; /* Add some spacing for better visual separation */
+}
+
+.footer {
+    position: absolute;
+    bottom: 300px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.txt-light.text-left {
+    position: relative; /* Make the parent container a positioning context */
+}
+
+.ttd {
+    position: absolute; /* Position absolutely within the parent container */
+    top: 0;
+    left: 0;
+    z-index: 1; /* Set a higher z-index to make it appear above other elements */
+}
+
+.signature {
+    position: absolute; /* Position absolutely within the parent container */
+    top: 0;
+    left: 0;
+    z-index: 2; /* Set a higher z-index to make it appear above the "ttd" div */
+}

@@ -107,9 +107,9 @@
                             No Date Available
                         @endif
                     </td>
+                    <td>{{ $a->perihal_surat }}</td>
                     <td>{{ $a->keterangan }}</td>
 
-                    <td>{{ $a->perihal_surat }}</td>
                     <td>
                         <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" target="_blank"
                             style="background-color: var(--bs-color2); color: white;">

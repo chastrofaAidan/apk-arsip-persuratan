@@ -1,6 +1,7 @@
 @extends('partials/pembuatan_surat')
 
 @section('css')
+<link rel="stylesheet" href="/css/surat_style.css">
 <style>
     .container {
         /* max-width: 800px;
@@ -54,272 +55,184 @@
         Pembuatan Surat - Izin
     </h4>
 
-    <form action="/surat_ijin/store" method="post" enctype="multipart/form-data">
+    <form action="{{ route('pembuatanSuratStore') }}" method="post" enctype="multipart/form-data" target="_blank">
     {{ csrf_field() }}
     <div class="container">
         <br>
-        <h5 class="fw-bold">Data Surat Ijin</h5>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="no_keluar">No</label>
-                <input class="custom-input" type="text" name="no_keluar" id="no_keluar" value="{{ $newNoKeluarValue }}" readonly>
 
-                <label for="tanggal_keluar">Tanggal</label>
-                <input class="custom-input" type="date" name="tanggal_keluar" id="tanggal_keluar" required="required" value="{{ now()->toDateString() }}"><br>
-
-                <label for="perihal_keluar">Perihal</label>
-                <input class="custom-input" type="text" name="perihal_keluar" id="perihal_keluar" required="required" value="Surat Ijin"><br>      
-            </div>
-        
-            <div class="col-md-6">
-                <label for="kode_keluar1">Nomor Surat Keluar</label>
-                <div class="row">
-                    <div class="col-md-4">
-                        <select class="custom-input form-select" name="kode_keluar1" id="kode_keluar1" required="required">
-                            <option value="" disabled selected>Pilih Kode Surat</option>
-                            @foreach($datakodesurat as $ks)
-                            <option value="{{ $ks->kode_surat }}">{{ $ks->kode_surat }} / {{ $ks->keterangan_kode_surat }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-1">
-                        <b>/</b>
-                    </div>
-                    <div class="col-md-7">
-                        <input class="custom-input" type="text" name="kode_keluar2" id="kode_keluar2" required="required" value="{{ $newNoKeluarValue }}/{{ $kode_surat->kode_surat }}">
-                    </div>
-                </div>
-
-                <label for="ditujukan">Ditujukan Kepada</label>
-                <input class="custom-input" type="text" name="ditujukan" id="ditujukan" required="required"><br>
-
-                <label for="keterangan_keluar">Keterangan</label>
-                <input class="custom-input" type="text" name="keterangan_keluar" id="keterangan_keluar" required="required"><br>
-            </div>
+        <!-- Add this text input for the PDF file name -->
+        <div class="col-md-12">
+            <label for="surat_keluar">Nama Surat</label>
+            <input class="custom-input" type="text" name="surat_keluar" id="surat_keluar" required="required"><br><br>
         </div>
-        <br>
-        <h5 class="fw-bold">Konten Surat Ijin</h5>
 
         <div class="container">
-            <div id="forms-container"></div>
+            <textarea name="konten" id="konten" class="konten">
+                <header>
+                <table class="center-table">
+                <tr>
+                    <td width=20%>
+                        <img src="{{ $kop_surat->logo_instansi }}" alt="Kop Surat" class="kop-surat align-bottom">
+                    </td>
+                    <td width=80% class="text-center">
+                        <div class="txt-light title">PEMERINTAH DAERAH PROVINSI JAWA BARAT</div>
+                        <div class="txt-light title">DINAS PENDIDIKAN</div>
+                        <div class="txt-light title">{{ $kop_surat->lingkup_wilayah }}</div>
+                        <div class="txt-bold big">{{ $kop_surat->nama_instansi }}</div>
+                        <div class="txt-light">{{ $kop_surat->alamat_instansi }}, Telp./Fax. {{ $kop_surat->kontak_instansi }}</div>
+                        <div class="txt-light">Website : {{ $kop_surat->website_instansi }} - email : <a href="{{ $kop_surat->email_instansi }}">{{ $kop_surat->email_instansi }}</a></div>
+                        <div class="txt-light">{{ $kop_surat->kode_pos }}</div>
+                    </td>
+                </tr>
+                </table>
+                <hr class="thick-hr">
+                </header>
+                <div class="spacing">&nbsp;</div> <!-- Add some spacing -->
+                <div class="text-center"><b class="title"><u>S U R A T &nbsp; I J I N</u></b></div>
+                <div class="text-center">Nomor : 800/515/SMKN.1.Cadisdik WIL.VII</div>
+                <div class="text-center">Tanggal : 01 November 2023</div>
+            </textarea>
             <br><br>
-            <button class="custom-button" onclick="addParagraph()">
-                <span>Add Paragraph</span>
-            </button>
-            <br>
-            <button class="custom-button" onclick="addTable()">
-                <span>Add Table</span>
-            </button>
-            <label for="tableRowCount">Jumlah Kolom:</label>
-            <input type="number" id="tableRowCount" min="1" max="5" value="1" oninput="handleInputChange(this)">
-            <br>
-            <!-- <button class="custom-button" onclick="addPageBreak()">
-                <span>Add Page Break</span>
-            </button> -->
+            <div class="row">
+                <div class="col-md-6">
+                <input class="btn format-surat col-md-12" type="submit" name="pendataan" value="Pendataan Surat Keluar" style="background-color: var(--bs-color1); color: white;">
+            </div>
+            <div class="col-md-6">
+                <input class="btn format-surat col-md-12" type="submit" name="unduh" value="Unduh File PDF" style="background-color: var(--bs-color1); color: white;">
+            </div>
         </div>
     </div>
-</div>
-
-<br><br>
-
-<div class="px-3 py-2 bg-white rounded shadow">
-<h4 class="fw-bold">
-    <i class="ri-mail-send-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
-    Surat Keluar
-</h4>
-
-<div class="container">
-    <div class="container">
-        <div class="row">
-            <input class="btn format-surat col-md-6" type="submit" value="Catat Surat Keluar & Unduh Sebagai PDF" style="background-color: var(--bs-color1); color: white;">
-
-            <a href="/surat_ijin" class="btn col-md-6 text-center" id="preview-link" target="_blank">
-            <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;">Preview Surat</div>
-            </a><br>
-        </div>
-    </div>
-</div>
-</form>
+    </form>
 @endsection
 
 @section('js')
+
+<!-- Include the jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.0/tinymce.min.js" integrity="sha512-SOoMq8xVzqCe9ltHFsl/NBPYTXbFSZI6djTMcgG/haIFHiJpsvTQn0KDCEv8wWJFu/cikwKJ4t2v1KbxiDntCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+<!-- <script>
+    function generateAndSubmitForm() {
+        // Get the TinyMCE editor content
+        var editorContent = tinymce.get('editor').getContent();
+
+        // Generate a unique PDF file name with the current datetime
+        var currentDate = new Date();
+        var formattedDate = currentDate.toISOString().replace(/:/g, '-').replace(/\..*$/, ''); // Format: YYYY-MM-DDTHH-MM-SS
+        var pdfFileName = 'generated_file_' + formattedDate + '.pdf';
+
+        // Set the PDF file name in the hidden input field
+        document.getElementById('surat_keluar').value = pdfFileName;
+
+        // Submit the form
+        document.getElementById('suratForm').submit();
+    }
+
+
+    function generatePdfFromContent(content) {
+        // Create a new jsPDF instance
+        var pdf = new jsPDF();
+
+        // Add HTML content to the PDF
+        pdf.fromHTML(content, 15, 15);
+
+        // Generate a unique file name with the current datetime
+        var currentDate = new Date();
+        var formattedDate = currentDate.toISOString().replace(/:/g, '-').replace(/\..*$/, ''); // Format: YYYY-MM-DDTHH-MM-SS
+        var pdfFileName = 'generated_file_' + formattedDate + '.pdf';
+
+        // Save the PDF to a file
+        pdf.save(pdfFileName);
+
+        // Return the generated file name
+        return pdfFileName;
+    }
+</script> -->
+
+
 <script>
-    function handleInputChange(inputElement) {
-    // Get the selected value from the dropdown
-    var selectedValue = inputElement.value;
+    tinymce.init({
+        selector: 'textarea.konten',
+        height: 350,
+        plugins: 'table advlist pagebreak image',
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | pagebreak | image',
+        // content_css: 'http://localhost/apk-arsip-persuratan/apkArsipPersuratanWeb/public/css/surat_style.css',
+        file_picker_callback: function(callback, value, meta) {
+        // Open a file dialog
+        var input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
 
-    // Check if the selected value is within the valid range (1 to 5)
-    if (selectedValue < 1) {
-      inputElement.value = 1;
-    } else if (selectedValue > 5) {
-      inputElement.value = 5;
-    } else {
-      inputElement.value = selectedValue;
+        // Listen for the file input change event
+        input.addEventListener('change', function() {
+            var file = input.files[0];
+
+            // Create a FileReader to read the file as a data URL
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // Pass the data URL to the callback
+                callback(e.target.result, {
+                    alt: file.name
+                });
+            };
+
+            // Read the file as a data URL
+            reader.readAsDataURL(file);
+        });
+
+        // Trigger the file input click event
+        input.click();
     }
-  }
+    });
+
+
+    // Add a listener to the button click event
+    document.getElementById('generatePdfBtn').addEventListener('click', function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Get the TinyMCE content
+        var konten = tinymce.activeEditor.getContent();
+
+        // Update the hidden input with the TinyMCE content
+        document.getElementById('hiddenContent').value = konten;
+
+        // Submit the form
+        document.getElementById('myForm').submit();
+    });
 
 
 
-    let elementCounter = 1;
+    // Set the initial content after TinyMCE is initialized
+    // tinymce.get('editor').setContent(`
+    // <header>
+    //     <table class="center-table">
+    //     <tr>
+    //         <td width=20%>
+    //             <img src="{{ $kop_surat->logo_instansi }}" alt="Kop Surat" class="kop-surat align-bottom">
+    //         </td>
+    //         <td width=80% class="text-center">
+    //             <div class="txt-light title">PEMERINTAH DAERAH PROVINSI JAWA BARAT</div>
+    //             <div class="txt-light title">DINAS PENDIDIKAN</div>
+    //             <div class="txt-light title">{{ $kop_surat->lingkup_wilayah }}</div>
+    //             <div class="txt-bold big">{{ $kop_surat->nama_instansi }}</div>
+    //             <div class="txt-light">{{ $kop_surat->alamat_instansi }}, Telp./Fax. {{ $kop_surat->kontak_instansi }}</div>
+    //             <div class="txt-light">Website : {{ $kop_surat->website_instansi }} - email : <a href="{{ $kop_surat->email_instansi }}">{{ $kop_surat->email_instansi }}</a></div>
+    //             <div class="txt-light">{{ $kop_surat->kode_pos }}</div>
+    //         </td>
+    //     </tr>
+    //     </table>
+    //     <hr class="thick-hr">
+    //     </header>
+    //     <div class="spacing">&nbsp;</div> <!-- Add some spacing -->
+    //     <div class="text-center"><b class="title"><u>S U R A T &nbsp; I J I N</u></b></div>
+    //     <div class="text-center">Nomor : 800/515/SMKN.1.Cadisdik WIL.VII</div>
+    //     <div class="text-center">Tanggal : 01 November 2023</div>
+    // `);
 
-    function addParagraph() {
-        const container = document.getElementById('forms-container');
-
-        // Create new paragraph container
-        const newParagraph = document.createElement('div');
-        newParagraph.className = 'row';
-
-        // Create label
-        const newLabel = document.createElement('label');
-        newLabel.setAttribute('for', 'paragraf-' + elementCounter);
-        newLabel.textContent = 'Paragraf ' + elementCounter;
-
-        // Create textarea for paragraph content
-        const newTextarea = document.createElement('textarea');
-        newTextarea.className = 'custom-input paragraph';
-        newTextarea.name = 'paragraf[' + elementCounter + ']'; // Use an array for dynamic names
-        newTextarea.id = 'paragraf-' + elementCounter;
-        newTextarea.required = true;
-
-        // Create delete button
-        const deleteButton = document.createElement('button');
-        deleteButton.className = 'custom-button delete-button';
-        deleteButton.onclick = function () {
-            deleteElement(newParagraph);
-        };
-        deleteButton.innerHTML = '<span>Delete</span>';
-
-        // Append elements to the new paragraph container
-        newParagraph.appendChild(newLabel);
-        newParagraph.appendChild(newTextarea);
-        newParagraph.appendChild(deleteButton);
-
-        // Append the new paragraph to the container
-        container.appendChild(newParagraph);
-
-        // Increment the counter for the next element
-        elementCounter++;
-    }
-
-    // function addPageBreak(){
-
-    // }
-
-    function addTable() {
-        const tableRowCount = document.getElementById('tableRowCount').value;
-        const container = document.getElementById('forms-container');
-
-        // Create break
-        const lineBreak1 = document.createElement('br');
-        const lineBreak2 = document.createElement('br');
-        const lineBreak3 = document.createElement('br');
-        const lineBreak4 = document.createElement('br');
-
-        // Create Div
-        const newTable = document.createElement('div');
-        newTable.className = 'custom-table';
-        newTable.id = 'table-' + elementCounter;
-
-        // Create delete button for the table
-        const deleteTableButton = document.createElement('button');
-        deleteTableButton.className = 'custom-button delete-button';
-        deleteTableButton.onclick = function () {
-            deleteElement(newTable);
-        };
-        deleteTableButton.innerHTML = '<span>Delete Table</span>';
-
-        // Create add row button
-        const addRowButton = document.createElement('button');
-        addRowButton.className = 'custom-button';
-        addRowButton.onclick = function () {
-            addRow(newTable, tableRowCount);
-        };
-        addRowButton.innerHTML = '<span>Add Row</span>';
-
-        // Create label
-        const newLabel = document.createElement('label');
-        newLabel.textContent = 'Table Header';
-
-        // Append buttons to the new table container
-        newTable.appendChild(deleteTableButton);
-        newTable.appendChild(addRowButton);
-        newTable.appendChild(lineBreak1);
-        newTable.appendChild(newLabel);
-
-        // Create textareas based on the number of rows
-        for (let i = 0; i < tableRowCount; i++) {
-            const newTextarea = document.createElement('textarea');
-            newTextarea.className = 'custom-input';
-            newTextarea.placeholder = "Nama Kolom " + (i + 1);  // Updated variable name
-            newTextarea.name = 'kepala-kolom-' + elementCounter;
-            newTextarea.id = 'kepala-kolom-' + elementCounter;
-            newTextarea.required = true;
-            newTable.appendChild(newTextarea);
-        }
-
-        // Append buttons to the new table container
-        newTable.appendChild(lineBreak2);
-        newTable.appendChild(lineBreak3);
-        newTable.appendChild(lineBreak4);
-
-        // Append the new table to the container
-        container.appendChild(newTable);
-
-        // Increment the counter for the next element
-        elementCounter++;
-
-        // Assuming you have a button to trigger the page transition
-        // const transitionButton = document.getElementById('transitionButton');
-        // transitionButton.addEventListener('click', function () {
-        //     navigateToAnotherPage();
-        // });
-    }
-
-    function addRow(table, rowCount) {
-        // Create break
-        const lineBreak = document.createElement('br');
-
-        // Create row container
-        const newRow = document.createElement('div');
-        newRow.className = 'table-row';
-
-        // Create delete row button
-        const deleteRowButton = document.createElement('button');
-        deleteRowButton.className = 'custom-button delete-button';
-        deleteRowButton.onclick = function () {
-            deleteRow(newRow);
-        };
-        deleteRowButton.innerHTML = '<span>Delete Row</span>';
-
-        // Append delete row button to the row
-        newRow.appendChild(deleteRowButton);
-
-        // Create textareas for the new row
-        for (let i = 0; i < rowCount; i++) {
-            const newTextarea = document.createElement('textarea');
-            newTextarea.className = 'custom-input';
-            newTextarea.placeholder = 'Value ' + (i + 1);
-            newTextarea.name = 'value-' + elementCounter + '-row-' + (i + 1);
-            newTextarea.id = 'value-' + elementCounter + '-row-' + (i + 1);
-            newTextarea.required = true;
-            newRow.appendChild(newTextarea);
-        }
-
-        // Append row and line break to the table
-        table.appendChild(newRow);
-        table.appendChild(lineBreak);
-    }
-
-
-    function deleteRow(row) {
-        // Remove the row from its parent node
-        row.parentNode.removeChild(row);
-    }
-
-
-    function deleteElement(element) {
-        const container = document.getElementById('forms-container');
-        container.removeChild(element);
-    }
 </script>
 @endsection
