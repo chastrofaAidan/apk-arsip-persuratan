@@ -21,54 +21,21 @@ class TemplateSuratController extends Controller
 {
     public function ijin()
     {
-        $user = Auth::user(); // Get the currently logged-in user
-        $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
-        $datakodesurat = KodeSuratModel::all();
-
-        $kop_surat = KopSuratModel::latest()->first();
-        $kepala_sekolah = KepalaSekolahModel::latest()->first();
-        
-
-        $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
-        $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
-
-        return view('surat keluar/template surat/ijin_template', [
-            'user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 
-            'kode_surat' => $kode_surat, 
-            'datakodesurat' => $datakodesurat,
-            'kop_surat' => $kop_surat,
-            'kepala_sekolah' => $kepala_sekolah,
-        ]);
-    }
-
-
-    public function pengantar()
-    {
-        $user = Auth::user(); // Get the currently logged-in user
-        return view('surat keluar/template surat/pengantar_template', ['user' => $user]);
-    }
-
-    public function perintah()
-    {
-        $user = Auth::user(); // Get the currently logged-in user
-        return view('surat keluar/template surat/perintah_template', ['user' => $user]);
-    }
-
-    public function pernyataan()
-    {
-        $user = Auth::user(); // Get the currently logged-in user
-        return view('surat keluar/template surat/pernyataan_template', ['user' => $user]);
-    }
-
-
-    public function suratIjin(Request $request)
-    {
         $kop_surat = KopSuratModel::latest()->first();
         $kepala_sekolah = KepalaSekolahModel::latest()->first();
 
         // Paths to the image files
         $logoImagePath = public_path('data_file/' . $kop_surat->logo_instansi);
         $tandaTanganPath = public_path('data_file/' . $kepala_sekolah->tanda_tangan);
+
+        $user = Auth::user(); // Get the currently logged-in user
+        $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
+        $datakodesurat = KodeSuratModel::all();
+
+        
+
+        $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
+        $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
 
         // Check if the image files exist
         if (file_exists($logoImagePath) && file_exists($tandaTanganPath)) {
@@ -80,110 +47,304 @@ class TemplateSuratController extends Controller
             // Convert the resized logo to base64
             $resizedLogo = 'data:image/png;base64,' . base64_encode($logo->stream()->__toString());
 
-            // Load the view and set the default font to Arial
-            $pdf = PDF::loadView('surat-pdf.ijin', [
+            return view('surat keluar/template surat/ijin_template', [
                 'image' => $resizedLogo,
                 'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
+                'user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 
+                'kode_surat' => $kode_surat, 
+                'datakodesurat' => $datakodesurat,
                 'kop_surat' => $kop_surat,
                 'kepala_sekolah' => $kepala_sekolah,
-                // 'paragraf1' => $paragraf1, // Pass the paragraf values to the view
-                // 'paragraf2' => $paragraf2,
-                // 'paragraf3' => $paragraf3,
-            ])->setOptions([
-                'defaultFont' => 'Arial',
             ]);
-
-            $pdf->setPaper('a4', 'portrait');
-
-            // Save the PDF to a file or return it as a download
-            return $pdf->stream('NamaSurat.pdf');
         } else {
             return "Image file not found.";
         }
+
+
+
+        // // Check if the image files exist
+        // if (file_exists($logoImagePath) && file_exists($tandaTanganPath)) {
+        //     // Resize the logo to 100px width
+        //     $logo = Image::make($logoImagePath)->resize(100, null, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //     });
+
+        //     // Convert the resized logo to base64
+        //     $resizedLogo = 'data:image/png;base64,' . base64_encode($logo->stream()->__toString());
+
+        //     // Load the view and set the default font to Arial
+        //     $pdf = PDF::loadView('surat-pdf.ijin', [
+        //         'image' => $resizedLogo,
+        //         'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
+        //         'kop_surat' => $kop_surat,
+        //         'kepala_sekolah' => $kepala_sekolah,
+        //         // 'paragraf1' => $paragraf1, // Pass the paragraf values to the view
+        //         // 'paragraf2' => $paragraf2,
+        //         // 'paragraf3' => $paragraf3,
+        //     ])->setOptions([
+        //         'defaultFont' => 'Arial',
+        //     ]);
+
+        //     $pdf->setPaper('a4', 'portrait');
+
+        //     // Save the PDF to a file or return it as a download
+        //     return $pdf->stream('NamaSurat.pdf');
+        // } else {
+        //     return "Image file not found.";
+        // }
     }
 
 
-
-    public function suratPengantar()
+    public function pengantar()
     {
-        // Use the correct directory separator for your OS
-        $path = public_path() . '/data_file/kop_surat.png';
+        $kop_surat = KopSuratModel::latest()->first();
+        $kepala_sekolah = KepalaSekolahModel::latest()->first();
 
-        // Check if the image file exists
-        if (file_exists($path)) {
-            $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+        // Paths to the image files
+        $logoImagePath = public_path('data_file/' . $kop_surat->logo_instansi);
+        $tandaTanganPath = public_path('data_file/' . $kepala_sekolah->tanda_tangan);
 
-            $namaFile = 'NamaSurat.pdf';
+        $user = Auth::user(); // Get the currently logged-in user
+        $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
+        $datakodesurat = KodeSuratModel::all();
 
-            // Load the view and set the default font to Arial
-            $pdf = PDF::loadView('surat-pdf.pengantar', ['image' => $image])->setOptions([
-                'defaultFont' => 'Arial', // Set the default font to Arial
+        
+
+        $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
+        $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
+
+        // Check if the image files exist
+        if (file_exists($logoImagePath) && file_exists($tandaTanganPath)) {
+            // Resize the logo to 100px width
+            $logo = Image::make($logoImagePath)->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+            // Convert the resized logo to base64
+            $resizedLogo = 'data:image/png;base64,' . base64_encode($logo->stream()->__toString());
+
+            return view('surat keluar/template surat/pengantar_template', [
+                'image' => $resizedLogo,
+                'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
+                'user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 
+                'kode_surat' => $kode_surat, 
+                'datakodesurat' => $datakodesurat,
+                'kop_surat' => $kop_surat,
+                'kepala_sekolah' => $kepala_sekolah,
             ]);
-            $pdf->setPaper('a4', 'portrait');
-
-            // Save the PDF to a file or return it as a download
-            return $pdf->stream($namaFile);
-            // return $pdf->download($namaFile);
-            // return view('surat.pengantar', ['image' => $image]);
         } else {
-            // Handle the case when the image file does not exist
             return "Image file not found.";
         }
     }
 
-    public function suratPerintah()
+    public function perintah()
     {
-        // Use the correct directory separator for your OS
-        $path = public_path() . '/data_file/kop_surat.png';
+        $kop_surat = KopSuratModel::latest()->first();
+        $kepala_sekolah = KepalaSekolahModel::latest()->first();
 
-        // Check if the image file exists
-        if (file_exists($path)) {
-            $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+        // Paths to the image files
+        $logoImagePath = public_path('data_file/' . $kop_surat->logo_instansi);
+        $tandaTanganPath = public_path('data_file/' . $kepala_sekolah->tanda_tangan);
 
-            $namaFile = 'NamaSurat.pdf';
+        $user = Auth::user(); // Get the currently logged-in user
+        $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
+        $datakodesurat = KodeSuratModel::all();
 
-            // Load the view and set the default font to Arial
-            $pdf = PDF::loadView('surat-pdf.perintah', ['image' => $image])->setOptions([
-                'defaultFont' => 'Arial', // Set the default font to Arial
+        
+
+        $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
+        $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
+
+        // Check if the image files exist
+        if (file_exists($logoImagePath) && file_exists($tandaTanganPath)) {
+            // Resize the logo to 100px width
+            $logo = Image::make($logoImagePath)->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+            // Convert the resized logo to base64
+            $resizedLogo = 'data:image/png;base64,' . base64_encode($logo->stream()->__toString());
+
+            return view('surat keluar/template surat/perintah_template', [
+                'image' => $resizedLogo,
+                'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
+                'user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 
+                'kode_surat' => $kode_surat, 
+                'datakodesurat' => $datakodesurat,
+                'kop_surat' => $kop_surat,
+                'kepala_sekolah' => $kepala_sekolah,
             ]);
-            $pdf->setPaper('a4', 'portrait');
-
-            // Save the PDF to a file or return it as a download
-            return $pdf->stream($namaFile);
-            // return $pdf->download($namaFile);
-            // return view('surat.perintah', ['image' => $image]);
         } else {
-            // Handle the case when the image file does not exist
             return "Image file not found.";
         }
     }
 
-    public function suratPernyataan()
+    public function pernyataan()
     {
-        // Use the correct directory separator for your OS
-        $path = public_path() . '/data_file/kop_surat.png';
+        $kop_surat = KopSuratModel::latest()->first();
+        $kepala_sekolah = KepalaSekolahModel::latest()->first();
 
-        // Check if the image file exists
-        if (file_exists($path)) {
-            $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+        // Paths to the image files
+        $logoImagePath = public_path('data_file/' . $kop_surat->logo_instansi);
+        $tandaTanganPath = public_path('data_file/' . $kepala_sekolah->tanda_tangan);
 
-            $namaFile = 'NamaSurat.pdf';
+        $user = Auth::user(); // Get the currently logged-in user
+        $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
+        $datakodesurat = KodeSuratModel::all();
 
-            // Load the view and set the default font to Arial
-            $pdf = PDF::loadView('surat-pdf.pernyataan', ['image' => $image])->setOptions([
-                'defaultFont' => 'Arial', // Set the default font to Arial
+        
+
+        $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
+        $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
+
+        // Check if the image files exist
+        if (file_exists($logoImagePath) && file_exists($tandaTanganPath)) {
+            // Resize the logo to 100px width
+            $logo = Image::make($logoImagePath)->resize(100, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+            // Convert the resized logo to base64
+            $resizedLogo = 'data:image/png;base64,' . base64_encode($logo->stream()->__toString());
+
+            return view('surat keluar/template surat/pernyataan_template', [
+                'image' => $resizedLogo,
+                'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
+                'user' => $user, 'newNoKeluarValue' => $newNoKeluarValue, 
+                'kode_surat' => $kode_surat, 
+                'datakodesurat' => $datakodesurat,
+                'kop_surat' => $kop_surat,
+                'kepala_sekolah' => $kepala_sekolah,
             ]);
-            $pdf->setPaper('a4', 'portrait');
-
-            // Save the PDF to a file or return it as a download
-            return $pdf->stream($namaFile);
-            // return $pdf->download($namaFile);
-            // return view('surat.pernyataan', ['image' => $image]);
         } else {
-            // Handle the case when the image file does not exist
             return "Image file not found.";
         }
     }
+
+
+    // public function suratIjin(Request $request)
+    // {
+    //     $kop_surat = KopSuratModel::latest()->first();
+    //     $kepala_sekolah = KepalaSekolahModel::latest()->first();
+
+    //     // Paths to the image files
+    //     $logoImagePath = public_path('data_file/' . $kop_surat->logo_instansi);
+    //     $tandaTanganPath = public_path('data_file/' . $kepala_sekolah->tanda_tangan);
+
+    //     // Check if the image files exist
+    //     if (file_exists($logoImagePath) && file_exists($tandaTanganPath)) {
+    //         // Resize the logo to 100px width
+    //         $logo = Image::make($logoImagePath)->resize(100, null, function ($constraint) {
+    //             $constraint->aspectRatio();
+    //         });
+
+    //         // Convert the resized logo to base64
+    //         $resizedLogo = 'data:image/png;base64,' . base64_encode($logo->stream()->__toString());
+
+    //         // Load the view and set the default font to Arial
+    //         $pdf = PDF::loadView('surat-pdf.ijin', [
+    //             'image' => $resizedLogo,
+    //             'tanda_tangan' => 'data:image/png;base64,' . base64_encode(file_get_contents($tandaTanganPath)),
+    //             'kop_surat' => $kop_surat,
+    //             'kepala_sekolah' => $kepala_sekolah,
+    //             // 'paragraf1' => $paragraf1, // Pass the paragraf values to the view
+    //             // 'paragraf2' => $paragraf2,
+    //             // 'paragraf3' => $paragraf3,
+    //         ])->setOptions([
+    //             'defaultFont' => 'Arial',
+    //         ]);
+
+    //         $pdf->setPaper('a4', 'portrait');
+
+    //         // Save the PDF to a file or return it as a download
+    //         return $pdf->stream('NamaSurat.pdf');
+    //     } else {
+    //         return "Image file not found.";
+    //     }
+    // }
+
+
+
+    // public function suratPengantar()
+    // {
+    //     // Use the correct directory separator for your OS
+    //     $path = public_path() . '/data_file/kop_surat.png';
+
+    //     // Check if the image file exists
+    //     if (file_exists($path)) {
+    //         $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+
+    //         $namaFile = 'NamaSurat.pdf';
+
+    //         // Load the view and set the default font to Arial
+    //         $pdf = PDF::loadView('surat-pdf.pengantar', ['image' => $image])->setOptions([
+    //             'defaultFont' => 'Arial', // Set the default font to Arial
+    //         ]);
+    //         $pdf->setPaper('a4', 'portrait');
+
+    //         // Save the PDF to a file or return it as a download
+    //         return $pdf->stream($namaFile);
+    //         // return $pdf->download($namaFile);
+    //         // return view('surat.pengantar', ['image' => $image]);
+    //     } else {
+    //         // Handle the case when the image file does not exist
+    //         return "Image file not found.";
+    //     }
+    // }
+
+    // public function suratPerintah()
+    // {
+    //     // Use the correct directory separator for your OS
+    //     $path = public_path() . '/data_file/kop_surat.png';
+
+    //     // Check if the image file exists
+    //     if (file_exists($path)) {
+    //         $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+
+    //         $namaFile = 'NamaSurat.pdf';
+
+    //         // Load the view and set the default font to Arial
+    //         $pdf = PDF::loadView('surat-pdf.perintah', ['image' => $image])->setOptions([
+    //             'defaultFont' => 'Arial', // Set the default font to Arial
+    //         ]);
+    //         $pdf->setPaper('a4', 'portrait');
+
+    //         // Save the PDF to a file or return it as a download
+    //         return $pdf->stream($namaFile);
+    //         // return $pdf->download($namaFile);
+    //         // return view('surat.perintah', ['image' => $image]);
+    //     } else {
+    //         // Handle the case when the image file does not exist
+    //         return "Image file not found.";
+    //     }
+    // }
+
+    // public function suratPernyataan()
+    // {
+    //     // Use the correct directory separator for your OS
+    //     $path = public_path() . '/data_file/kop_surat.png';
+
+    //     // Check if the image file exists
+    //     if (file_exists($path)) {
+    //         $image = 'data:image/png;base64,' . base64_encode(file_get_contents($path));
+
+    //         $namaFile = 'NamaSurat.pdf';
+
+    //         // Load the view and set the default font to Arial
+    //         $pdf = PDF::loadView('surat-pdf.pernyataan', ['image' => $image])->setOptions([
+    //             'defaultFont' => 'Arial', // Set the default font to Arial
+    //         ]);
+    //         $pdf->setPaper('a4', 'portrait');
+
+    //         // Save the PDF to a file or return it as a download
+    //         return $pdf->stream($namaFile);
+    //         // return $pdf->download($namaFile);
+    //         // return view('surat.pernyataan', ['image' => $image]);
+    //     } else {
+    //         // Handle the case when the image file does not exist
+    //         return "Image file not found.";
+    //     }
+    // }
 
 
     public function settings()

@@ -201,7 +201,7 @@
             </li>
             <li class="sidebar-menu-item" id="pendataan_surat_keluar">
                 <a href="/surat_keluar/tambah">
-                    <i class="ri-quill-pen-line"></i>
+                    <i class="ri-quill-pen-line sidebar-menu-item-icon"></i>
                     Pendataan Surat Keluar
                 </a>
             </li>

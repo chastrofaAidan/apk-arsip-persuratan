@@ -76,9 +76,9 @@
 <div class="px-3 py-2 rounded shadow" style="background: #9A4444; color:#fff;">
 <div class="dashboard">
     <h3>Selamat Datang, {{ $user->name }}</h3>
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut, quis inventore totam iste tempora doloribus?
-    Necessitatibus incidunt, quia veritatis culpa facilis nihil, iste ea eveniet soluta reprehenderit, laboriosam
-    tempore aliquam.
+    ARCHIE - Untuk Segala Kebutuhan Persuratan Anda ^^
+    <br>
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam deserunt quibusdam possimus iste laudantium excepturi quia, vero dolor voluptatum, saepe dolorum, temporibus repellat nulla commodi aliquam accusantium praesentium quod! Ab?
     <br>
     <br>
     <div>

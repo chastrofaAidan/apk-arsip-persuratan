@@ -118,9 +118,9 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
 
     // Pembuatan Surat (Add - Pembuatan Surat)
     Route::get('/pembuatan_surat_ijin', [TemplateSuratController::class, 'ijin']);
-    Route::get('/pembuatan_surat_pengantar', [TemplateSuratController::class, 'index']);
-    Route::get('/pembuatan_surat_perintah', [TemplateSuratController::class, 'index']);
-    Route::get('/pembuatan_surat_pernyataan', [TemplateSuratController::class, 'index']);
+    Route::get('/pembuatan_surat_pengantar', [TemplateSuratController::class, 'pengantar']);
+    Route::get('/pembuatan_surat_perintah', [TemplateSuratController::class, 'perintah']);
+    Route::get('/pembuatan_surat_pernyataan', [TemplateSuratController::class, 'pernyataan']);
 
     // Penyimpanan Surat (Store - Pembuatan Surat)
     Route::post('/pembuatan_surat/store', [ArsipController::class, 'pembuatanSurat'])->name('pembuatanSuratStore');

@@ -546,6 +546,72 @@ class ArsipController extends Controller
         return redirect('/surat_keluar');
     }
 
+    public function pengantarStore(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'konten' => 'required|string',
+            'surat_keluar' => 'required|string',
+        ]);
+
+        // Get the content and create a PDF
+        $content = $request->input('konten');
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($content);
+
+        // Set the file name
+        $fileName = $request->input('surat_keluar') . '.pdf';
+
+        // Save the PDF file to the server
+        $pdf->save(public_path('data_file/' . $fileName));
+
+        return redirect('/surat_keluar');
+    }
+
+    public function perintahStore(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'konten' => 'required|string',
+            'surat_keluar' => 'required|string',
+        ]);
+
+        // Get the content and create a PDF
+        $content = $request->input('konten');
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($content);
+
+        // Set the file name
+        $fileName = $request->input('surat_keluar') . '.pdf';
+
+        // Save the PDF file to the server
+        $pdf->save(public_path('data_file/' . $fileName));
+
+        return redirect('/surat_keluar');
+    }
+
+    public function pernyataanStore(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'konten' => 'required|string',
+            'surat_keluar' => 'required|string',
+        ]);
+
+        // Get the content and create a PDF
+        $content = $request->input('konten');
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($content);
+
+        // Set the file name
+        $fileName = $request->input('surat_keluar') . '.pdf';
+
+        // Save the PDF file to the server
+        $pdf->save(public_path('data_file/' . $fileName));
+
+        return redirect('/surat_keluar');
+    }
+
     // public function ijinStore(Request $request)
     // {
     //     // Validate the request data
