@@ -17,7 +17,11 @@
         <div class="login-container">
             <p class="title">TATA USAHA</p>
             <div class="separator"></div>
-            <p class="welcome-message">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero, doloremque.</p>
+            <p class="welcome-message">
+                -ARCHIE- 
+                <br>
+                Untuk Segala Kebutuhan Persuratan Anda ^^
+            </p>
             @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>

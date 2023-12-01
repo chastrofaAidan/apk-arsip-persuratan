@@ -121,8 +121,7 @@
                                     style="background-color: var(--bs-color1); color: white;">
                                     <i class="ri-delete-bin-line"></i>
                                 </a><br>
-                            </td>
-                        @endif
+                          </td>
                     </tr>
                 @endforeach
             </tbody>

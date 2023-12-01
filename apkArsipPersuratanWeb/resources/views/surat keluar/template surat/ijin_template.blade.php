@@ -1,6 +1,7 @@
 @extends('partials/pembuatan_surat')
 
 @section('css')
+<link rel="stylesheet" href="/css/surat_style.css">
 <style>
     .container {
         /* max-width: 800px;
@@ -54,272 +55,311 @@
         Pembuatan Surat - Izin
     </h4>
 
-    <form action="/surat_ijin/store" method="post" enctype="multipart/form-data">
+    <form id="myForm" action="{{ route('pembuatanSuratStore') }}" method="post" enctype="multipart/form-data" target="_blank">
     {{ csrf_field() }}
     <div class="container">
         <br>
-        <h5 class="fw-bold">Data Surat Ijin</h5>
+
+        <!-- Add this text input for the PDF file name -->
         <div class="row">
-            <div class="col-md-6">
-                <label for="no_keluar">No</label>
-                <input class="custom-input" type="text" name="no_keluar" id="no_keluar" value="{{ $newNoKeluarValue }}" readonly>
-
-                <label for="tanggal_keluar">Tanggal</label>
-                <input class="custom-input" type="date" name="tanggal_keluar" id="tanggal_keluar" required="required" value="{{ now()->toDateString() }}"><br>
-
-                <label for="perihal_keluar">Perihal</label>
-                <input class="custom-input" type="text" name="perihal_keluar" id="perihal_keluar" required="required" value="Surat Ijin"><br>      
-            </div>
-        
-            <div class="col-md-6">
-                <label for="kode_keluar1">Nomor Surat Keluar</label>
-                <div class="row">
-                    <div class="col-md-4">
-                        <select class="custom-input form-select" name="kode_keluar1" id="kode_keluar1" required="required">
-                            <option value="" disabled selected>Pilih Kode Surat</option>
-                            @foreach($datakodesurat as $ks)
-                            <option value="{{ $ks->kode_surat }}">{{ $ks->kode_surat }} / {{ $ks->keterangan_kode_surat }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-1">
-                        <b>/</b>
-                    </div>
-                    <div class="col-md-7">
-                        <input class="custom-input" type="text" name="kode_keluar2" id="kode_keluar2" required="required" value="{{ $newNoKeluarValue }}/{{ $kode_surat->kode_surat }}">
-                    </div>
-                </div>
-
-                <label for="ditujukan">Ditujukan Kepada</label>
-                <input class="custom-input" type="text" name="ditujukan" id="ditujukan" required="required"><br>
-
-                <label for="keterangan_keluar">Keterangan</label>
-                <input class="custom-input" type="text" name="keterangan_keluar" id="keterangan_keluar" required="required"><br>
-            </div>
+        <div class="col-md-12">
+            <label for="surat_keluar">Nama Surat</label>
+            <input class="custom-input" type="text" name="surat_keluar" id="surat_keluar" placeholder="Tidak Mengandung Spasi / Karakter Spesial" required="required"><br><br>
         </div>
-        <br>
-        <h5 class="fw-bold">Konten Surat Ijin</h5>
+        <!-- <div class="col-12">
+            <input type="checkbox" id="showSignature" class="form-check-input" style="transform: scale(1.5);">
+            <label for="showSignature">&nbsp; Gunakan Tanda Tangan Digital</label>
+        </div> -->
+        </div>
+        <!-- <div class="row">
+            <div class="col-md-6 row">
+                <label for="kode_keluar1">Nomor Surat Keluar</label>
+                <div class="col-md-4">
+                    <select class="custom-input form-select" name="kode_keluar1" id="kode_keluar1" required="required">
+                        <option value="" disabled selected>Pilih Kode Surat</option>
+                        @foreach($datakodesurat as $ks)
+                        <option value="{{ $ks->kode_surat }}">{{ $ks->kode_surat }} / {{ $ks->keterangan_kode_surat }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <b>/</b>
+                </div>
+                <div class="col-md-7">
+                    <input class="custom-input" type="text" name="kode_keluar2" id="kode_keluar2" required="required" value="{{ $newNoKeluarValue }}/{{ $kode_surat->kode_surat }}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="tanggal_keluar">Tanggal Pembuatan</label>
+                <input class="custom-input" type="date" name="tanggal_keluar" id="tanggal_keluar" required="required" value="{{ now()->toDateString() }}"><br>
+            </div>
+            <div id="displayedValues" style="text-align: center;">
+                <div></div>
+                <div></div>
+            </div>
+        </div> -->
 
         <div class="container">
-            <div id="forms-container"></div>
+            <textarea name="konten" id="konten" class="konten">
+            <style>
+                /* Additional styles for page breaks and positioning */
+                .page-break-before {
+                    page-break-before: always;
+                }
+
+                .page-break-after {
+                    page-break-after: always;
+                }
+
+                .table-container {
+                    position: relative;
+                    margin-bottom: 300px; /* Adjust as needed */
+                }
+
+                .footer {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    text-align: center;
+                }
+
+                /* Fixed header for repeating at the beginning of each page */
+                .fixed-header {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    text-align: center;
+                }
+            </style>
+            <div class="fixed-header">
+                <table style="margin: 0 auto; margin-bottom: 0; width: 100%;" class="center-table page-break-before">
+                    <tr>
+                        <td width="15%" style="text-align: center;">
+                            <img src="{{ $image }}" alt="Kop Surat" style="vertical-align: bottom;" class="kop-surat">
+                        </td>
+                        <td width="85%" style="text-align: center;">
+                            <div style="font-weight: lighter; font-size: 19px;" class="title">PEMERINTAH DAERAH PROVINSI JAWA BARAT</div>
+                            <div style="font-weight: lighter; font-size: 19px;" class="title">DINAS PENDIDIKAN</div>
+                            <div style="font-weight: lighter; font-size: 19px;" class="title">{{ $kop_surat->lingkup_wilayah }}</div>
+                            <div style="font-weight: bolder; font-size: 22px;" class="big">{{ $kop_surat->nama_instansi }}</div>
+                            <div style="font-weight: lighter;">{{ $kop_surat->alamat_instansi }}, Telp./Fax. {{ $kop_surat->kontak_instansi }}</div>
+                            <div style="font-weight: lighter;">Website : {{ $kop_surat->website_instansi }} - email : <a href="{{ $kop_surat->email_instansi }}">{{ $kop_surat->email_instansi }}</a></div>
+                            <div style="font-weight: lighter;">{{ $kop_surat->kode_pos }}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <hr style="border: none; border-top: 4px solid #000; margin: 20px 0;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div style="text-align: center;"><b style="font-size: 19px;"><u>S U R A T &nbsp; I J I N</u></b></div>
+            <div id="displayedValues" style="text-align: center;">
+                <div>Nomor : (kode-surat)/{{ $newNoKeluarValue }}/{{ $kode_surat->kode_surat }}</div>
+                <div>Tanggal : {{ now()->format('j F Y') }}</div>
+            </div>
+            <div></div>
+            
+
+            <table style="width: 100%; position: absolute; bottom: 300px; left: 0; right: 0; text-align: center;" class="footer page-break-after">
+                <tr>
+                    <td style="width: 55%;"></td>
+                    <td style="width: 45%;">
+                        <div style="position: relative;">
+                            <div id="signatureContainer" style="position: absolute; top: 0; left: 0; z-index: 3; text-align: left;">
+                                <br>
+                                <img src="{{ $tanda_tangan }}" alt="ttd">
+                            </div>
+                            <div style="position: absolute; top: 0; left: 0; z-index: 2; text-align: left;">
+                                <div style="font-weight: lighter; font-size: 19px;" class="title">K E P A L A</div>
+                                <br><br><br><br><br>
+                                <b>{{ $kepala_sekolah->nama_kepala_sekolah }}</b><br>
+                                {{$kepala_sekolah->golongan_kepala_sekolah}} <br>
+                                NIP. {{$kepala_sekolah->nip_kepala_sekolah}} <br>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>    
+            </textarea>
             <br><br>
-            <button class="custom-button" onclick="addParagraph()">
-                <span>Add Paragraph</span>
-            </button>
-            <br>
-            <button class="custom-button" onclick="addTable()">
-                <span>Add Table</span>
-            </button>
-            <label for="tableRowCount">Jumlah Kolom:</label>
-            <input type="number" id="tableRowCount" min="1" max="5" value="1" oninput="handleInputChange(this)">
-            <br>
-            <!-- <button class="custom-button" onclick="addPageBreak()">
-                <span>Add Page Break</span>
-            </button> -->
+            <div class="row">
+                <div class="col-md-6">
+                <input class="btn format-surat col-md-12" type="submit" name="pendataan" value="Pendataan Surat Keluar" style="background-color: var(--bs-color1); color: white;">
+            </div>
+            <div class="col-md-6">
+                <input class="btn format-surat col-md-12" type="submit" name="unduh" value="Unduh File PDF" style="background-color: var(--bs-color1); color: white;">
+            </div>
+            
         </div>
     </div>
-</div>
-
-<br><br>
-
-<div class="px-3 py-2 bg-white rounded shadow">
-<h4 class="fw-bold">
-    <i class="ri-mail-send-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
-    Surat Keluar
-</h4>
-
-<div class="container">
-    <div class="container">
-        <div class="row">
-            <input class="btn format-surat col-md-6" type="submit" value="Catat Surat Keluar & Unduh Sebagai PDF" style="background-color: var(--bs-color1); color: white;">
-
-            <a href="/surat_ijin" class="btn col-md-6 text-center" id="preview-link" target="_blank">
-            <div class="btn format-surat col-md-12" style="background-color: var(--bs-color1); color: white;">Preview Surat</div>
-            </a><br>
-        </div>
-    </div>
-</div>
-</form>
+    </form>
 @endsection
 
 @section('js')
+
+<!-- Include the jsPDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.0/tinymce.min.js" integrity="sha512-SOoMq8xVzqCe9ltHFsl/NBPYTXbFSZI6djTMcgG/haIFHiJpsvTQn0KDCEv8wWJFu/cikwKJ4t2v1KbxiDntCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <script>
-    function handleInputChange(inputElement) {
-    // Get the selected value from the dropdown
-    var selectedValue = inputElement.value;
+    tinymce.init({
+        selector: 'textarea.konten',
+        height: 1250,
+        plugins: 'table advlist pagebreak image',
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | pagebreak | image',
+        // content_css: 'http://localhost/apk-arsip-persuratan/apkArsipPersuratanWeb/public/css/surat_style.css',
+        file_picker_callback: function(callback, value, meta) {
+        // Open a file dialog
+        var input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        
 
-    // Check if the selected value is within the valid range (1 to 5)
-    if (selectedValue < 1) {
-      inputElement.value = 1;
-    } else if (selectedValue > 5) {
-      inputElement.value = 5;
-    } else {
-      inputElement.value = selectedValue;
+        // Listen for the file input change event
+        input.addEventListener('change', function() {
+            var file = input.files[0];
+
+            // Create a FileReader to read the file as a data URL
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                // Pass the data URL to the callback
+                callback(e.target.result, {
+                    alt: file.name
+                });
+            };
+
+            // Read the file as a data URL
+            reader.readAsDataURL(file);
+        });
+
+        // Trigger the file input click event
+        input.click();
     }
-  }
+    });
+
+
+    
+
+
+    // Add a listener to the button click event
+    document.getElementById('generatePdfBtn').addEventListener('click', function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Get the TinyMCE content
+        var konten = tinymce.activeEditor.getContent();
+
+        // Update the hidden input with the TinyMCE content
+        document.getElementById('hiddenContent').value = konten;
+
+        // Submit the form
+        document.getElementById('myForm').submit();
+    });
 
 
 
-    let elementCounter = 1;
 
-    function addParagraph() {
-        const container = document.getElementById('forms-container');
+    // jQuery script to update displayed values
+    $(document).ready(function () {
+        // Function to update displayed values
+        function updateDisplayedValues() {
+            // Get values from inputs
+            var kodeSurat = $('#kode_keluar1').val() + '/' + $('#kode_keluar2').val();
+            var tanggalSurat = $('#tanggal_keluar').val();
 
-        // Create new paragraph container
-        const newParagraph = document.createElement('div');
-        newParagraph.className = 'row';
-
-        // Create label
-        const newLabel = document.createElement('label');
-        newLabel.setAttribute('for', 'paragraf-' + elementCounter);
-        newLabel.textContent = 'Paragraf ' + elementCounter;
-
-        // Create textarea for paragraph content
-        const newTextarea = document.createElement('textarea');
-        newTextarea.className = 'custom-input paragraph';
-        newTextarea.name = 'paragraf[' + elementCounter + ']'; // Use an array for dynamic names
-        newTextarea.id = 'paragraf-' + elementCounter;
-        newTextarea.required = true;
-
-        // Create delete button
-        const deleteButton = document.createElement('button');
-        deleteButton.className = 'custom-button delete-button';
-        deleteButton.onclick = function () {
-            deleteElement(newParagraph);
-        };
-        deleteButton.innerHTML = '<span>Delete</span>';
-
-        // Append elements to the new paragraph container
-        newParagraph.appendChild(newLabel);
-        newParagraph.appendChild(newTextarea);
-        newParagraph.appendChild(deleteButton);
-
-        // Append the new paragraph to the container
-        container.appendChild(newParagraph);
-
-        // Increment the counter for the next element
-        elementCounter++;
-    }
-
-    // function addPageBreak(){
-
-    // }
-
-    function addTable() {
-        const tableRowCount = document.getElementById('tableRowCount').value;
-        const container = document.getElementById('forms-container');
-
-        // Create break
-        const lineBreak1 = document.createElement('br');
-        const lineBreak2 = document.createElement('br');
-        const lineBreak3 = document.createElement('br');
-        const lineBreak4 = document.createElement('br');
-
-        // Create Div
-        const newTable = document.createElement('div');
-        newTable.className = 'custom-table';
-        newTable.id = 'table-' + elementCounter;
-
-        // Create delete button for the table
-        const deleteTableButton = document.createElement('button');
-        deleteTableButton.className = 'custom-button delete-button';
-        deleteTableButton.onclick = function () {
-            deleteElement(newTable);
-        };
-        deleteTableButton.innerHTML = '<span>Delete Table</span>';
-
-        // Create add row button
-        const addRowButton = document.createElement('button');
-        addRowButton.className = 'custom-button';
-        addRowButton.onclick = function () {
-            addRow(newTable, tableRowCount);
-        };
-        addRowButton.innerHTML = '<span>Add Row</span>';
-
-        // Create label
-        const newLabel = document.createElement('label');
-        newLabel.textContent = 'Table Header';
-
-        // Append buttons to the new table container
-        newTable.appendChild(deleteTableButton);
-        newTable.appendChild(addRowButton);
-        newTable.appendChild(lineBreak1);
-        newTable.appendChild(newLabel);
-
-        // Create textareas based on the number of rows
-        for (let i = 0; i < tableRowCount; i++) {
-            const newTextarea = document.createElement('textarea');
-            newTextarea.className = 'custom-input';
-            newTextarea.placeholder = "Nama Kolom " + (i + 1);  // Updated variable name
-            newTextarea.name = 'kepala-kolom-' + elementCounter;
-            newTextarea.id = 'kepala-kolom-' + elementCounter;
-            newTextarea.required = true;
-            newTable.appendChild(newTextarea);
+            // Update the displayed values with placeholders if inputs are empty
+            $('#displayedValues div:nth-child(1)').text('Nomor : ' + (kodeSurat || '---'));
+            $('#displayedValues div:nth-child(2)').text('Tanggal : ' + (tanggalSurat || '---'));
         }
 
-        // Append buttons to the new table container
-        newTable.appendChild(lineBreak2);
-        newTable.appendChild(lineBreak3);
-        newTable.appendChild(lineBreak4);
+        // Listen for changes in the select and input fields
+        $('#kode_keluar1, #kode_keluar2, #tanggal_keluar').on('input', function () {
+            // Update the displayed values
+            updateDisplayedValues();
+        });
 
-        // Append the new table to the container
-        container.appendChild(newTable);
-
-        // Increment the counter for the next element
-        elementCounter++;
-
-        // Assuming you have a button to trigger the page transition
-        // const transitionButton = document.getElementById('transitionButton');
-        // transitionButton.addEventListener('click', function () {
-        //     navigateToAnotherPage();
-        // });
-    }
-
-    function addRow(table, rowCount) {
-        // Create break
-        const lineBreak = document.createElement('br');
-
-        // Create row container
-        const newRow = document.createElement('div');
-        newRow.className = 'table-row';
-
-        // Create delete row button
-        const deleteRowButton = document.createElement('button');
-        deleteRowButton.className = 'custom-button delete-button';
-        deleteRowButton.onclick = function () {
-            deleteRow(newRow);
-        };
-        deleteRowButton.innerHTML = '<span>Delete Row</span>';
-
-        // Append delete row button to the row
-        newRow.appendChild(deleteRowButton);
-
-        // Create textareas for the new row
-        for (let i = 0; i < rowCount; i++) {
-            const newTextarea = document.createElement('textarea');
-            newTextarea.className = 'custom-input';
-            newTextarea.placeholder = 'Value ' + (i + 1);
-            newTextarea.name = 'value-' + elementCounter + '-row-' + (i + 1);
-            newTextarea.id = 'value-' + elementCounter + '-row-' + (i + 1);
-            newTextarea.required = true;
-            newRow.appendChild(newTextarea);
-        }
-
-        // Append row and line break to the table
-        table.appendChild(newRow);
-        table.appendChild(lineBreak);
-    }
+        // Initial update to handle default values
+        updateDisplayedValues();
+    });
 
 
-    function deleteRow(row) {
-        // Remove the row from its parent node
-        row.parentNode.removeChild(row);
-    }
+    // jQuery script for input validation
+    $(document).ready(function () {
+        // Listen for changes in the input field
+        $('#surat_keluar').on('input', function () {
+            // Get the current value of the input
+            var inputValue = $(this).val();
+
+            // Remove spaces and special characters
+            var sanitizedValue = inputValue.replace(/[^a-zA-Z0-9_-]/g, '');
+
+            // Update the input value with the sanitized value
+            $(this).val(sanitizedValue);
+        });
+    });
 
 
-    function deleteElement(element) {
-        const container = document.getElementById('forms-container');
-        container.removeChild(element);
-    }
+
+    // $(document).ready(function () {
+    // // Function to update displayed values
+    //     function updateDisplayedValues() {
+    //         var kodeSurat = $('#kode_keluar1').val() + '/' + $('#kode_keluar2').val();
+    //         var tanggalSurat = $('#tanggal_keluar').val();
+
+    //         $('#displayedValues div:nth-child(1)').text('Nomor : ' + (kodeSurat || '---'));
+    //         $('#displayedValues div:nth-child(2)').text('Tanggal : ' + (tanggalSurat || '---'));
+    //     }
+
+    //     // Function to toggle signature visibility
+    //     function toggleSignatureVisibility() {
+    //         var showSignature = $('#showSignature').prop('checked');
+    //         $('#signatureContainer').toggle(showSignature);
+    //     }
+
+    //     // Listen for changes in the select and input fields
+    //     $('#kode_keluar1, #kode_keluar2, #tanggal_keluar').on('input', function () {
+    //         updateDisplayedValues();
+    //     });
+
+    //     // Listen for changes in the checkbox
+    //     $('#showSignature').on('change', function () {
+    //         toggleSignatureVisibility();
+    //     });
+
+    //     // Initial update to handle default values
+    //     updateDisplayedValues();
+    //     // Initial toggle to handle default checkbox state
+    //     toggleSignatureVisibility();
+
+    //     // Add input validation for the 'surat_keluar' field
+    //     $('#surat_keluar').on('input', function () {
+    //         var inputValue = $(this).val();
+    //         var sanitizedValue = inputValue.replace(/[^a-zA-Z0-9_-]/g, '');
+    //         $(this).val(sanitizedValue);
+    //     });
+
+    //     // Add a listener to the button click event
+    //     $('#generatePdfBtn').on('click', function (event) {
+    //         event.preventDefault();
+    //         var konten = tinymce.activeEditor.getContent();
+    //         $('#hiddenContent').val(konten);
+    //         $('#myForm').submit();
+    //     });
+    // });
+
+
+
+
 </script>
 @endsection
+
+
+

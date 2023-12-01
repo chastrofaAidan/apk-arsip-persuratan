@@ -11,6 +11,8 @@ use App\Models\ArsipModel;
 use App\Models\SuratMasukModel;
 use App\Models\SuratKeluarModel;
 use App\Models\User;
+use App\Models\KodeSuratModel;
+use App\Models\KopSuratModel;
 use Barryvdh\DomPDF\PDF as PDF;
 
 class ArsipController extends Controller
@@ -67,7 +69,7 @@ class ArsipController extends Controller
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
 
         // Use the query builder to paginate the results
-        $surat_keluar = SuratKeluarModel::paginate($perPage);
+        $surat_keluar = SuratKeluarModel::orderBy('id_keluar', 'desc')->paginate($perPage);
 
         return view('surat keluar/surat_keluar', ['user' => $user, 'datakeluar' => $surat_keluar, 'perPage' => $perPage, 'tujuanList' => $tujuanList, 'admins' => $admins, 'perihalList' => $perihalList,]);
     }
@@ -354,9 +356,6 @@ class ArsipController extends Controller
     }
 
 
-
-
-
     public function masukTambah()
     {
         $user = Auth::user(); // Get the currently logged-in user
@@ -466,14 +465,6 @@ class ArsipController extends Controller
 
 
 
-
-
-
-
-
-
-
-
     public function searchSuratKeluar(Request $request)
     {
         $user = Auth::user(); // Get the currently logged-in user
@@ -498,7 +489,45 @@ class ArsipController extends Controller
     }
 
 
-    public function ijinStore(Request $request)
+
+    public function keluarTambah()
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+        $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
+        $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
+
+        $datakodesurat = KodeSuratModel::all();
+        $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
+
+        return view('surat keluar/keluar_tambah', [
+            'user' => $user,
+            'kode_surat' => $kode_surat, 
+            'datakodesurat' => $datakodesurat,
+            'newNoKeluarValue' => $newNoKeluarValue
+        ]);
+    }
+
+
+    public function keluarTambahPembuatan($fileName)
+    {
+        $user = Auth::user(); // Get the currently logged-in user
+        $lastRecord = SuratKeluarModel::latest('no_keluar')->first();
+        $newNoKeluarValue = ($lastRecord) ? $lastRecord->no_keluar + 1 : 1;
+
+        $datakodesurat = KodeSuratModel::all();
+        $kode_surat = KopSuratModel::latest('id_kop_surat')->first();
+
+        return view('surat keluar/keluar_tambah_pembuatan', [
+            'user' => $user,
+            'kode_surat' => $kode_surat, 
+            'datakodesurat' => $datakodesurat,
+            'newNoKeluarValue' => $newNoKeluarValue,
+            'fileName' => $fileName,
+        ]);
+    }
+
+
+    public function keluarStore(Request $request)
     {
         // Validate the request data
         $validatedData = $request->validate([
@@ -509,9 +538,21 @@ class ArsipController extends Controller
             'ditujukan' => 'required',
             'perihal_keluar' => 'required',
             'keterangan_keluar' => 'required',
-
-            // 'paragraf.*' => 'required', // Validate each dynamic paragraph input
+            'surat_keluar' => '',
+            'pembuatan_surat' => '',
         ]);
+
+
+        if (!$request->hasFile('surat_keluar')) {
+            // Assign the previous value to the "file" field
+            $pdf = $request->input('pembuatan_surat');
+        } else {
+            // Handle the case when a new surat_keluar is uploaded
+            $surat_keluar = $request->file('surat_keluar');
+            $pdf = time() . "_" . $surat_keluar->getClientOriginalName();
+            $tujuanupload = 'data_file';
+            $surat_keluar->move($tujuanupload, $pdf);
+        }
 
         // Combine Kode Keluar Inputs
         $kode_keluar1 = $request->input('kode_keluar1');
@@ -521,24 +562,151 @@ class ArsipController extends Controller
         // Get the authenticated user's ID
         $userId = Auth::id();
 
-        // Create a new SuratKeluarModel instance and populate it with the validated data
-        $ijin = new SuratKeluarModel();
-        $ijin->no_keluar = $validatedData['no_keluar'];
-        $ijin->id = $userId; // Set the user ID
-        $ijin->tanggal_keluar = $validatedData['tanggal_keluar'];
-        $ijin->kode_keluar = $kode_keluar;
-        $ijin->ditujukan = $validatedData['ditujukan'];
-        $ijin->perihal_keluar = $validatedData['perihal_keluar'];
-        $ijin->surat_keluar = "EWOWcopy.pdf";
-        $ijin->keterangan_keluar = $validatedData['keterangan_keluar'];
 
+        $keluar = new SuratKeluarModel();
+        $keluar->no_keluar = $validatedData['no_keluar'];
+        $keluar->id = $userId; // Set the user ID
+        $keluar->tanggal_keluar = $validatedData['tanggal_keluar'];
+        $keluar->kode_keluar = $kode_keluar;
+        $keluar->ditujukan = $validatedData['ditujukan'];
+        $keluar->perihal_keluar = $validatedData['perihal_keluar'];
+        $keluar->surat_keluar = $pdf;
+        $keluar->keterangan_keluar = $validatedData['keterangan_keluar'];
         // Save the new record to the database
-        $ijin->save();
-
+        $keluar->save();
+        
         // Redirect to a success page or another appropriate action
         return redirect('/surat_keluar');
     }
 
+
+    public function pembuatanSurat(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'konten' => 'required|string',
+            'surat_keluar' => 'required|string',
+        ]);
+
+        // Get the content and create a PDF
+        $content = $request->input('konten');
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($content);
+
+        // Set the file name
+        $fileName = $request->input('surat_keluar') . '_' . now()->format('YmdHis') . '.pdf';
+
+        
+        
+        if ($request->has('pendataan')) {
+            
+            // Save the PDF file to the server
+            $pdf->save(public_path('data_file/' . $fileName));
+
+            return redirect('/surat_keluar/tambah/' . $fileName);
+
+        } 
+        elseif ($request->has('unduh')) {
+
+            $pdf->save(public_path('data_file/' . $fileName));
+
+            // Download the file
+            $downloadPath = public_path('data_file/' . $fileName);
+            return response()->download($downloadPath, $fileName)->deleteFileAfterSend(true);
+
+        }
+    }
+
+
+    public function ijinStore(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'konten' => 'required|string',
+            'surat_keluar' => 'required|string',
+        ]);
+
+        // Get the content and create a PDF
+        $content = $request->input('konten');
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($content);
+
+        // Set the file name
+        $fileName = $request->input('surat_keluar') . '.pdf';
+
+        // Save the PDF file to the server
+        $pdf->save(public_path('data_file/' . $fileName));
+
+        return redirect('/surat_keluar');
+    }
+
+    public function pengantarStore(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'konten' => 'required|string',
+            'surat_keluar' => 'required|string',
+        ]);
+
+        // Get the content and create a PDF
+        $content = $request->input('konten');
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($content);
+
+        // Set the file name
+        $fileName = $request->input('surat_keluar') . '.pdf';
+
+        // Save the PDF file to the server
+        $pdf->save(public_path('data_file/' . $fileName));
+
+        return redirect('/surat_keluar');
+    }
+
+    public function perintahStore(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'konten' => 'required|string',
+            'surat_keluar' => 'required|string',
+        ]);
+
+        // Get the content and create a PDF
+        $content = $request->input('konten');
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($content);
+
+        // Set the file name
+        $fileName = $request->input('surat_keluar') . '.pdf';
+
+        // Save the PDF file to the server
+        $pdf->save(public_path('data_file/' . $fileName));
+
+        return redirect('/surat_keluar');
+    }
+
+    public function pernyataanStore(Request $request)
+    {
+        // Validate the form data
+        $request->validate([
+            'konten' => 'required|string',
+            'surat_keluar' => 'required|string',
+        ]);
+
+        // Get the content and create a PDF
+        $content = $request->input('konten');
+        $pdf = app('dompdf.wrapper');
+        $pdf->loadHTML($content);
+
+        // Set the file name
+        $fileName = $request->input('surat_keluar') . '.pdf';
+
+        // Save the PDF file to the server
+        $pdf->save(public_path('data_file/' . $fileName));
+
+        return redirect('/surat_keluar');
+    }
+
+    
 
     public function keluarEdit($no_keluar)
     {

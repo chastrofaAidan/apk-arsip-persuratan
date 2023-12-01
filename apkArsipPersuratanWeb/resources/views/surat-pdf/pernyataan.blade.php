@@ -114,8 +114,8 @@
 </header>
 <div class="spacing">&nbsp;</div> <!-- Add some spacing -->
 <div class="text-center"><b class="title"><u>S U R A T &nbsp; P E R N Y A T A A N</u></b></div>
-<div class="text-center">Nomor : 800/268/SMKN.1.Cadisdik WIL.VII</div>
-<div class="text-center">Tanggal : 20 Juni 2023</div>
+<div class="text-center">Nomor : 800/{{}}</div>
+<div class="text-center">Tanggal : {{ now()->toDateString() }}</div>
 
 <!-- <div class="page-break"></div>
 <div class="page-break"></div>
