@@ -36,7 +36,7 @@
             <form action="" method="POST" class="login-form">
                 @csrf
                 <div class="form-control">
-                    <input type="email" placeholder="Username" name="email" value="{{ old('email') }}">
+                    <input type="email" placeholder="Email" name="email" value="{{ old('email') }}">
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="form-control">

@@ -67,6 +67,14 @@ class UserController extends Controller
         ]);
     }
 
+    public function checkDuplicateEmail(Request $request)
+    {
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
+
+        return response()->json(['exists' => $user !== null]);
+    }
+
     public function pegawaiTambah()
     {
         $user = Auth::user(); // Get the currently logged-in user

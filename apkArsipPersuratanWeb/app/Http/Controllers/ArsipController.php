@@ -33,41 +33,194 @@ class ArsipController extends Controller
         return view('dashboard', ['user' => $user, 'arsip' => $arsip, 'masuk' => $masuk, 'keluar' => $keluar]);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+
+    // Cari Arsip
     public function arsip(Request $request)
     {
+        $user = Auth::user();
+        $perusahaanList = ArsipModel::pluck('perusahaan', 'perusahaan')->unique();
+
+        $admins = User::where('role', 'admin')->get();
+
+        $perPage = $request->input('per_page', 10);
+
+        $arsip = ArsipModel::paginate($perPage);
+
+        return view('surat arsip/arsip_index', [
+            'user' => $user,
+            'admins' => $admins,
+            'dataarsip' => $arsip,
+            'perPage' => $perPage,
+            'perusahaanList' => $perusahaanList,
+        ]);
+    }
+
+    public function keluar(Request $request)
+    {
         $user = Auth::user(); // Get the currently logged-in user
+        $tujuanList = SuratKeluarModel::pluck('ditujukan', 'ditujukan')->unique();
+        $perihalList = SuratKeluarModel::pluck('perihal_keluar', 'perihal_keluar')->unique();
+        $admins = User::where('role', 'admin')->get();
 
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
 
-        // Use paginate() to paginate the results based on the selected number of records per page
-        $arsip = ArsipModel::orderBy('id_surat', 'desc')->paginate($perPage);
+        // Use the query builder to paginate the results
+        $surat_keluar = SuratKeluarModel::orderBy('id_keluar', 'desc')->paginate($perPage);
 
-        return view('surat arsip/arsip_index', ['user' => $user, 'dataarsip' => $arsip, 'perPage' => $perPage]);
+        return view('surat keluar/surat_keluar', ['user' => $user, 'datakeluar' => $surat_keluar, 'perPage' => $perPage, 'tujuanList' => $tujuanList, 'admins' => $admins, 'perihalList' => $perihalList,]);
     }
 
-
-    public function searchArsip(Request $request)
+    public function masuk(Request $request)
     {
+        $user = Auth::user();
+        $pengirimList = SuratMasukModel::pluck('pengirim', 'pengirim')->unique();
+        $admins = User::where('role', 'admin')->get();
 
-        $user = Auth::user(); // Get the currently logged-in user
+        $perPage = $request->input('per_page', 10);
 
-        if ($request->has('search')) {
-            $search = $request->input('search'); // Get the search input from the request
+        $surat_masuk = SuratMasukModel::with('user')->paginate($perPage);
 
-            $arsip = ArsipModel::where(function ($query) use ($search) {
-                $query->where('kode_surat', 'LIKE', '%' . $search . '%')
-                    ->orWhere('judul_surat', 'LIKE', '%' . $search . '%')
-                    ->orWhere('perusahaan', 'LIKE', '%' . $search . '%')
-                    ->orWhere('tanggal_surat', '=', $search)
-                    ->orWhere('perihal_surat', 'LIKE', '%' . $search . '%')
-                    ->orWhere('keterangan', 'LIKE', '%' . $search . '%');
-            })
-                ->get();
-        } else {
-            $arsip = ArsipModel::all();
-        }
-        return view('surat arsip/arsip_index', ['user' => $user, 'dataarsip' => $arsip]);
+        return view('surat masuk/surat_masuk', [
+            'user' => $user,
+            'datamasuk' => $surat_masuk,
+            'admins' => $admins,
+            'perPage' => $perPage,
+            'pengirimList' => $pengirimList,
+        ]);
     }
+
+
+    public function cariArsip(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $searchPerusahaan = $request->input('perusahaan');
+        $searchPengarsip = $request->input('pengarsip');
+
+        $query = ArsipModel::query();
+
+        if ($searchTerm && $searchTerm !== 'all') {
+            $query->where(function ($subquery) use ($searchTerm) {
+                $subquery->where('judul_surat', 'like', "%{$searchTerm}%")
+                    ->orWhere('jenis_surat', 'like', "%{$searchTerm}%")
+                    ->orWhere('kode_surat', 'like', "%{$searchTerm}%")
+                    ->orWhere('perihal_surat', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        if ($searchPerusahaan && $searchPerusahaan !== 'all') {
+            $query->where('perusahaan', $searchPerusahaan);
+        }
+
+        if ($searchPengarsip && $searchPengarsip !== 'all') {
+            // Menggunakan relasi 'user' untuk mencari berdasarkan nama pengguna
+            $query->whereHas('user', function ($subquery) use ($searchPengarsip) {
+                $subquery->where('id', $searchPengarsip);
+            });
+        }
+
+        $dataarsip = $query->paginate(10);
+
+        return view('surat arsip/cari_arsip', ['dataarsip' => $dataarsip]);
+    }
+
+    public function cariSuratKeluar(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $searchDitujukan = $request->input('ditujukan');
+        $searchPendata = $request->input('pendata');
+        $searchPerihal = $request->input('perihal'); // tambahkan perihal
+
+        $query = SuratKeluarModel::query();
+
+        if ($searchTerm && $searchTerm !== 'all') {
+            $query->where(function ($subquery) use ($searchTerm) {
+                $subquery->where('perihal_keluar', 'like', "%{$searchTerm}%")
+                    ->orWhere('ditujukan', 'like', "%{$searchTerm}%")
+                    ->orWhere('kode_keluar', 'like', "%{$searchTerm}%")
+                    ->orWhere('tanggal_keluar', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        if ($searchDitujukan && $searchDitujukan !== 'all') {
+            $query->where('ditujukan', $searchDitujukan);
+        }
+
+        if ($searchPerihal && $searchPerihal !== 'all') {
+            $query->where('perihal_keluar', $searchPerihal); // tambahkan filter untuk perihal
+        }
+
+        if ($searchPendata && $searchPendata !== 'all') {
+            $query->whereHas('user', function ($subquery) use ($searchPendata) {
+                $subquery->where('id', $searchPendata);
+            });
+        }
+
+        $datakeluar = $query->paginate(10);
+
+        return view('surat keluar/cari_surat_keluar', ['datakeluar' => $datakeluar]);
+    }
+
+    public function cariSuratMasuk(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $searchPengirim = $request->input('pengirim');
+        $searchPendata = $request->input('pendata');
+        $searchTanggal = $request->input('tgl');
+        $searchNomorSurat = $request->input('nomor_surat');
+        $searchPokokIsi = $request->input('pokok_isi');
+
+        $query = SuratMasukModel::query();
+
+        if ($searchTerm && $searchTerm !== 'all') {
+            $query->where(function ($subquery) use ($searchTerm) {
+                $subquery->where('pokok_masuk', 'like', "%{$searchTerm}%")
+                    ->orWhere('pengirim', 'like', "%{$searchTerm}%")
+                    ->orWhere('kode_masuk', 'like', "%{$searchTerm}%")
+                    ->orWhere('tanggal_masuk', 'like', "%{$searchTerm}%");
+            });
+        }
+
+        if ($searchPengirim && $searchPengirim !== 'all') {
+            $query->where('pengirim', $searchPengirim);
+        }
+
+        if ($searchPendata && $searchPendata !== 'all') {
+            $query->whereHas('user', function ($subquery) use ($searchPendata) {
+                $subquery->where('id', $searchPendata);
+            });
+        }
+
+        if ($searchTanggal) {
+            $query->where('tanggal_masuk', $searchTanggal);
+        }
+
+        if ($searchNomorSurat) {
+            $query->where('kode_masuk', $searchNomorSurat);
+        }
+
+        if ($searchPokokIsi) {
+            $query->where('pokok_masuk', 'like', "%{$searchPokokIsi}%");
+        }
+
+        $datamasuk = $query->paginate(10);
+
+        return view('surat masuk/cari_surat_masuk', ['datamasuk' => $datamasuk]);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -83,7 +236,6 @@ class ArsipController extends Controller
             return 'File not found.';
         }
     }
-
 
     public function tambah()
     {
@@ -145,7 +297,7 @@ class ArsipController extends Controller
 
         return view('surat arsip/arsip_edit', ['user' => $user, 'dataarsip' => $arsip]);
     }
-    
+
 
     public function update(Request $request)
     {
@@ -183,7 +335,7 @@ class ArsipController extends Controller
             // Simpan nama gambar ke dalam kolom file_surat
             $arsip->file_surat = $pdfName;
         }
-        
+
         // Simpan perubahan
         $arsip->save();
 
@@ -201,45 +353,6 @@ class ArsipController extends Controller
 
         // alihkan halaman ke halaman arsip
         return redirect('/surat_arsip');
-    }
-
-
-    public function masuk(Request $request)
-    {
-        $user = Auth::user(); // Get the currently logged-in user
-
-        $perPage = $request->input('per_page', 10); // Default to 10 records per page
-
-        // Eager load the user relationship
-        $surat_masuk = SuratMasukModel::with('user')->orderBy('no_masuk', 'desc')->paginate($perPage);
-
-        return view('surat masuk/surat_masuk', ['user' => $user, 'datamasuk' => $surat_masuk, 'perPage' => $perPage]);
-    }
-
-
-
-    public function searchSuratMasuk(Request $request)
-    {
-        $user = Auth::user(); // Get the currently logged-in user
-
-        if ($request->has('search')) {
-            $search = $request->input('search'); // Get the search input from the request
-
-            $surat_masuk = ArsipModel::where(function ($query) use ($search) {
-                $query->where('kode_surat', 'LIKE', '%' . $search . '%')
-                    ->orWhere('id_surat', 'LIKE', '%' . $search . '%')
-                    ->orWhere('judul_surat', 'LIKE', '%' . $search . '%')
-                    ->orWhere('perusahaan', 'LIKE', '%' . $search . '%')
-                    ->orWhere('tanggal_surat', '=', $search)
-                    ->orWhere('perihal_surat', 'LIKE', '%' . $search . '%')
-                    ->orWhere('keterangan', 'LIKE', '%' . $search . '%');
-            })
-                ->where('jenis_surat', 'Surat Masuk')
-                ->get();
-        } else {
-            $surat_masuk = ArsipModel::all();
-        }
-        return view('surat masuk/surat_masuk', ['user' => $user, 'dataarsip' => $surat_masuk]);
     }
 
 
@@ -352,25 +465,6 @@ class ArsipController extends Controller
 
 
 
-
-
-
-
-
-    public function keluar(Request $request)
-    {
-        $user = Auth::user(); // Get the currently logged-in user
-
-        $perPage = $request->input('per_page', 10); // Default to 10 records per page
-
-        // Use the query builder to paginate the results and order by no_keluar in descending order
-        $surat_keluar = SuratKeluarModel::orderBy('no_keluar', 'desc')->paginate($perPage);
-
-        return view('surat keluar/surat_keluar', ['user' => $user, 'datakeluar' => $surat_keluar, 'perPage' => $perPage]);
-    }
-
-
-
     public function searchSuratKeluar(Request $request)
     {
         $user = Auth::user(); // Get the currently logged-in user
@@ -468,7 +562,7 @@ class ArsipController extends Controller
         // Get the authenticated user's ID
         $userId = Auth::id();
 
-        // Create a new SuratKeluarModel instance and populate it with the validated data
+
         $keluar = new SuratKeluarModel();
         $keluar->no_keluar = $validatedData['no_keluar'];
         $keluar->id = $userId; // Set the user ID
@@ -612,72 +706,13 @@ class ArsipController extends Controller
         return redirect('/surat_keluar');
     }
 
-    // public function ijinStore(Request $request)
-    // {
-    //     // Validate the request data
-    //     $validatedData = $request->validate([
-    //         'no_keluar' => 'required',
-    //         'tanggal_keluar' => 'required',
-    //         'kode_keluar1' => 'required',
-    //         'kode_keluar2' => 'required',
-    //         'ditujukan' => 'required',
-    //         'perihal_keluar' => 'required',
-    //         'keterangan_keluar' => 'required',
-    //         'surat_keluar' => 'required',
-
-    //         // 'paragraf.*' => 'required', // Validate each dynamic paragraph input
-    //     ]);
-
-    //     // Combine Kode Keluar Inputs
-    //     $kode_keluar1 = $request->input('kode_keluar1');
-    //     $kode_keluar2 = $request->input('kode_keluar2');
-    //     $kode_keluar = $kode_keluar1 . '/' . $kode_keluar2;
-
-    //     // Get the authenticated user's ID
-    //     $userId = Auth::id();
-
-    //     // Create a new SuratKeluarModel instance and populate it with the validated data
-    //     $ijin = new SuratKeluarModel();
-    //     $ijin->no_keluar = $validatedData['no_keluar'];
-    //     $ijin->id = $userId; // Set the user ID
-    //     $ijin->tanggal_keluar = $validatedData['tanggal_keluar'];
-    //     $ijin->kode_keluar = $kode_keluar;
-    //     $ijin->ditujukan = $validatedData['ditujukan'];
-    //     $ijin->perihal_keluar = $validatedData['perihal_keluar'];
-    //     $ijin->surat_keluar = $validatedData['surat_keluar'];
-    //     $ijin->keterangan_keluar = $validatedData['keterangan_keluar'];
-    //     // Save the new record to the database
-    //     $ijin->save();
-        
-    //     // Redirect to a success page or another appropriate action
-    //     return redirect('/surat_keluar');
-    // }
-
-
-
-    // Process dynamic paragraph inputs
-    // foreach ($validatedData['paragraf'] as $index => $paragraphContent) {
-    //     // Create a new ParagraphModel instance and save it to the database
-    //     $paragraph = new ParagraphModel();
-    //     $paragraph->ijin_id = $ijin->id; // Assuming a foreign key relationship
-    //     $paragraph->content = $paragraphContent;
-    //     $paragraph->save();
-    // }
-
     
-    // Get the uploaded file
-    // $file = $request->file('file');
-    // $pdf = time() . "_" . $file->getClientOriginalName();
-    // $tujuanupload = 'data_file';
-    // $file->move($tujuanupload, $pdf);
-
 
     public function keluarEdit($no_keluar)
     {
         $user = Auth::user(); // Get the currently logged-in user
 
         $keluar = DB::table('surat_keluar')->where('no_keluar', $no_keluar)->get();
-
 
         return view('surat keluar/keluar_edit', ['user' => $user, 'datakeluar' => $keluar]);
     }

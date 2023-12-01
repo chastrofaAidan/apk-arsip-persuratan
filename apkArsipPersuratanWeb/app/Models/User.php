@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +11,6 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
 
     protected $table = 'users';
     protected $primaryKey = 'id';
@@ -42,23 +41,16 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
     ];
 
-    // app/User.php
+    // Metode untuk mengambil semua pengguna dengan peran "admin"
+    public function scopeAdmins($query)
+    {
+        return $query->where('role', 'admin');
+    }
+
     public function hasAnyRole(...$roles)
     {
         return in_array($this->role, $roles);
     }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id');
-    }
-
-
-    // public function suratMasuk()
-    // {
-    //     return $this->hasMany(SuratMasukModel::class, 'user_id');
-    // }
 }

@@ -46,7 +46,7 @@
                                     <div class="w-full flex flex-col rounded-lg border border-solid">
                                         <div class="w-full bg-gray-200 p-2 rounded-t-lg">
                                             <span
-                                                class="w-full flex justify-center text-md font-poppins font-semibold text-black">Foto</span>
+                                                class="w-full flex justify-center text-md font-poppins font-semibold text-black">Foto (jpeg,png,jpg,gif,svg,heic)</span>
                                         </div>
                                         <div class="w-full rounded-b-lg h-64 p-2">
                                             <input type="file" name="profile" onchange="loadFile(event)" required>
@@ -54,6 +54,7 @@
                                                 <img class="mt-2 h-48" id="output">
                                             </div>
                                         </div>
+                                        <p>max:2mb</p>
                                     </div>
                                 </div>
                                 <div class="ml-2 mt-1 w-1/2">
@@ -69,6 +70,7 @@
                                     <div class="w-full flex border-solid border rounded-lg mt-2">
                                         <div class="w-4/12 bg-gray-200 p-2 rounded-l-lg">
                                             <span class="text-md font-poppins font-semibold text-black">Email</span>
+                                            <p id="emailError" class="text-red-500 text-sm"></p>
                                         </div>
                                         <div class="w-8/12 p-2 rounded-l-lg">
                                             <input class="h-full w-full outline-none font-poppins" type="email"
@@ -101,7 +103,7 @@
                             <div class="w-full mt-3 flex items-end justify-end">
                                 <button
                                     class="bg-white hover:bg-blue-500 text-black hover:text-white transition ease-linear py-2 px-3 border border-black rounded-xl font-poppins font-semibold text-md"
-                                    type="submit">
+                                    type="submit" id="tambahButton" disabled>
                                     Tambah
                                 </button>
                             </div>
@@ -119,13 +121,48 @@
                     $('#logo-sidebar').toggleClass(
                         'translate-x-0'); // Mengganti class CSS untuk menggeser drawer
                 });
-            });
 
-            var loadFile = function(event) {
-                var output = document.getElementById('output');
-                output.src = URL.createObjectURL(event.target.files[0]);
-            }
+                var loadFile = function(event) {
+                    var output = document.getElementById('output');
+                    output.src = URL.createObjectURL(event.target.files[0]);
+                }
+
+                // Fungsi untuk memeriksa apakah email sudah terdaftar
+                function checkDuplicateEmail() {
+                    var email = $('input[name="email"]').val();
+
+                    // Lakukan pengecekan ke server
+                    $.ajax({
+                        url: '/check-duplicate-email', // Gantilah dengan URL yang sesuai di server Anda
+                        method: 'POST',
+                        data: {
+                            email: email,
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.exists) {
+                                $('#emailError').text('Email sudah terdaftar.');
+                                $('#tambahButton').prop('disabled', true);
+                            } else {
+                                $('#emailError').text('');
+                                $('#tambahButton').prop('disabled', false);
+                            }
+                        }
+                    });
+                }
+
+                // Panggil fungsi checkDuplicateEmail saat input email berubah
+                $('input[name="email"]').on('input', function() {
+                    checkDuplicateEmail();
+                });
+
+                // Tambahan: Jika ingin memberikan umpan balik saat pengguna meninggalkan kolom email
+                $('input[name="email"]').on('blur', function() {
+                    checkDuplicateEmail();
+                });
+            });
         </script>
+
     </body>
 
     </html>

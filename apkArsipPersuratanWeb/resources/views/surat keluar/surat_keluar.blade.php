@@ -7,8 +7,6 @@
             vertical-align: middle;
             /* Center the content vertically */
         }
-
-        
     </style>
 @endsection
 
@@ -24,29 +22,57 @@
             <i class="ri-equalizer-line" style="font-size: 20px;"></i>
             Filter
         </h4>
+        <div class="row" style="padding: 5px 0px 20px 0px;">
+            <div class="col-md-4">
+                <label>Ditujukan</label>
+                <select id="filter-ditujukan" class="form-control filter">
+                    <option value="" disabled selected>Pilih Tujuan</option>
+                    <option value="all">Semua Tujuan</option>
+                    @foreach ($tujuanList as $tujuan)
+                        <option value="{{ $tujuan }}">
+                            {{ $tujuan }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
+            <div class="col-md-4">
+                <label>Perihal</label>
+                <select id="filter-perihal" name="search" class="form-control filter">
+                    <option value="" disabled selected>Pilih Perihal</option>
+                    <option value="all">Semua Perihal</option>
+                    @foreach ($perihalList as $perihal)
+                        <!-- ganti dari $tujuan -->
+                        <option value="{{ $perihal }}">
+                            {{ $perihal }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label>Pendata</label>
+                <select id="filter-pendata" name="pendata" class="form-control filter">
+                    <option value="" disabled selected>Pilih Pendata</option>
+                    <option value="all">Semua Pendata</option>
+                    @foreach ($admins as $admin)
+                        <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
-    <br><br>
-    <div class="px-3 py-2 bg-white rounded shadow" style="overflow-x: auto; max-width: 100%;">
-        <form action="/surat_keluar/search" method="GET">
-            <label for="search">Date Format: YYYY-MM-DD</label><br>
-            <input type="search" name="search" placeholder="Search">
-            <button type="submit">
-                Find
-            </button>
-        </form>
 
-        <form action="/surat_keluar" method="GET" style="padding: 20px 0px 20px 0px;"> <!-- Add this form for per_page -->
-            <label for="per_page">Records Per Page: </label>
-            <select name="per_page" id="per_page" onchange="this.form.submit()">
-                <option value="3" @if ($perPage == 3) selected @endif>3</option>
-                <option value="5" @if ($perPage == 5) selected @endif>5</option>
-                <option value="10" @if ($perPage == 10) selected @endif>10</option>
-                <option value="25" @if ($perPage == 25) selected @endif>25</option>
-                <option value="50" @if ($perPage == 50) selected @endif>50</option>
-                <option value="100" @if ($perPage == 100) selected @endif>100</option>
-            </select>
-        </form>
+    <br>
+    <div class="px-3 py-2 bg-white rounded shadow" style="overflow-x: auto; max-width: 100%;">
+        <div class="col-md-4">
+            <label>Tanggal / Nomor Surat</label>
+            <br>
+            <input type="text" id="search"
+                class="w-full p-2  border border-gray-300 border-solid rounded-lg outline-none font-poppins"
+                placeholder="Cari...">
+        </div>
+        <br>
 
         <table class="table table-bordered table-striped" border="1">
             <tr>
@@ -63,6 +89,7 @@
                 @endif
             </tr>
 
+            <tbody class="container-keluar">
             @foreach ($datakeluar as $k)
                 <tr>
                     <td>{{ $k->no_keluar }}</td>
@@ -77,7 +104,7 @@
                     <td>{{ $k->ditujukan }}</td>
                     <td>{{ $k->perihal_keluar }}</td>
                     <td>{{ $k->keterangan_keluar }}</td>
-                    
+
                     <td>
                         <a href="{{ asset('preview/' . $k->surat_keluar) }}" class="btn col-12 text-center" target="_blank"
                             style="background-color: var(--bs-color2); color: white;">
@@ -112,13 +139,92 @@
                     @endif
                 </tr>
             @endforeach
+            </tbody>
         </table>
 
-        <!-- Pagination links -->
-        {{ $datakeluar->appends(['per_page' => $perPage])->links() }}
+        {{ $datakeluar->links() }}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("search");
+
+            searchInput.addEventListener("input", function() {
+                const searchKeluar = searchInput.value.toLowerCase();
+
+                $.ajax({
+                    url: '/surat_keluar/cari-keluar',
+                    type: 'GET',
+                    data: {
+                        search: searchKeluar
+                    },
+                    success: function(data) {
+                        document.querySelector('.container-keluar').innerHTML = data;
+                    }
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("filter-ditujukan");
+
+            searchInput.addEventListener("input", function() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                $.ajax({
+                    url: '/surat_keluar/cari-keluar',
+                    type: 'GET',
+                    data: {
+                        search: searchTerm
+                    },
+                    success: function(data) {
+                        document.querySelector('.container-keluar').innerHTML = data;
+                    }
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const selectPerihal = document.getElementById("filter-perihal"); // ganti dari "filter-perusahaan"
+
+            selectPerihal.addEventListener("change", function() {
+                const selectedPerihal = selectPerihal.value;
+
+                $.ajax({
+                    url: '/surat_keluar/cari-keluar',
+                    type: 'GET',
+                    data: {
+                        perihal: selectedPerihal // ganti dari "perusahaan"
+                    },
+                    success: function(data) {
+                        document.querySelector('.container-keluar').innerHTML = data;
+                    }
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const selectPendata = document.getElementById("filter-pendata");
+
+            selectPendata.addEventListener("change", function() {
+                const selectedPendata = selectPendata.value;
+
+                $.ajax({
+                    url: '/surat_keluar/cari-keluar',
+                    type: 'GET',
+                    data: {
+                        pendata: selectedPendata
+                    },
+                    success: function(data) {
+                        document.querySelector('.container-keluar').innerHTML = data;
+                    }
+                });
+            });
+        });
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
