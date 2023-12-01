@@ -26,14 +26,16 @@
     <div class="container">
     <div class="row">
             <div class="col-md-6">
-                <label for="no_keluar">No</label>
-                <input class="custom-input" type="text" name="no_keluar" id="no_keluar" value="{{ $newNoKeluarValue }}" readonly>
+                <input class="custom-input" type="hidden" name="no_keluar" id="no_keluar" value="{{ $newNoKeluarValue }}" readonly>
 
                 <label for="tanggal_keluar">Tanggal</label>
                 <input class="custom-input" type="date" name="tanggal_keluar" id="tanggal_keluar" required="required" value="{{ now()->toDateString() }}"><br>
 
                 <label for="perihal_keluar">Perihal</label>
-                <input class="custom-input" type="text" name="perihal_keluar" id="perihal_keluar" required="required"><br>      
+                <input class="custom-input" type="text" name="perihal_keluar" id="perihal_keluar" required="required"><br>
+
+                <label for="surat_keluar">File</label>
+                <input class="custom-input" type="file" name="surat_keluar" id="surat_keluar" accept=".pdf" required="required"><br>
             </div>
         
             <div class="col-md-6">
@@ -61,12 +63,7 @@
                 <label for="keterangan_keluar">Keterangan</label>
                 <input class="custom-input" type="text" name="keterangan_keluar" id="keterangan_keluar"><br>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="surat_keluar">File</label>
-                    <input class="custom-input" type="file" name="surat_keluar" id="surat_keluar" accept=".pdf" required="required"><br>
-                </div>
-            </div>
+            
             <div class="col-md-6">
                     <input type="hidden" name="pembuatan_surat" id="pembuatan_surat">
                 </div>

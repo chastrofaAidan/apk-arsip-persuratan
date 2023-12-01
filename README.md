@@ -23,4 +23,5 @@ Be sure to follow the following steps in order for your aplication to work
 - delete the (;) in ';extension=gd'
 
 6. restart XAMPP and/or PC's to update 'php.ini' changes
+- php artisan serve
 etc.

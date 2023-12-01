@@ -26,11 +26,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <label for="no_masuk">No</label>
-                <input class="custom-input" type="text" name="no_masuk" id="no_masuk" required="required" value="{{ $newNoMasukValue }}" readonly>
+                <input class="custom-input" type="hidden" name="no_masuk" id="no_masuk" required="required" value="{{ $newNoMasukValue }}" readonly>
 
                 <label for="tanggal_masuk">Tanggal</label>
                 <input class="custom-input" type="date" name="tanggal_masuk" id="tanggal_masuk" required="required"  value="{{ now()->toDateString() }}"><br>
+
+                <label for="identitas_masuk">Nomor dan Tanggal Surat Masuk</label>
+                <input class="custom-input" type="text" name="identitas_masuk" id="identitas_masuk" required="required"  placeholder=" Nomor Surat - {{ \Carbon\Carbon::now()->format('j F Y') }}"><br>
+
+                <label for="pokok_masuk">Pokok Isi Surat Masuk</label>
+                <input class="custom-input" type="text" name="pokok_masuk" id="pokok_masuk"><br>
             </div>
         
             <div class="col-md-6">
@@ -39,24 +44,11 @@
 
                 <label for="pengirim">Pengirim</label>
                 <input class="custom-input" type="text" name="pengirim" id="pengirim" required="required"><br>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <label for="identitas_masuk">Nomor dan Tanggal Surat Masuk</label>
-                <input class="custom-input" type="text" name="identitas_masuk" id="identitas_masuk" required="required"  placeholder=" ewow - {{ \Carbon\Carbon::now()->format('j F Y') }}"><br>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <label for="pokok_masuk">Pokok Isi Surat Masuk</label>
-                <input class="custom-input" type="text" name="pokok_masuk" id="pokok_masuk"><br>
-            </div>
-            <div class="col-md-6">
+                
                 <label for="keterangan_masuk">Keterangan</label>
                 <input class="custom-input" type="text" name="keterangan_masuk" id="keterangan_masuk"><br>
             </div>
+
         </div>
         <br>
         <input class="btn btn-primary" type="submit" value="Simpan Data">

@@ -69,7 +69,7 @@ class ArsipController extends Controller
         $perPage = $request->input('per_page', 10); // Default to 10 records per page
 
         // Use the query builder to paginate the results
-        $surat_keluar = SuratKeluarModel::orderBy('id_keluar', 'desc')->paginate($perPage);
+        $surat_keluar = SuratKeluarModel::orderBy('no_keluar', 'desc')->paginate($perPage);
 
         return view('surat keluar/surat_keluar', ['user' => $user, 'datakeluar' => $surat_keluar, 'perPage' => $perPage, 'tujuanList' => $tujuanList, 'admins' => $admins, 'perihalList' => $perihalList,]);
     }
@@ -82,7 +82,7 @@ class ArsipController extends Controller
 
         $perPage = $request->input('per_page', 10);
 
-        $surat_masuk = SuratMasukModel::with('user')->paginate($perPage);
+        $surat_masuk = SuratMasukModel::with('user')->orderBy('no_masuk', 'desc')->paginate($perPage);
 
         return view('surat masuk/surat_masuk', [
             'user' => $user,

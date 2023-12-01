@@ -18,9 +18,7 @@
             <p class="title">TATA USAHA</p>
             <div class="separator"></div>
             <p class="welcome-message">
-                -ARCHIE- 
-                <br>
-                Untuk Segala Kebutuhan Persuratan Anda ^^
+                Aplikasi untuk Mempermudah Pengelolaan, Pembuatan, dan Pengarsipan Surat Secara Aman, Nyaman, dan Mudah.
             </p>
             @if ($errors->any())
             <div class="alert alert-danger">
