@@ -16,7 +16,7 @@ class SuratKeluarSeeder extends Seeder
         $tanggal_surat_1 = Carbon::create(2023, 11, 4);
         $tanggal_surat_2 = Carbon::create(2023, 10, 27);
         $tanggal_surat_3 = Carbon::create(2023, 11, 19);
-    
+
         DB::table('surat_keluar')->insert([
             [
                 'no_keluar' => '001',
@@ -64,7 +64,7 @@ class SuratKeluarSeeder extends Seeder
                 'keterangan_keluar' => 'Arsiparis'
             ],
             [
-                'no_keluar' => '006',
+                'no_keluar' => '007',
                 'tanggal_keluar' => $tanggal_surat_2, // corrected variable name
                 'kode_keluar' => '800/006/SMKN.1-Cadisdik Wil.VII',
                 'ditujukan' => 'Guru PKWU',
@@ -72,6 +72,70 @@ class SuratKeluarSeeder extends Seeder
                 'surat_keluar' => 'EWOWcopy.pdf',
                 'keterangan_keluar' => 'Arsiparis'
             ],
+            [
+                'no_keluar' => '008',
+                'tanggal_keluar' => $tanggal_surat_2, // corrected variable name
+                'kode_keluar' => '800/006/SMKN.1-Cadisdik Wil.VII',
+                'ditujukan' => 'Guru PKWU',
+                'perihal_keluar' => 'Job Fair',
+                'surat_keluar' => 'EWOWcopy.pdf',
+                'keterangan_keluar' => 'Arsiparis'
+            ],
+            [
+                'no_keluar' => '010',
+                'tanggal_keluar' => $tanggal_surat_2, // corrected variable name
+                'kode_keluar' => '800/006/SMKN.1-Cadisdik Wil.VII',
+                'ditujukan' => 'Guru PKWU',
+                'perihal_keluar' => 'Job Fair',
+                'surat_keluar' => 'EWOWcopy.pdf',
+                'keterangan_keluar' => 'Arsiparis'
+            ],
+            [
+                'no_keluar' => '011',
+                'tanggal_keluar' => $tanggal_surat_2, // corrected variable name
+                'kode_keluar' => '800/006/SMKN.1-Cadisdik Wil.VII',
+                'ditujukan' => 'Guru PKWU',
+                'perihal_keluar' => 'Job Fair',
+                'surat_keluar' => 'EWOWcopy.pdf',
+                'keterangan_keluar' => 'Arsiparis'
+            ],
+            [
+                'no_keluar' => '012',
+                'tanggal_keluar' => $tanggal_surat_2, // corrected variable name
+                'kode_keluar' => '800/006/SMKN.1-Cadisdik Wil.VII',
+                'ditujukan' => 'Guru PKWU',
+                'perihal_keluar' => 'Job Fair',
+                'surat_keluar' => 'EWOWcopy.pdf',
+                'keterangan_keluar' => 'Arsiparis'
+            ],
+            [
+                'no_keluar' => '013',
+                'tanggal_keluar' => $tanggal_surat_2, // corrected variable name
+                'kode_keluar' => '800/006/SMKN.1-Cadisdik Wil.VII',
+                'ditujukan' => 'Guru PKWU',
+                'perihal_keluar' => 'Job Fair',
+                'surat_keluar' => 'EWOWcopy.pdf',
+                'keterangan_keluar' => 'Arsiparis'
+            ],
+            [
+                'no_keluar' => '014',
+                'tanggal_keluar' => $tanggal_surat_2, // corrected variable name
+                'kode_keluar' => '800/006/SMKN.1-Cadisdik Wil.VII',
+                'ditujukan' => 'Guru PKWU',
+                'perihal_keluar' => 'Job Fair',
+                'surat_keluar' => 'EWOWcopy.pdf',
+                'keterangan_keluar' => 'Arsiparis'
+            ],
+            [
+                'no_keluar' => '015',
+                'tanggal_keluar' => $tanggal_surat_2, // corrected variable name
+                'kode_keluar' => '800/006/SMKN.1-Cadisdik Wil.VII',
+                'ditujukan' => 'Guru PKWU',
+                'perihal_keluar' => 'Job Fair',
+                'surat_keluar' => 'EWOWcopy.pdf',
+                'keterangan_keluar' => 'Arsiparis'
+            ],
+
         ]);
     }
 }

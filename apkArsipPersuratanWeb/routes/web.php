@@ -40,6 +40,11 @@ Route::middleware(['auth', 'userAkses:superadmin,admin,user'])->group(function (
 
     // Preview dan Download PDF
     Route::get('/preview/{pdf}', [ArsipController::class, 'preview'])->name('preview');
+
+    // Untuk Fungsi Cari
+    Route::get('/surat_keluar/cari-keluar', [ArsipController::class, 'cariSuratKeluar']);
+    Route::get('/surat_masuk/cari-masuk', [ArsipController::class, 'cariSuratMasuk']);
+    Route::get('/arsip/cari-arsip', [ArsipController::class, 'cariArsip']);
 });
 
 
@@ -103,6 +108,7 @@ Route::middleware(['auth', 'userAkses:admin'])->group(function () {
     Route::get('/surat_masuk/arsip/{id}', [ArsipController::class, 'masukArsip']);
     // Route::post('/surat_masuk/archive', [ArsipController::class, 'masukPengarsipan']);
     Route::get('/surat_masuk/hapus/{id}', [ArsipController::class, 'masukHapus']);
+
 
     // CRUD Surat Keluar
     Route::get('/surat_keluar/edit/{id}', [ArsipController::class, 'keluarEdit']);

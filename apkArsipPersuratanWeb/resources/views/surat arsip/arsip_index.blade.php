@@ -26,56 +26,43 @@
                 <label>Perusahaan</label>
                 <select id="filter-perusahaan" class="form-control filter">
                     <option value="" disabled selected>Pilih Perusahaan</option>
-                    @foreach ($dataarsip as $a)
-                        <option value="{{ $a->id_surat }}">{{ $a->perusahaan }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label>Jenis Surat</label>
-                <select id="filter-jenis" class="form-control filter">
-                    <option value="" disabled selected>Pilih Jenis Surat</option>
-                    @foreach ($dataarsip as $a)
-                        <option value="{{ $a->id_surat }}">{{ $a->jenis_surat }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label>Perihal</label>
-                <select id="filter-perihal" class="form-control filter">
-                    <option value="" disabled selected>Pilih Perihal</option>
-                    @foreach ($dataarsip as $a)
-                        <option value="{{ $a->id_surat }}">{{ $a->perihal_surat }}</option>
+                    <option value="all">Semua Perusahaan</option>
+                    @foreach ($perusahaanList as $perusahaan)
+                        <option value="{{ $perusahaan }}">
+                            {{ $perusahaan }}
+                        </option>
                     @endforeach
                 </select>
             </div>
 
+            <div class="col-md-4">
+                <label>Jenis Surat</label>
+                <select id="filter-jenis" name="search" class="form-control filter">
+                    <option value="" disabled selected>Pilih Jenis Surat</option>
+                    <option value="all">Surat Masuk & Keluar</option>
+                    <option value="masuk">Surat Masuk</option>
+                    <option value="keluar">Surat Keluar</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label>Pengarsip</label>
+                <select id="filter-pengarsip" name="pengarsip" class="form-control filter">
+                    <option value="" disabled selected>Pilih Pengarsip</option>
+                    <option value="all">Semua Pengarsip</option>
+                    @foreach ($admins as $admin)
+                        <option value="{{ $admin->id }}">{{ $admin->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
     </div>
-    <br><br>
+    <br>
 
 
     <div class="px-3 py-2 bg-white rounded shadow" style="overflow-x: auto; max-width: 100%;">
-        <form action="/surat_arsip/search" method="GET">
-            <label for="search">Date Format: YYYY-MM-DD</label><br>
-            <input type="search" name="search" placeholder="Search">
-            <button type="submit">
-                Find
-            </button>
-        </form>
 
-        <form action="/surat_arsip" method="GET" style="padding: 20px 0px 20px 0px;"> <!-- Add this form for per_page -->
-            <label for="per_page">Records Per Page: </label>
-            <select name="per_page" id="per_page" onchange="this.form.submit()">
-                <option value="3" @if ($perPage == 3) selected @endif>3</option>
-                <option value="5" @if ($perPage == 5) selected @endif>5</option>
-                <option value="10" @if ($perPage == 10) selected @endif>10</option>
-                <option value="25" @if ($perPage == 25) selected @endif>25</option>
-                <option value="50" @if ($perPage == 50) selected @endif>50</option>
-                <option value="100" @if ($perPage == 100) selected @endif>100</option>
-            </select>
-        </form>
-
+        <br>
         <table class="table table-bordered table-striped" border="1">
             <tr>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">ID</th>
@@ -93,58 +80,138 @@
                 @endif
             </tr>
 
-            @foreach ($dataarsip as $a)
-                <tr>
-                    <td>{{ $a->id_surat }}</td>
-                    <td>{{ $a->kode_surat }}</td>
-                    <td>{{ $a->judul_surat }}</td>
-                    <td>{{ $a->jenis_surat }}</td>
-                    <td>{{ $a->perusahaan }}</td>
-                    <td>
-                        @if ($a->tanggal_surat)
-                            {{ $a->tanggal_surat->format('Y-m-d') }}
-                        @else
-                            No Date Available
+            <tbody class="container-arsip">
+                @foreach ($dataarsip as $a)
+                    <tr>
+                        <td>{{ $a->id_surat }}</td>
+                        <td>{{ $a->kode_surat }}</td>
+                        <td>{{ $a->judul_surat }}</td>
+                        <td>{{ $a->jenis_surat }}</td>
+                        <td>{{ $a->perusahaan }}</td>
+                        <td>
+                            @if ($a->tanggal_surat)
+                                {{ $a->tanggal_surat->format('Y-m-d') }}
+                            @else
+                                No Date Available
+                            @endif
+                        </td>
+                        <td>{{ $a->perihal_surat }}</td>
+                        <td>{{ $a->keterangan }}</td>
+
+                        <td>
+                            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center"
+                                target="_blank" style="background-color: var(--bs-color2); color: white;">
+                                <i class="ri-eye-line"></i>
+                            </a><br><br>
+                            <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center"
+                                style="background-color: var(--bs-color1); color: white;" download>
+                                <i class="ri-file-download-line"></i>
+                            </a><br>
+                        </td>
+
+                        <td>{{ optional($a->user)->name }}</td>
+                        @if (Auth::user()->role == 'admin')
+                            <td>
+                                <a href="/surat_arsip/edit/{{ $a->id_surat }}" class="btn col-12 text-center"
+                                    style="background-color: var(--bs-color2); color: white;">
+                                    <i class="ri-edit-box-line"></i>
+                                </a><br><br>
+                                <a href="/arsip/hapus/{{ $a->id_surat }}" class="btn col-12 text-center delete-btn"
+                                    data-url="/arsip/hapus/{{ $a->id_surat }}"
+                                    style="background-color: var(--bs-color1); color: white;">
+                                    <i class="ri-delete-bin-line"></i>
+                                </a><br>
+                            </td>
                         @endif
-                    </td>
-                    <td>{{ $a->keterangan }}</td>
-
-                    <td>{{ $a->perihal_surat }}</td>
-                    <td>
-                        <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center" target="_blank"
-                            style="background-color: var(--bs-color2); color: white;">
-                            <i class="ri-eye-line"></i>
-                        </a><br><br>
-                        <a href="{{ asset('preview/' . $a->file_surat) }}" class="btn col-12 text-center"
-                            style="background-color: var(--bs-color1); color: white;" download>
-                            <i class="ri-file-download-line"></i>
-                        </a><br>
-                    </td>
-
-                    <td>{{ optional($a->user)->name }}</td>
-                    @if (Auth::user()->role == 'admin')
-                    <td>
-                        <a href="/surat_arsip/edit/{{ $a->id_surat }}" class="btn col-12 text-center"
-                            style="background-color: var(--bs-color2); color: white;">
-                            <i class="ri-edit-box-line"></i>
-                        </a><br><br>
-                        <a href="/arsip/hapus/{{ $a->id_surat }}" class="btn col-12 text-center delete-btn"
-                            data-url="/arsip/hapus/{{ $a->id_surat }}"
-                            style="background-color: var(--bs-color1); color: white;">
-                            <i class="ri-delete-bin-line"></i>
-                        </a><br>
-                    </td>
-                    @endif
-                </tr>
-            @endforeach
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
-
-        <!-- Pagination links -->
-        {{ $dataarsip->appends(['per_page' => $perPage])->links() }}
-    </div>
+        {{ $dataarsip->links() }}
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("search");
+
+            searchInput.addEventListener("input", function() {
+                const searchPengarsip = searchInput.value.toLowerCase();
+
+                $.ajax({
+                    url: '/arsip/cari-arsip',
+                    type: 'GET',
+                    data: {
+                        search: searchPengarsip
+                    },
+                    success: function(data) {
+                        document.querySelector('.container-arsip').innerHTML = data;
+                    }
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById("filter-jenis");
+
+            searchInput.addEventListener("input", function() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                $.ajax({
+                    url: '/arsip/cari-arsip',
+                    type: 'GET',
+                    data: {
+                        search: searchTerm
+                    },
+                    success: function(data) {
+                        document.querySelector('.container-arsip').innerHTML = data;
+                    }
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const selectPerusahaan = document.getElementById("filter-perusahaan");
+
+            selectPerusahaan.addEventListener("change", function() {
+                const selectedPerusahaan = selectPerusahaan.value;
+
+                $.ajax({
+                    url: '/arsip/cari-arsip',
+                    type: 'GET',
+                    data: {
+                        perusahaan: selectedPerusahaan
+                    },
+                    success: function(data) {
+                        document.querySelector('.container-arsip').innerHTML = data;
+                    }
+                });
+            });
+        });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const selectPengarsip = document.getElementById("filter-pengarsip");
+
+            selectPengarsip.addEventListener("change", function() {
+                const selectedPengarsipName = selectPengarsip.value;
+
+                $.ajax({
+                    url: '/arsip/cari-arsip',
+                    type: 'GET',
+                    data: {
+                        pengarsip: selectedPengarsipName
+                    },
+                    success: function(data) {
+                        document.querySelector('.container-arsip').innerHTML = data;
+                    }
+                });
+            });
+        });
+    </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -185,20 +252,3 @@
         });
     </script>
 @endsection
-
-
-<!-- @section('js')
-    <script>
-        let perusahaan = $("#filter-perusahaan").val()
-        let jenis = $("#filter-jenis").val()
-        let perihal = $("#filter-perihal").val()
-
-        $(".filter").on('change', function() {
-            perusahaan = $("#filter-perusahaan").val()
-            jenis = $("#filter-jenis").val()
-            perihal = $("#filter-perihal").val()
-            // console.log([perusahaan,jenis,perihal])
-            // console.log("FILTER")
-        })
-    </script>
-@endsection -->

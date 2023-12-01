@@ -26,6 +26,4 @@ class ArsipModel extends Model
     {
         return $this->belongsTo(User::class, 'id');
     }
-
-    // protected $dates = ['deleted_at'];
 }
