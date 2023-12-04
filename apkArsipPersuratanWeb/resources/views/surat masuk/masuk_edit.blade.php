@@ -23,7 +23,7 @@
 <div class="px-3 py-2 bg-white rounded shadow">
     <h4 class="fw-bold">
         <i class="ri-mail-send-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
-        Pendataan Surat Keluar
+        Pendataan Surat Masuk
     </h4>
     <hr>
 @foreach($datamasuk as $m)
@@ -33,14 +33,14 @@
         <div class="row">
             <div class="col-md-6">
                 <label for="no_masuk">No</label>
-                <input class="custom-input" type="text" name="no_masuk" id="no_masuk" required="required" value="{{ $m->no_masuk }}">
+                <input class="custom-input" type="number" name="no_masuk" id="no_masuk" required="required" value="{{ $m->no_masuk }}" readonly>
 
                 <label for="tanggal_masuk">Tanggal</label>
                 <input class="custom-input" type="date" name="tanggal_masuk" id="tanggal_masuk" required="required" value="{{ $m->tanggal_masuk }}"><br>
             </div>
         
             <div class="col-md-6">
-            <label for="kode_masuk">Nomor Surat Keluar</label>
+            <label for="kode_masuk">Nomor Surat Masuk</label>
                 <input class="custom-input" type="text" name="kode_masuk" id="kode_masuk" required="required" value="{{ $m->kode_masuk }}"><br>
 
                 <label for="pengirim">Pengirim</label>
@@ -61,7 +61,7 @@
             </div>
             <div class="col-md-6">
                 <label for="keterangan_masuk">Keterangan</label>
-                <input class="custom-input" type="text" name="keterangan_masuk" id="keterangan_masuk" value="{{ $m->keterangan_masuk }}"><br>
+                <input class="custom-input" type="text" name="keterangan_masuk" id="keterangan_masuk" required="required" value="{{ $m->keterangan_masuk }}"><br>
             </div>
         </div>
     </div>
