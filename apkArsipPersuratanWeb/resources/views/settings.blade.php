@@ -30,6 +30,8 @@
 @endsection
 
 @section('isi')
+
+@if (Auth::user()->role == 'superadmin')
 <div class="px-3 py-2 bg-white rounded shadow">
 <h4 class="fw-bold">
     <i class="ri-award-fill" style="font-size: 20px;"></i>
@@ -44,8 +46,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <label for="id_kop_surat">ID Kop Surat</label>
-                <input class="custom-input" type="text" name="id_kop_surat" id="id_kop_surat" required="required" value="{{ $kop_surat->id_kop_surat }}" readonly>
+                <input class="custom-input" type="hidden" name="id_kop_surat" id="id_kop_surat" required="required" value="{{ $kop_surat->id_kop_surat }}" readonly>
             </div>
         </div>
         <div class="row">
@@ -123,8 +124,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <label for="id_kepala_sekolah">ID Kepala Sekolah</label>
-                <input class="custom-input" type="text" name="id_kepala_sekolah" id="id_kepala_sekolah" required="required" value="{{ $kepala_sekolah->id_kepala_sekolah }}" readonly>
+                <input class="custom-input" type="hidden" name="id_kepala_sekolah" id="id_kepala_sekolah" required="required" value="{{ $kepala_sekolah->id_kepala_sekolah }}" readonly>
             </div>
         </div>
         <div class="row">
@@ -176,6 +176,154 @@
 </form>
 </div>
 <br><br>
+
+
+
+
+
+@elseif (Auth::user()->role == 'admin')
+<div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-award-fill" style="font-size: 20px;"></i>
+    Format Kop Surat 
+</h4>
+<br>
+@if (isset($kop_surat->updated_at))
+    <h6><b>Updated At: {{ $kop_surat->updated_at->timezone('Asia/Jakarta')->format('d F Y') }}</b></h6>
+@endif
+<form action="/kop_surat/update" method="post" enctype="multipart/form-data">
+    {{ csrf_field() }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <input class="custom-input" type="hidden" name="id_kop_surat" id="id_kop_surat" required="required" value="{{ $kop_surat->id_kop_surat }}" readonly>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="kode_surat">Kode Wilayah SMK 1 Cimahi</label>
+                <input class="custom-input" type="text" name="kode_surat" id="kode_surat" required="required" value="{{ $kop_surat->kode_surat }}" readonly>
+
+                <label for="nama_instansi">Nama Instansi</label>
+                <input class="custom-input" type="text" name="nama_instansi" id="nama_instansi" required="required" value="{{ $kop_surat->nama_instansi }}" readonly><br>
+
+                <label for="website_instansi">Website Instansi</label>
+                <input class="custom-input" type="text" name="website_instansi" id="website_instansi" required="required" value="{{ $kop_surat->website_instansi }}" readonly><br>
+
+                <label for="kode_surat">Kode Pos</label>
+                <input class="custom-input" type="text" name="kode_surat" id="kode_surat" required="required" value="{{ $kop_surat->kode_surat }}" readonly><br>
+            </div>
+        
+            <div class="col-md-6">
+                <label for="alamat_instansi">Alamat Instansi</label>
+                <input class="custom-input" type="text" name="alamat_instansi" id="alamat_instansi" required="required" value="{{ $kop_surat->alamat_instansi }}" readonly><br>
+
+                <label for="kontak_instansi">Kontak Instansi</label>
+                <input class="custom-input" type="text" name="kontak_instansi" id="kontak_instansi" required="required" value="{{ $kop_surat->kontak_instansi }}" readonly><br>
+
+                <label for="email_instansi">Email Instansi</label>
+                <input class="custom-input" type="text" name="email_instansi" id="email_instansi" required="required" value="{{ $kop_surat->email_instansi }}" readonly><br>
+
+                <label for="lingkup_wilayah">Lingkup Wilayah</label>
+                <input class="custom-input" type="text" name="lingkup_wilayah" id="lingkup_wilayah" required="required" value="{{ $kop_surat->lingkup_wilayah }}" readonly><br>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label for="logo_instansi">Foto Instansi (Ukuran File: 90*105)</label>
+            </div>
+
+            <div class="col-md-8" style="position: relative;">
+                <input class="custom-input" type="file" name="logo_instansi" id="file" accept=".png, .jpeg, .jpg" onchange="loadFile1(event)" readonly>
+                <br>
+            </div>
+
+            <div class="col-md-4 text-center">
+                @if ($kop_surat->logo_instansi)
+                    <!-- Tampilkan gambar profil sebelumnya jika ada -->
+                    <img id="output1" src="data_file/{{ $kop_surat->logo_instansi }}" class="img-thumbnail"
+                        alt="Logo Image" style="width: 200px; height: 200px; object-fit: cover;"
+                        crossorigin="anonymous">
+                    <label id="previousFileLabel" for="logo_instansi">Previous File: {{ $kop_surat->logo_instansi }}</label>
+                @else
+                    <!-- Tampilkan gambar default jika tidak ada gambar profil sebelumnya -->
+                    <img src="https://picsum.photos/200/" class="img-thumbnail" alt="Logo Image" style="width: 200px; height: 200px; object-fit: cover;" crossorigin="anonymous">
+                    <label for="logo_instansi">Previous File: {{ $kop_surat->logo_instansi }}</label><br>
+                @endif
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+<br><br>
+
+<div class="px-3 py-2 bg-white rounded shadow">
+<h4 class="fw-bold">
+    <i class="ri-account-circle-line sidebar-menu-item-icon" style="font-size: 20px;"></i>
+    Biodata Kepala Sekolah
+</h4>
+<br>
+@if (isset($kepala_sekolah->updated_at))
+    <h6><b>Updated At: {{ $kepala_sekolah->updated_at->timezone('Asia/Jakarta')->format('d F Y') }}</b></h6>
+@endif
+<form action="/kepala_sekolah/update" method="post" enctype="multipart/form-data">
+    {{ csrf_field() }}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <input class="custom-input" type="hidden" name="id_kepala_sekolah" id="id_kepala_sekolah" required="required" value="{{ $kepala_sekolah->id_kepala_sekolah }}" readonly>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="nama_kepala_sekolah">Nama Kepala Sekolah</label>
+                <input class="custom-input" type="text" name="nama_kepala_sekolah" id="nama_kepala_sekolah" required="required" value="{{ $kepala_sekolah->nama_kepala_sekolah }}" readonly>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="golongan_kepala_sekolah">Golongan Kepala Sekolah</label>
+                <input class="custom-input" type="text" name="golongan_kepala_sekolah" id="golongan_kepala_sekolah" required="required" value="{{ $kepala_sekolah->golongan_kepala_sekolah }}" readonly><br>
+            </div>
+            <div class="col-md-6">
+                <label for="nip_kepala_sekolah">NIP Kepala Sekolah</label>
+                <input class="custom-input" type="text" name="nip_kepala_sekolah" id="nip_kepala_sekolah" required="required" value="{{ $kepala_sekolah->nip_kepala_sekolah }}" readonly><br>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <label for="tanda_tangan">Tanda Tangan Kepala Sekolah (Ukuran File: 150*115)</label>
+            </div>
+
+            <div class="col-md-8" style="position: relative;">
+                <input class="custom-input" type="file" name="tanda_tangan" id="file" accept=".png, .jpeg, .jpg"
+                    onchange="loadFile2(event)">
+                <br>
+            </div>
+
+            <div class="col-md-4 text-center">
+                @if ($kepala_sekolah->tanda_tangan)
+                    <!-- Tampilkan gambar profil sebelumnya jika ada -->
+                    <img id="output2" src="data_file/{{ $kepala_sekolah->tanda_tangan }}" class="img-thumbnail"
+                        alt="Signature Image" style="width: 200px; height: 200px; object-fit: cover;"
+                        crossorigin="anonymous">
+                    <label id="previousFileLabel" for="tanda_tangan">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label>
+                @else
+                    <!-- Tampilkan gambar default jika tidak ada gambar profil sebelumnya -->
+                    <img src="https://picsum.photos/200/" class="img-thumbnail" alt="Signature Image"
+                        style="width: 200px; height: 200px; object-fit: cover;" crossorigin="anonymous">
+                    <label for="tanda_tangan">Previous File: {{ $kepala_sekolah->tanda_tangan }}</label><br>
+                @endif
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+<br><br>
+@endif
+
+
+
 
 <div class="px-3 py-2 bg-white rounded shadow">
 <h4 class="fw-bold">

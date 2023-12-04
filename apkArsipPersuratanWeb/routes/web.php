@@ -90,10 +90,10 @@ Route::middleware(['auth', 'userAkses:superadmin'])->group(function () {
     Route::put('/pegawai/update/{id}', [UserController::class, 'pegawaiUpdate'])->name('pegawai.update');
 
     // CRUD Kop Surat
-    Route::post('/kop_surat/update', [ArsipController::class, 'kopSuratUpdate']);
+    Route::post('/kop_surat/update', [TemplateSuratController::class, 'kopSuratUpdate']);
 
     // CRUD Kepala Sekolah
-    Route::post('/kepala_sekolah/update', [ArsipController::class, 'kepalaSekolahUpdate']);
+    Route::post('/kepala_sekolah/update', [TemplateSuratController::class, 'kepalaSekolahUpdate']);
 });
 
 
