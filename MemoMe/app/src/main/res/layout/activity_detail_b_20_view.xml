@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".VIEW_B20.DetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/detailImage"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:src="@drawable/uploadimg"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:text="Nisn"
+            android:layout_gravity="center"
+            android:id="@+id/detailNisn"
+            android:textSize="18sp"
+            android:textColor="@color/lavender"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:text="Nama"
+            android:layout_gravity="center"
+            android:id="@+id/detailName"
+            android:textSize="18sp"
+            android:textColor="@color/lavender"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:text="TGL LAHIR"
+            android:layout_gravity="center"
+            android:id="@+id/detailTanggal"
+            android:textSize="18sp"
+            android:textColor="@color/lavender"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:text="deskripsi"
+            android:layout_gravity="center"
+            android:id="@+id/detailDeskripsi"
+            android:textSize="18sp"
+            android:textColor="@color/lavender"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:text="tempat lahir"
+            android:layout_gravity="center"
+            android:id="@+id/detailTempat"
+            android:textSize="18sp"
+            android:textColor="@color/lavender"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:text="absen"
+            android:layout_gravity="center"
+            android:id="@+id/detailAbsen"
+            android:textSize="18sp"
+            android:textColor="@color/lavender"/>
+
+
+    </LinearLayout>
+
+</ScrollView>

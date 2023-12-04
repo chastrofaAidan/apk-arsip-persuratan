@@ -48,7 +48,7 @@ class ArsipController extends Controller
 
         $perPage = $request->input('per_page', 10);
 
-        $arsip = ArsipModel::paginate($perPage);
+        $arsip = ArsipModel::orderBy('id_surat', 'desc')->paginate($perPage);
 
         return view('surat arsip/arsip_index', [
             'user' => $user,

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".A21.UploadActivity">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Tambah Siswa Baru"
+                android:background="#6750A3"
+                android:textSize="25dp"
+                android:gravity="center"
+                android:textColor="#FFF" />
+
+            <!-- NISN -->
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:text="NISN"
+                    android:layout_marginLeft="35dp"/>
+
+                <EditText
+                    android:paddingLeft="10dp"
+                    android:id="@+id/uploadNisn"
+                    android:layout_width="0dp"
+                    android:layout_weight="2.5"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="35dp"
+                    android:elevation="6dp"
+                    android:inputType="number"
+                    android:background="@drawable/rounded" />
+
+            </LinearLayout>
+
+            <!-- Nama -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:text="Name"
+                    android:layout_marginLeft="35dp"/>
+
+                <EditText
+                    android:id="@+id/uploadName"
+                    android:paddingLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="2.5"
+                    android:layout_height="48dp"
+                    android:elevation="6dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="35dp"
+                    android:background="@drawable/rounded" />
+
+            </LinearLayout>
+
+            <!-- Kelas -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:text="Tgl Lahir"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="35dp"/>
+
+                <EditText
+                    android:layout_gravity="center"
+                    android:id="@+id/uploadTanggal"
+                    android:paddingLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1.9"
+                    android:layout_height="48dp"
+                    android:elevation="6dp"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/rounded" />
+
+                <ImageButton
+                    android:id="@+id/btnTanggal"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.6"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:elevation="6dp"
+                    android:layout_marginRight="35dp"
+                    android:src="@drawable/date_img" />
+
+            </LinearLayout>
+
+            <!-- Deskripsi -->
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:text="Deskripsi"
+                    android:layout_marginLeft="35dp"/>
+
+                <EditText
+                    android:id="@+id/uploadDeskripsi"
+                    android:paddingLeft="10dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="2.5"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="35dp"
+                    android:elevation="6dp"
+                    android:background="@drawable/rounded" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtTempat"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Tempat Lahir"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="34dp"
+                    android:layout_weight="1.5"
+                    android:layout_gravity="center"
+                    app:boxCornerRadiusBottomEnd="10sp"
+                    app:boxCornerRadiusBottomStart="10sp"
+                    app:boxCornerRadiusTopEnd="10sp"
+                    app:boxCornerRadiusTopStart="10sp"
+                    app:boxStrokeWidth="0sp"
+                    app:boxStrokeWidthFocused="0sp">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/uploadTempat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:dropDownHeight="108dp"
+                        app:simpleItems="@array/tempat" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/txtAbsen"
+                    style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    android:layout_width="25dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Absen"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="34dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    app:boxCornerRadiusBottomEnd="10sp"
+                    app:boxCornerRadiusBottomStart="10sp"
+                    app:boxCornerRadiusTopEnd="10sp"
+                    app:boxCornerRadiusTopStart="10sp"
+                    app:boxStrokeWidth="0sp"
+                    app:boxStrokeWidthFocused="0sp">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/uploadAbsen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:dropDownHeight="108dp"
+                        android:inputType="none"
+                        app:simpleItems="@array/absen" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:text="Foto Siswa" />
+
+            <ImageView
+                android:id="@+id/uploadImage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/uploadimg" />
+
+            <RelativeLayout
+                android:id="@+id/relative"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/siswaImage" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp"
+                android:text="Add"
+                android:textSize="21dp"
+                android:textAllCaps="false"
+                android:background="@drawable/rounded" />
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp"
+                android:text="Back"
+                android:textSize="21dp"
+                android:textAllCaps="false"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded"
+                android:layout_marginBottom="50dp"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</ScrollView>
