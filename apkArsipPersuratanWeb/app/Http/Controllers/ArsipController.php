@@ -116,7 +116,6 @@ class ArsipController extends Controller
         }
 
         if ($searchPengarsip && $searchPengarsip !== 'all') {
-            // Menggunakan relasi 'user' untuk mencari berdasarkan nama pengguna
             $query->whereHas('user', function ($subquery) use ($searchPengarsip) {
                 $subquery->where('id', $searchPengarsip);
             });
@@ -134,7 +133,7 @@ class ArsipController extends Controller
         $searchTerm = $request->input('search');
         $searchDitujukan = $request->input('ditujukan');
         $searchPendata = $request->input('pendata');
-        $searchPerihal = $request->input('perihal'); // tambahkan perihal
+        $searchPerihal = $request->input('perihal');
 
         $query = SuratKeluarModel::query();
 
@@ -152,7 +151,7 @@ class ArsipController extends Controller
         }
 
         if ($searchPerihal && $searchPerihal !== 'all') {
-            $query->where('perihal_keluar', $searchPerihal); // tambahkan filter untuk perihal
+            $query->where('perihal_keluar', $searchPerihal);
         }
 
         if ($searchPendata && $searchPendata !== 'all') {
