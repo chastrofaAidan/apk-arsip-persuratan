@@ -315,8 +315,12 @@ class ArsipController extends Controller
         // Find the ArsipModel instance by its ID or create a new one
         $arsip = ArsipModel::find($request->input('id_surat'));
 
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
         // Update the properties of the $kop_surat object
         $arsip->kode_surat = $request->input('kode_surat');
+        $arsip->id = $userId; // Set the user ID
         $arsip->judul_surat = $request->input('judul_surat');
         $arsip->perusahaan = $request->input('perusahaan');
         $arsip->jenis_surat = $request->input('jenis_surat');
@@ -429,8 +433,12 @@ class ArsipController extends Controller
         // Find the Arsip record by its ID
         $masuk = SuratMasukModel::find($request->input('no_masuk'));
 
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
         // Update the record with the validated data
         $masuk->no_masuk = $validatedData['no_masuk'];
+        $masuk->id = $userId; // Set the user ID
         $masuk->tanggal_masuk = $validatedData['tanggal_masuk'];
         $masuk->kode_masuk = $validatedData['kode_masuk'];
         $masuk->pengirim = $validatedData['pengirim'];
@@ -749,8 +757,12 @@ class ArsipController extends Controller
             $file->move($tujuanupload, $pdf);
         }
 
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
         // Update the record with the validated data
         $keluar->no_keluar = $validatedData['no_keluar'];
+        $keluar->id = $userId; // Set the user ID
         $keluar->tanggal_keluar = $validatedData['tanggal_keluar'];
         $keluar->kode_keluar = $validatedData['kode_keluar'];
         $keluar->ditujukan = $validatedData['ditujukan'];

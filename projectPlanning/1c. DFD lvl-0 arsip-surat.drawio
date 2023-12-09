@@ -1,33 +1,33 @@
-<mxfile host="app.diagrams.net" modified="2023-11-06T03:14:05.251Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="U_ZfVKCWRdkYMYlyXv2s" version="21.8.1" type="device">
+<mxfile host="app.diagrams.net" modified="2023-12-06T03:46:54.987Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="L-F8tkvA9PWa7c98FRbN" version="22.1.5" type="device">
   <diagram name="Page-1" id="-krOig79hkJ82ZUgCSBC">
-    <mxGraphModel dx="1348" dy="810" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1618" dy="972" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="MAFrq6AxxMRPz1XZQBUV-1" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Aplikasi Administrasi Surat dan Pengarsipan&lt;/b&gt;&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
-          <mxGeometry x="520" y="430" width="150" height="150" as="geometry" />
+          <mxGeometry x="520" y="240" width="150" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="MAFrq6AxxMRPz1XZQBUV-6" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Persuratan TU&lt;br&gt;(Superadmin)&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="180" y="470" width="90" height="70" as="geometry" />
+        <mxCell id="MAFrq6AxxMRPz1XZQBUV-6" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Persuratan TU&lt;br&gt;(Admin)&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="156" y="280" width="114" height="78" as="geometry" />
         </mxCell>
-        <mxCell id="MAFrq6AxxMRPz1XZQBUV-36" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Tata Usaha&lt;br&gt;(Admin)&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="920" y="465" width="90" height="80" as="geometry" />
+        <mxCell id="MAFrq6AxxMRPz1XZQBUV-36" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Tata Usaha&lt;br&gt;(User)&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="920" y="280" width="114" height="78.5" as="geometry" />
         </mxCell>
         <mxCell id="1h4rm8SebVO0O0mBtEGe-1" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="280" y="530" as="sourcePoint" />
-            <mxPoint x="510" y="530" as="targetPoint" />
+            <mxPoint x="280" y="330" as="sourcePoint" />
+            <mxPoint x="510" y="330" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="1h4rm8SebVO0O0mBtEGe-2" value="Pendataan Surat" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1h4rm8SebVO0O0mBtEGe-1" vertex="1" connectable="0">
+        <mxCell id="1h4rm8SebVO0O0mBtEGe-2" value="Pendataan Surat Keluar" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1h4rm8SebVO0O0mBtEGe-1" vertex="1" connectable="0">
           <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
             <mxPoint x="12" y="-2" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="2SscNu7myae9_I2_TrU--1" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="280" y="505" as="sourcePoint" />
-            <mxPoint x="510" y="504.5" as="targetPoint" />
+            <mxPoint x="280" y="305" as="sourcePoint" />
+            <mxPoint x="510" y="304.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="2SscNu7myae9_I2_TrU--2" value="Pengarsipan Surat" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="2SscNu7myae9_I2_TrU--1" vertex="1" connectable="0">
@@ -37,8 +37,8 @@
         </mxCell>
         <mxCell id="2SscNu7myae9_I2_TrU--3" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="510" y="480" as="sourcePoint" />
-            <mxPoint x="280" y="480" as="targetPoint" />
+            <mxPoint x="510" y="280" as="sourcePoint" />
+            <mxPoint x="280" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="2SscNu7myae9_I2_TrU--4" value="Pembuatan Surat" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="2SscNu7myae9_I2_TrU--3" vertex="1" connectable="0">
@@ -48,28 +48,128 @@
         </mxCell>
         <mxCell id="2SscNu7myae9_I2_TrU--5" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="680" y="517.25" as="sourcePoint" />
-            <mxPoint x="910" y="520" as="targetPoint" />
+            <mxPoint x="680" y="333.25" as="sourcePoint" />
+            <mxPoint x="910" y="336" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="2SscNu7myae9_I2_TrU--6" value="Data Surat" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="2SscNu7myae9_I2_TrU--5" vertex="1" connectable="0">
+        <mxCell id="2SscNu7myae9_I2_TrU--6" value="Arsip Surat" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="2SscNu7myae9_I2_TrU--5" vertex="1" connectable="0">
           <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
             <mxPoint x="12" y="-2" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="2SscNu7myae9_I2_TrU--7" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="680" y="491.75" as="sourcePoint" />
-            <mxPoint x="910" y="492" as="targetPoint" />
+            <mxPoint x="680" y="307.75" as="sourcePoint" />
+            <mxPoint x="910" y="308" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="2SscNu7myae9_I2_TrU--8" value="Arsip Surat" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="2SscNu7myae9_I2_TrU--7" vertex="1" connectable="0">
+        <mxCell id="2SscNu7myae9_I2_TrU--8" value="Data Surat Masuk" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="2SscNu7myae9_I2_TrU--7" vertex="1" connectable="0">
           <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
             <mxPoint x="12" y="-2" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rl7d9PzQKTlgSU66wNUr-1" value="&lt;font style=&quot;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;DFD Level 0&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;APLIKASI ADMINISTRASI DAN PENGARSIPAN SURAT&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="470" y="340" width="250" height="60" as="geometry" />
+        <mxCell id="rl7d9PzQKTlgSU66wNUr-1" value="&lt;font style=&quot;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;DFD Level 0&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;APLIKASI ADMINISTRASI DAN PENGARSIPAN SURAT&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="470" y="150" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-21" value="Text" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" parent="rl7d9PzQKTlgSU66wNUr-1" vertex="1">
+          <mxGeometry x="148" y="28" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-1" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;Arsiparis Ahli Muda&lt;br&gt;(Superadmin)&lt;br&gt;&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="530" y="500" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-2" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="620" y="400" as="sourcePoint" />
+            <mxPoint x="620" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-3" value="Data &lt;br&gt;Surat Keluar" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1yVQUzVj0cPpFLMTJbad-2" vertex="1" connectable="0">
+          <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
+            <mxPoint x="2" y="-16" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-4" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="660" y="380" as="sourcePoint" />
+            <mxPoint x="660" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-5" value="Arsip Surat" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1yVQUzVj0cPpFLMTJbad-4" vertex="1" connectable="0">
+          <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
+            <mxPoint x="2" y="14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-7" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="580" y="400" as="sourcePoint" />
+            <mxPoint x="580" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-8" value="Data &lt;br&gt;Surat Masuk" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1yVQUzVj0cPpFLMTJbad-7" vertex="1" connectable="0">
+          <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
+            <mxPoint x="2" y="14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-9" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="680" y="280" as="sourcePoint" />
+            <mxPoint x="910" y="280.25" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-10" value="Data Surat Keluar" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1yVQUzVj0cPpFLMTJbad-9" vertex="1" connectable="0">
+          <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
+            <mxPoint x="12" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-13" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="280" y="360" as="sourcePoint" />
+            <mxPoint x="510" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-14" value="Pendataan Surat Masuk" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1yVQUzVj0cPpFLMTJbad-13" vertex="1" connectable="0">
+          <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
+            <mxPoint x="12" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-15" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="480" as="sourcePoint" />
+            <mxPoint x="530" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-16" value="Hak Akses&lt;br&gt;Aplikasi" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1yVQUzVj0cPpFLMTJbad-15" vertex="1" connectable="0">
+          <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
+            <mxPoint x="-2" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-17" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="670" y="260" as="sourcePoint" />
+            <mxPoint x="950" y="270" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="950" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-18" value="Hak Akses Aplikasi" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1yVQUzVj0cPpFLMTJbad-17" vertex="1" connectable="0">
+          <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
+            <mxPoint x="5" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-19" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="260" as="sourcePoint" />
+            <mxPoint x="220" y="280" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="220" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1yVQUzVj0cPpFLMTJbad-20" value="Hak Akses Aplikasi" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="1yVQUzVj0cPpFLMTJbad-19" vertex="1" connectable="0">
+          <mxGeometry x="-0.0983" y="-2" relative="1" as="geometry">
+            <mxPoint x="-2" y="2" as="offset" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>

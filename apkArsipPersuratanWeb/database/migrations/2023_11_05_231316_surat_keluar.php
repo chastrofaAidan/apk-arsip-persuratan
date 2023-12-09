@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('surat_keluar', function (Blueprint $table){
             $table ->id('no_keluar');
-            $table ->string('id')->index()->nullable()->default(null);
+            $table ->unsignedBigInteger('id')->index()->nullable()->default(null);
             $table ->date('tanggal_keluar');
             $table ->string('kode_keluar');
             $table ->string('ditujukan');
@@ -22,6 +22,9 @@ return new class extends Migration
             $table ->text('keterangan_keluar')->nullable()->default(null);
             $table  ->timestamps();            
             // $table->softDeletes();
+
+            // Define foreign key
+            $table->foreign('id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
