@@ -116,11 +116,12 @@ class ArsipController extends Controller
         }
 
         if ($searchPengarsip && $searchPengarsip !== 'all') {
-            // Menggunakan relasi 'user' untuk mencari berdasarkan nama pengguna
             $query->whereHas('user', function ($subquery) use ($searchPengarsip) {
                 $subquery->where('id', $searchPengarsip);
             });
         }
+
+        $query->orderBy('id_surat', 'desc');
 
         $dataarsip = $query->paginate(10);
 
@@ -132,7 +133,7 @@ class ArsipController extends Controller
         $searchTerm = $request->input('search');
         $searchDitujukan = $request->input('ditujukan');
         $searchPendata = $request->input('pendata');
-        $searchPerihal = $request->input('perihal'); // tambahkan perihal
+        $searchPerihal = $request->input('perihal');
 
         $query = SuratKeluarModel::query();
 
@@ -150,7 +151,7 @@ class ArsipController extends Controller
         }
 
         if ($searchPerihal && $searchPerihal !== 'all') {
-            $query->where('perihal_keluar', $searchPerihal); // tambahkan filter untuk perihal
+            $query->where('perihal_keluar', $searchPerihal);
         }
 
         if ($searchPendata && $searchPendata !== 'all') {
@@ -158,6 +159,8 @@ class ArsipController extends Controller
                 $subquery->where('id', $searchPendata);
             });
         }
+
+        $query->orderBy('no_keluar', 'desc');
 
         $datakeluar = $query->paginate(10);
 
@@ -206,6 +209,7 @@ class ArsipController extends Controller
             $query->where('pokok_masuk', 'like', "%{$searchPokokIsi}%");
         }
 
+        $query->orderBy('no_masuk', 'desc');
         $datamasuk = $query->paginate(10);
 
         return view('surat masuk/cari_surat_masuk', ['datamasuk' => $datamasuk]);
@@ -509,7 +513,7 @@ class ArsipController extends Controller
 
         return view('surat keluar/keluar_tambah', [
             'user' => $user,
-            'kode_surat' => $kode_surat, 
+            'kode_surat' => $kode_surat,
             'datakodesurat' => $datakodesurat,
             'newNoKeluarValue' => $newNoKeluarValue
         ]);
@@ -527,7 +531,7 @@ class ArsipController extends Controller
 
         return view('surat keluar/keluar_tambah_pembuatan', [
             'user' => $user,
-            'kode_surat' => $kode_surat, 
+            'kode_surat' => $kode_surat,
             'datakodesurat' => $datakodesurat,
             'newNoKeluarValue' => $newNoKeluarValue,
             'fileName' => $fileName,
@@ -582,7 +586,7 @@ class ArsipController extends Controller
         $keluar->keterangan_keluar = $validatedData['keterangan_keluar'];
         // Save the new record to the database
         $keluar->save();
-        
+
         // Redirect to a success page or another appropriate action
         return redirect('/surat_keluar');
     }
@@ -604,24 +608,21 @@ class ArsipController extends Controller
         // Set the file name
         $fileName = $request->input('surat_keluar') . '_' . now()->format('YmdHis') . '.pdf';
 
-        
-        
+
+
         if ($request->has('pendataan')) {
-            
+
             // Save the PDF file to the server
             $pdf->save(public_path('data_file/' . $fileName));
 
             return redirect('/surat_keluar/tambah/' . $fileName);
-
-        } 
-        elseif ($request->has('unduh')) {
+        } elseif ($request->has('unduh')) {
 
             $pdf->save(public_path('data_file/' . $fileName));
 
             // Download the file
             $downloadPath = public_path('data_file/' . $fileName);
             return response()->download($downloadPath, $fileName)->deleteFileAfterSend(true);
-
         }
     }
 
@@ -714,7 +715,7 @@ class ArsipController extends Controller
         return redirect('/surat_keluar');
     }
 
-    
+
 
     public function keluarEdit($no_keluar)
     {

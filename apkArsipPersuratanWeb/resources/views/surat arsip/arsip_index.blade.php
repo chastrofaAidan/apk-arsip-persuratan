@@ -61,14 +61,15 @@
 
 
     <div class="px-3 py-2 bg-white rounded shadow" style="overflow-x: auto; max-width: 100%;">
-        <!-- <div class="col-md-4">
-            <label>Tanggal / Nomor Surat Masuk / Pokok isi Surat </label>
+        <div class="col-md-4">
+            <label>Kode Surat / Judul Surat</label>
             <br>
             <input type="text" id="search"
                 class="w-full p-2  border border-gray-300 border-solid rounded-lg outline-none font-poppins"
                 placeholder="Cari...">
-        </div> -->
+        </div>
         <br>
+
         <table class="table table-bordered table-striped" border="1">
             <tr>
                 <th class="text-center" style="background-color: var(--bs-color1); color: white;">ID</th>
