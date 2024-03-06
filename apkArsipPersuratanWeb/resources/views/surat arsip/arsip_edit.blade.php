@@ -71,7 +71,7 @@
         </div>
     </div>
     <br>
-    <input class="btn btn-primary" type="submit" value="Simpan Data">
+    <input class="btn" style="background-color: var(--bs-color1); color: white;" type="submit" value="Simpan Data">
 </form>
 @endforeach
 </div>

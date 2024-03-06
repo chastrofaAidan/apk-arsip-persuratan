@@ -13,7 +13,7 @@ class AkunSeeder extends Seeder
      */
     public function run(): void
     {
-        $userData = [
+            $userData = [
             [
                 'name' => 'SUPER ADMIN TATA USAHA',
                 'email' => 'superadmin@gmail.com',

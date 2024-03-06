@@ -61,12 +61,12 @@
             </div>
             <div class="col-md-6">
                 <label for="keterangan_masuk">Keterangan</label>
-                <input class="custom-input" type="text" name="keterangan_masuk" id="keterangan_masuk" required="required" value="{{ $m->keterangan_masuk }}"><br>
+                <input class="custom-input" type="text" name="keterangan_masuk" id="keterangan_masuk" value="{{ $m->keterangan_masuk }}"><br>
             </div>
         </div>
     </div>
     <br>
-    <input class="btn btn-primary" type="submit" value="Simpan Data">
+    <input class="btn" style="background-color: var(--bs-color1); color: white;" type="submit" value="Simpan Data">
 </form>
 @endforeach
 </div>

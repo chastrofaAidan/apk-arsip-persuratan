@@ -34,7 +34,7 @@ class SessionController extends Controller
                 return redirect('dashboard');
             }
         } else {
-            return redirect('')->withErrors('Username dan Passord tidak sesuai')->withInput();
+            return redirect('')->withInput();
         }
     }
 

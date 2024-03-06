@@ -16,15 +16,17 @@
         <title>Daftar Pegawai</title>
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     </head>
-
+    
     <body>
-
+        
         {{-- Content-end --}}
         <div>
             <div class="p-4 border-2 border-gray-200 rounded-lg bg-white">
-                <div class="p-2">
-                    <h2 class="text-lg font-poppins font-bold"><span>Daftar Pegawai</span></h2>
-                    <h2 class="text-md font-poppins"><span>Yang terdaftar saat ini.</span></h2>
+                <div class="p-2Psu">
+                    <h4 class="fw-bold" style="margin: 5px 0;">
+                        <i class="ri-file-list-line" style="font-size: 20px;"></i>
+                        Daftar Pegawai
+                    </h4>
                 </div>
 
                 <!-- Tambah Pegawai Buttons -->
@@ -44,12 +46,6 @@
 
                 <!-- Search Input -->
                 <div class="relative flex flex-col shadow-lg mb-6 rounded-lg p-4">
-                    <div class="p-2 mb-2">
-                        <label for="search" class="font-poppins font-semibold text-gray-500">Cari Pegawai:</label>
-                        <input type="text" id="search"
-                            class="w-full p-2 border border-gray-300 border-solid rounded-lg outline-none font-poppins"
-                            placeholder="Nama Pegawai...">
-                    </div>
 
                     <div class="grid grid-cols-2 gap-4">
                         @php $counter = 1; @endphp
@@ -109,6 +105,26 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        // Ambil elemen input pencarian
+        var searchInput = document.getElementById('search');
+
+        // Tambahkan event listener untuk setiap perubahan pada input
+        searchInput.addEventListener('input', function() {
+            var searchTerm = searchInput.value.toLowerCase();
+            var searchItems = document.querySelectorAll('.searchItems');
+
+            // Loop melalui setiap item dan sembunyikan/munculkan berdasarkan kesesuaian dengan kata kunci pencarian
+            searchItems.forEach(function(item) {
+                var userName = item.querySelector('.font-bold').textContent.toLowerCase();
+                if (userName.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
         document.addEventListener('DOMContentLoaded', function() {
             // Tambahkan event listener untuk tombol delete
             var deleteButtons = document.querySelectorAll('.delete-btn');

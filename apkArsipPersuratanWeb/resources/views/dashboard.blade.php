@@ -78,7 +78,7 @@
     <h3>Selamat Datang, {{ $user->name }}</h3>
     ARCHIE - Untuk Segala Kebutuhan Persuratan Anda ^^
     <br>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam deserunt quibusdam possimus iste laudantium excepturi quia, vero dolor voluptatum, saepe dolorum, temporibus repellat nulla commodi aliquam accusantium praesentium quod! Ab?
+    SMK Negeri 1 Cimahi (STM Pembangunan Bandung) merupakan salah satu Lembaga Pendidikan Menengah Kejuruan di Kota Cimahi, Jawa Barat yang menyelenggarakan Program Pendidikan Kejuruan 4 Tahun, dan merupakan salah satu SMK dari 8 (delapan) SMK Negeri di Indonesia yang memiliki program 4 (empat) Tahun.
     <br>
     <br>
     <div>

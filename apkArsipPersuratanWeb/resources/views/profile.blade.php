@@ -79,8 +79,8 @@
 
                         <!-- Tombol "Simpan Data" dan "Batal" ditempatkan di paling bawah -->
                         <div style="position: absolute; bottom: 0;">
-                            <input class="btn btn-primary" type="submit" value="Simpan Data" id="btn-simpan">
-                            <input class="btn btn-danger" type="button" value="Batal" id="btn-batal"
+                            <input class="btn" style="background-color: var(--bs-color1); color: white;" type="submit" value="Simpan Data" id="btn-simpan">
+                            <input class="btn" style="background-color: var(--bs-color2); color: white;" type="button" value="Batal" id="btn-batal"
                                 onclick="confirmAndClearForm()">
                         </div>
                     </div>

@@ -104,8 +104,8 @@
         </div>
     </div>
     <br>
-    <input class="btn btn-primary" type="submit" value="Simpan Data" id="btn-simpan">
-    <input class="btn btn-danger" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()">
+    <input class="btn" style="background-color: var(--bs-color1); color: white;" type="submit" value="Simpan Data" id="btn-simpan">
+    <input class="btn" style="background-color: var(--bs-color2); color: white;" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()">
 </form>
 </div>
 <br><br>
@@ -171,8 +171,8 @@
         </div>
     </div>
     <br>
-    <input class="btn btn-primary" type="submit" value="Simpan Data" id="btn-simpan">
-    <input class="btn btn-danger" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()">
+    <input class="btn" style="background-color: var(--bs-color1); color: white;" type="submit" value="Simpan Data" id="btn-simpan">
+    <input class="btn" style="background-color: var(--bs-color2); color: white;" type="button" value="Batal" id="btn-batal" onclick="confirmAndClearForm()">
 </form>
 </div>
 <br><br>
@@ -233,11 +233,6 @@
                 <label for="logo_instansi">Foto Instansi (Ukuran File: 90*105)</label>
             </div>
 
-            <div class="col-md-8" style="position: relative;">
-                <input class="custom-input" type="file" name="logo_instansi" id="file" accept=".png, .jpeg, .jpg" onchange="loadFile1(event)" readonly>
-                <br>
-            </div>
-
             <div class="col-md-4 text-center">
                 @if ($kop_surat->logo_instansi)
                     <!-- Tampilkan gambar profil sebelumnya jika ada -->
@@ -293,12 +288,6 @@
         <div class="row">
             <div>
                 <label for="tanda_tangan">Tanda Tangan Kepala Sekolah (Ukuran File: 150*115)</label>
-            </div>
-
-            <div class="col-md-8" style="position: relative;">
-                <input class="custom-input" type="file" name="tanda_tangan" id="file" accept=".png, .jpeg, .jpg"
-                    onchange="loadFile2(event)">
-                <br>
             </div>
 
             <div class="col-md-4 text-center">

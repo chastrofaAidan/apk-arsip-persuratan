@@ -1,6 +1,3 @@
-
-
-
 @extends('partials/sidebar')
 <style>
     .custom-input {
@@ -33,7 +30,7 @@
         <div class="row">
             <div class="col-md-6">
                 <label for="no_keluar">No</label>
-                <input class="custom-input" type="text" name="no_keluar" id="no_keluar" required="required" value="{{ $k->no_keluar }}">
+                <input class="custom-input" type="text" name="no_keluar" id="no_keluar" required="required" value="{{ $k->no_keluar }}" readonly>
 
                 <label for="tanggal_keluar">Tanggal</label>
                 <input class="custom-input" type="date" name="tanggal_keluar" id="tanggal_keluar" required="required" value="{{ $k->tanggal_keluar }}"><br>
@@ -68,7 +65,7 @@
         </div>
     </div>
     <br>
-    <input class="btn btn-primary" type="submit" value="Simpan Data">
+    <input class="btn" style="background-color: var(--bs-color1); color: white;" type="submit" value="Simpan Data">
 </form>
 @endforeach
 </div>
